@@ -1,0 +1,14 @@
+# MODE=(red|opr|wer)
+MODE=opr    # nalezy to zaktualizowac
+ID=cover
+SIG=xd
+
+#
+# Ograniczenia systemowe dla rozwiazan
+#
+TIMELIMIT = 3         # liczba sekund
+SLOW_TIMELIMIT = 3    # liczba sekund dla rozwiazan nieoptymalnych
+MEMLIMIT  = 130000     # limit pamieci (np. 33000, 66000, 130000, 260000)
+
+# Sciezka do oitimetoola - do komend oirun.
+OI_TIME = ~/Programs/accek-oitimetool-bin-8a1e710/oitimetool
