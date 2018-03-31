@@ -1,1 +1,3 @@
 bigdata/
+*.e
+*.o
