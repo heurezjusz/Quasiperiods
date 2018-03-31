@@ -1,6 +1,6 @@
 include ../makefile.inc
 
-combine: combine_str.e combine_slow.e combine_tree.e
+combine: combine_str.e combine_slow.e combine_tree.e combine_chk.e
 
 COMBINE_O = ../combine/combine.o
 
