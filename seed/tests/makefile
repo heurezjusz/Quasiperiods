@@ -1,11 +1,29 @@
-CXXFLAGS = -DNDEBUG -O3 -std=c++11 -I /usr/local/include -L /usr/local/lib
-LFLAGS =  -lsdsl -ldivsufsort -ldivsufsort64
+include ../makefile.inc
 
-tree.o: tree.cpp
-	g++ tree.cpp $(CXXFLAGS) -c -o tree.o
+combine: combine_str.e combine_slow.e combine_tree.e
+
+COMBINE_O = ../combine/combine.o
+
+combine_slow.o: combine_slow.cpp ../combine/combine.hpp
+	g++ combine_slow.cpp $(CXXFLAGS) -c -o $@
+
+combine_str.o: combine_str.cpp ../combine/combine.hpp
+	g++ combine_str.cpp $(CXXFLAGS) -c -o $@
+
+combine_str.e: combine_str.o $(COMBINE_O)
+	g++ combine_str.o $(COMBINE_O) -o $@ $(LFLAGS)
+
+combine_tree.o: combine_tree.cpp ../combine/combine.hpp
+	g++ combine_tree.cpp $(CXXFLAGS) -c -o $@
+
+combine_tree.e: combine_tree.o $(COMBINE_O)
+	g++ combine_tree.o $(COMBINE_O) -o $@ $(LFLAGS)
 
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)
 
 clean:
-	make clean -C combine
+	rm -f *.o
+	rm -f *.e
+
+.PHONY: clean combine

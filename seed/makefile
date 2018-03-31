@@ -1,5 +1,4 @@
-CXXFLAGS = -DNDEBUG -O3 -std=c++11 -I /usr/local/include -L /usr/local/lib
-LFLAGS =  -lsdsl -ldivsufsort -ldivsufsort64
+include makefile.inc
 
 tree.o: tree.cpp
 	g++ tree.cpp $(CXXFLAGS) -c -o tree.o
@@ -9,3 +8,4 @@ tree.o: tree.cpp
 
 clean:
 	make clean -C combine
+	make clean -C tests
