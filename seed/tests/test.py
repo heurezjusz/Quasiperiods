@@ -3,27 +3,31 @@
 import os
 import sys
 
-PARTS = ["combine", "maxgap", "all"]
+PARTS = ["combine", "maxgap", "all", "ukkonen"]
 PARTS.sort()
 
 CHECKER = {
     "combine": "combine_chk.e",
     "maxgap": None,
+    "ukkonen": None,
 }
 
 CORRECT = {
     "combine": "combine_slow.e",
     "maxgap": "maxgap_slow.e",
+    "ukkonen": "ukkonen_slow.py",
 }
 
 BIN = {
     "combine": ["combine_str.e"],
     "maxgap": ["maxgap.e"],
+    "ukkonen": ["ukkonen_slow.py"],
 }
 
 TEST_DIR = {
     "combine": "combine",
     "maxgap": "maxgap",
+    "ukkonen": "words",
 }
 
 

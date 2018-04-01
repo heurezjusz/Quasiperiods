@@ -45,17 +45,8 @@ maxgap.e: maxgap.o $(MAXGAP_O) $(STRUCT_DEP)
 	g++ maxgap.o $(MAXGAP_O) -o $@ $(LFLAGS)
 
 
-# target: depths
-depths: depths_slow.e depths.e
-
-depths_slow.e: depths_slow.cpp
-	g++ depths_slow.cpp $(CXXFLAGS) -o $@ $(LFLAGS)
-
-depths.o: depths.cpp
-	g++ depths.cpp $(CXXFLAGS) -c -o $@
-
-depths.e: depths.o $(UTILS_DEP)
-	g++ depths.o ../utils/utils.o -o $@ $(LFLAGS)
+# target: ukkonen
+ukkonen:
 
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)
@@ -64,4 +55,4 @@ clean:
 	rm -f *.o
 	rm -f *.e
 
-.PHONY: clean combine maxgap structs depths
+.PHONY: clean combine maxgap structs ukkonen
