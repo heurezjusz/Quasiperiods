@@ -9,8 +9,9 @@ struct Edge {
 
 struct Node {
     std::map<int, Edge> edges;
-    int parent;
+    int parent, depth;
     Node(int parent);
+    bool is_leaf();
 };
 
 struct Tree {
@@ -19,6 +20,7 @@ struct Tree {
 
     Tree();
     Node& root();
+    void create(std::vector<int>& word);
 };
 
 #endif

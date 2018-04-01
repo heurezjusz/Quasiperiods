@@ -21,7 +21,7 @@ CORRECT = {
 BIN = {
     "combine": ["combine_str.e"],
     "maxgap": ["maxgap.e"],
-    "ukkonen": ["ukkonen_slow.py"],
+    "ukkonen": ["ukkonen.e"],
 }
 
 TEST_DIR = {

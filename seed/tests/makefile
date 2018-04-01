@@ -27,13 +27,9 @@ maxgap: maxgap_slow.e maxgap.e
 
 structs:
 	make -C ../structs
-utils:
-	make -C ../utils
 
 MAXGAP_O = ../structs/structs.o
 STRUCT_DEP = ../structs/structs.hpp ../structs/structs.cpp structs
-UTILS_DEP = ../utils/utils.hpp ../utils/utils.cpp utils
-
 
 maxgap_slow.e: maxgap_slow.cpp ../structs/structs.hpp
 	g++ maxgap_slow.cpp $(CXXFLAGS) -o $@
@@ -46,7 +42,14 @@ maxgap.e: maxgap.o $(MAXGAP_O) $(STRUCT_DEP)
 
 
 # target: ukkonen
-ukkonen:
+ukkonen: ukkonen.e
+ukkonen_o:
+	make -C ../ukkonen
+
+ukkonen.o: ukkonen.cpp
+	g++ ukkonen.cpp $(CXXFLAGS) -c -o $@
+ukkonen.e: ukkonen.o ../ukkonen/ukkonen.hpp ../ukkonen/ukkonen.cpp ukkonen_o
+	g++ ukkonen.o ../ukkonen/ukkonen.o -o $@ $(LFLAGS)
 
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)
