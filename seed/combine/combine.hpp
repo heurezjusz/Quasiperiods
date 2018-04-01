@@ -1,7 +1,7 @@
 #ifndef __COMBINE
 #define __COMBINE
 
-#include "../header.hpp"
+#include "../structs/structs.hpp"
 #include <vector>
 #include <string>
 #include <sdsl/suffix_trees.hpp>

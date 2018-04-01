@@ -3,22 +3,26 @@
 import os
 import sys
 
-PARTS = ["combine", "all"]
+PARTS = ["combine", "maxgap", "all"]
 
 CHECKER = {
-    "combine": "combine_chk.e"
+    "combine": "combine_chk.e",
+    "maxgap": None
 }
 
 CORRECT = {
-    "combine": "combine_slow.e"
+    "combine": "combine_slow.e",
+    "maxgap": "maxgap_slow.e"
 }
 
 BIN = {
-    "combine": ["combine_str.e", "combine_tree.e"]
+    "combine": ["combine_str.e", "combine_tree.e"],
+    "maxgap": ["maxgap.e"]
 }
 
 TEST_DIR = {
-    "combine": "combine"
+    "combine": "combine",
+    "maxgap": "maxgap"
 }
 
 
@@ -53,7 +57,9 @@ def test_part(part):
 
     print '=' * 10, part, '=' * 10
     print_info("building " + part)
-    os.system('make ' + part)
+    safe_exec('make ' + part)
+    
+    ok, bad = 0, 0
 
     for sol in BIN[part]:
         print_info("testing " + sol)
@@ -62,16 +68,26 @@ def test_part(part):
         chk = CHECKER[part]
 
         for fname in os.listdir(tst):
+            if not fname.endswith('.in'):
+                continue
             path = os.path.join(tst, fname)
             print fname, '\t',
             safe_exec("./%s < %s > %s" % (corr, path, "out_corr"))
             safe_exec("./%s < %s > %s" % (sol, path, "out_sol"))
-            res = os.system('./%s %s out_corr out_sol > sssh' % (chk, path))
+            
+            if chk is None:
+                res = os.system('diff out_corr out_sol > /dev/null')
+            else:
+                res = os.system('./%s %s out_corr out_sol > /dev/null' % (chk, path))
+
             if res != 0:
                 print_bad("WRONG")
+                bad += 1
             else:
                 print_good("OK")
-            safe_exec('rm out_corr out_sol sssh')
+                ok += 1
+            safe_exec('rm out_corr out_sol')
+    print_info('passed %d/%d tests' % (ok, ok + bad))
 
 for part in parts:
     if part == "all":
