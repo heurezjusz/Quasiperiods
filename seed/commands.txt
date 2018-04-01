@@ -1,0 +1,12 @@
+parent
+children
+id
+nodes = size
+root
+rb,lb
+select_leaf(i)
+sibling = next_child (or root if v is last)
+size = #leaves
+node_depth
+inv_id for leaves
+is_leaf

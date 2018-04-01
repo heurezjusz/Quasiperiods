@@ -8,6 +8,6 @@
 
 void combine(std::string& word, std::vector<std::vector<Pack>>& packs, std::vector<Pack>& res);
 
-void combine(sdsl::cst_sada<>& suf_tree, std::vector<std::vector<Pack>>& packs, std::vector<Pack>& res);
+void combine(sdsl::cst_sada<>& suf_tree, std::vector<int>& depths, std::vector<std::vector<Pack>>& packs, std::vector<Pack>& res);
 
 #endif

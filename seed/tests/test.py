@@ -3,26 +3,31 @@
 import os
 import sys
 
-PARTS = ["combine", "maxgap", "all"]
+PARTS = ["combine", "maxgap", "depths", "all"]
+PARTS.sort()
 
 CHECKER = {
     "combine": "combine_chk.e",
-    "maxgap": None
+    "maxgap": None,
+    "depths": None,
 }
 
 CORRECT = {
     "combine": "combine_slow.e",
-    "maxgap": "maxgap_slow.e"
+    "maxgap": "maxgap_slow.e",
+    "depths": "depths_slow.e",
 }
 
 BIN = {
     "combine": ["combine_str.e", "combine_tree.e"],
-    "maxgap": ["maxgap.e"]
+    "maxgap": ["maxgap.e"],
+    "depths": ["depths.e"]
 }
 
 TEST_DIR = {
     "combine": "combine",
-    "maxgap": "maxgap"
+    "maxgap": "maxgap",
+    "depths": "depths"
 }
 
 
@@ -67,7 +72,7 @@ def test_part(part):
         corr = CORRECT[part]
         chk = CHECKER[part]
 
-        for fname in os.listdir(tst):
+        for fname in sorted(os.listdir(tst)):
             if not fname.endswith('.in'):
                 continue
             path = os.path.join(tst, fname)

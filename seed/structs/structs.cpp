@@ -16,11 +16,6 @@ void MaxGap::init(int n, int x) {
         int pos = x;
         if(L != 0)
             pos /= L;
-        if(pos > INV_EPS) {
-            printf("N:%d x:%d L:%d\n", N, x, L);
-            printf("pos: %d\n", pos);
-        }
-        assert(pos <= INV_EPS);
         mn[pos] = mx[pos] = x;
         max_gap_ = max(x + 1, N - x);
     }
