@@ -3,31 +3,27 @@
 import os
 import sys
 
-PARTS = ["combine", "maxgap", "depths", "all"]
+PARTS = ["combine", "maxgap", "all"]
 PARTS.sort()
 
 CHECKER = {
     "combine": "combine_chk.e",
     "maxgap": None,
-    "depths": None,
 }
 
 CORRECT = {
     "combine": "combine_slow.e",
     "maxgap": "maxgap_slow.e",
-    "depths": "depths_slow.e",
 }
 
 BIN = {
-    "combine": ["combine_str.e", "combine_tree.e"],
+    "combine": ["combine_str.e"],
     "maxgap": ["maxgap.e"],
-    "depths": ["depths.e"]
 }
 
 TEST_DIR = {
     "combine": "combine",
     "maxgap": "maxgap",
-    "depths": "depths"
 }
 
 
