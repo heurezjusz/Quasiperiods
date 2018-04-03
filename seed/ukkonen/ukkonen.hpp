@@ -35,8 +35,8 @@ struct Tree {
     // helpers
     void _add_node(int i);
     void _split_edge(int i);
-    void _align();
-    void _step_back();
+    void _align(int i);
+    void _step_back(int i);
     void _dfs(int v);
     void _connect_sl(int id);
 };

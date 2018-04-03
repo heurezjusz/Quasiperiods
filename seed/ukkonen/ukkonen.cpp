@@ -45,7 +45,7 @@ void Tree::get_word(int id, vector<int>& res) {
         it++;
     int a = it->second.a, b = it->second.b;
     if(b == -1)
-        b = word.size() - 1;
+        b = N - 1;
     for(int i = a; i <= b; i++)
         res.push_back(word[i]);
 }
@@ -99,50 +99,45 @@ void Tree::_split_edge(int i) {
 }
 
 
-void Tree::_align() {
+void Tree::_align(int i) {
     // move active node if active_len > active_edge.len()
+
     while(active_len && active_edge->second.b != NONE && active_edge->second.len() <= active_len) {
         active_node = active_edge->second.node;
         active_len -= active_edge->second.len();
-        active_edge = nodes[active_node].edges.find(word[active_edge->second.b + 1]);
+        active_edge = nodes[active_node].edges.find(word[i - active_len]);
     }
-//     if(active_len == 0)
-//         _connect_sl(active_node);
 }
 
-void Tree::_step_back() {
+void Tree::_step_back(int i) {
     if(active_node == ROOT) {
         if(!active_len)
             return;
         active_len--;
         if(active_len)
             active_edge = nodes[ROOT].edges.find(word[active_edge->second.a + 1]);
-        _align();
+        _align(i);
         return;
     }
 
-    // !We don't have all necessary sl!
-    if(nodes[active_node].sl == NONE) {
+    if(nodes[active_node].sl == NONE)
         active_node = ROOT;
-    }
     else
         active_node = nodes[active_node].sl;
     active_edge = nodes[active_node].edges.find(word[active_edge->second.a]);
-    _align();
+    _align(i);
 }
 
 void Tree::_add_node(int i) {
     last_creted = NONE;
     remainder++;
-    
+
     while(remainder > 0) {
         if(!active_len) {
             active_edge = nodes[active_node].edges.find(word[i]);
             if(active_edge != nodes[active_node].edges.end()) {
                 active_len++;
-                _connect_sl(active_node);
-                _align();
-
+                _align(i);
                 break;
             }
             else {
@@ -150,17 +145,20 @@ void Tree::_add_node(int i) {
                 nodes.emplace_back(active_node);
                 nodes[active_node].edges[word[i]] = Edge{id_leaf, i};
                 remainder--;
-                _step_back();
+                _step_back(i);
             }
-        } else {
+        }
+        else {
             if(word[i] == word[active_edge->second.a + active_len]) {
                 active_len++;
-                _align();
+                _align(i);
                 break;
             }
             else {
                 _split_edge(i);
-                _step_back();
+                _step_back(i);
+                if(!active_len)
+                    _connect_sl(active_node);
                 remainder--;
             }
         }
@@ -194,15 +192,8 @@ void Tree::create(vector<int>& word_) {
     word = word_;
     N = word.size();
     
-    for(int i = 0; i < (int)word.size(); ++i) {
+    for(int i = 0; i < (int)word.size(); ++i)
         _add_node(i);
-        
-//         print();
-//         printf("active_node:%d\n", active_node);
-//         printf("active_len:%d\n", active_len);
-//         if(active_len)
-//             printf("active_edge:%c\n", 'a' + word[active_edge->second.a]);
-    }
 
     nodes[ROOT].depth = 0;
     _lcp = NONE;
