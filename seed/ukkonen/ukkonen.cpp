@@ -1,6 +1,10 @@
 #include "ukkonen.hpp"
 using namespace std;
 
+namespace {
+    const int ROOT = 0;
+};
+
 Edge::Edge(int target, int a, int b)
 : a(a), b(b), node(target) {}
 
@@ -8,22 +12,55 @@ int Edge::len() const {
     return b - a + 1;
 }
 
-Node::Node(int parent) : parent(parent) {}
+// ==== Node ====
+Node::Node(int parent)
+: parent(parent), sl(NONE) {}
 
 bool Node::is_leaf() {
     return edges.empty();
 }
 
+
+// ==== Tree ====
 Tree::Tree() {
     nodes.emplace_back(NONE);
-    root_ = 0;
 }
 
 Node& Tree::root() {
-   return nodes[root_];
+   return nodes[ROOT];
 }
 
+Node& Tree::node(int id) {
+    return nodes[id];
+};
 
+void Tree::get_word(int id, vector<int>& res) {
+    if(id == ROOT)
+        return;
+
+    Node& node = nodes[id];
+    get_word(node.parent, res);
+    auto it = nodes[node.parent].edges.begin();
+    while(it->second.node != id)
+        it++;
+    int a = it->second.a, b = it->second.b;
+    if(b == -1)
+        b = word.size() - 1;
+    for(int i = a; i <= b; i++)
+        res.push_back(word[i]);
+}
+
+void Tree::print() {
+    int id = 0;
+    for(Node& n: nodes) {
+        printf("%d (%d): ", id, n.parent);
+        vector<int> w;
+        get_word(id, w);
+        for(int a: w) printf("%c", 'a' + a);
+        puts("");
+        id++;
+    }
+}
 
 // ==== create ====
 namespace {
@@ -31,12 +68,12 @@ namespace {
     int active_node, active_len, last_creted;
     map<int, Edge>::iterator active_edge;
 
-    int remainder;
+    int remainder, _lcp;
 
     vector<int> word;
 }
 
-void Tree::split_edge(int i) {
+void Tree::_split_edge(int i) {
     int id_mid = nodes.size();
     nodes.emplace_back(active_node);
     int id_leaf = nodes.size();
@@ -44,9 +81,10 @@ void Tree::split_edge(int i) {
 
     Node& mid = nodes[id_mid];
     Edge& e = active_edge->second;
-    
+
+    nodes[e.node].parent = id_mid;
     mid.edges[word[i]] = Edge{id_leaf, i};
-    mid.edges[word[e.a + active_len]] = Edge{e.node, e.a + active_len};
+    mid.edges[word[e.a + active_len]] = Edge{e.node, e.a + active_len, e.b};
 
     e.b = e.a + active_len - 1;
     e.node = id_mid;
@@ -56,17 +94,103 @@ void Tree::split_edge(int i) {
     last_creted = id_mid;
 }
 
-void Tree::add_node(int i) {
-    last_creted = NONE;
+
+void Tree::_align() {
+    // move active node if active_len > active_edge.len()
+    while(active_len && active_edge->second.b != NONE && active_edge->second.len() <= active_len) {
+        active_node = active_edge->second.node;
+        active_len -= active_edge->second.len();
+        active_edge = nodes[active_node].edges.find(word[active_edge->second.b + 1]);
+    }
 }
 
+void Tree::_step_back() {
+    if(active_node == ROOT) {
+        if(!active_len)
+            return;
+        active_len--;
+        if(active_len)
+            active_edge = nodes[ROOT].edges.find(word[active_edge->second.a + 1]);
+        _align();
+        return;
+    }
+
+    // !We don't have all necessary sl!
+    if(nodes[active_node].sl == NONE) {
+        active_node = ROOT;
+    }
+    else
+        active_node = nodes[active_node].sl;
+    active_edge = nodes[active_node].edges.find(word[active_edge->second.a]);
+    _align();
+}
+
+void Tree::_add_node(int i) {
+    last_creted = NONE;
+    remainder++;
+    
+    while(remainder > 0) {
+        if(!active_len) {
+            active_edge = nodes[active_node].edges.find(word[i]);
+            if(active_edge != nodes[active_node].edges.end()) {
+                active_len++;
+                _align();
+                break;
+            }
+            else {
+                int id_leaf = nodes.size();
+                nodes.emplace_back(active_node);
+                nodes[active_node].edges[word[i]] = Edge{id_leaf, i};
+                remainder--;
+                _step_back();
+            }
+        } else {
+            if(word[i] == word[active_edge->second.a + active_len]) {
+                active_len++;
+                _align();
+                break;
+            }
+            else {
+                _split_edge(i);
+                _step_back();
+                remainder--;
+            }
+        }
+    }
+}
+
+
+void Tree::_dfs(int v) {
+    Node& node = nodes[v];
+    if(node.is_leaf()) {
+        if(_lcp != NONE)
+            lcp.push_back(_lcp);
+        _lcp = node.depth;
+        sa.push_back(N - node.depth);
+    }
+
+    for(auto &it: node.edges) {
+        Edge& e = it.second;
+        if(e.b == NONE)
+            e.b = N - 1;
+        _lcp = min(_lcp, node.depth);
+        nodes[e.node].depth = node.depth + e.len();
+        _dfs(e.node);
+    }
+}
+
+
 void Tree::create(vector<int>& word_) {
-    active_node = root_;
+    active_node = ROOT;
     active_len = 0;
-    word.swap(word_);
+    word = word_;
+    N = word.size();
     
     for(int i = 0; i < (int)word.size(); ++i)
-        add_node(i);
+        _add_node(i);
 
-    word.swap(word_);
+    nodes[ROOT].depth = 0;
+    _lcp = NONE;
+    _dfs(ROOT);
+    lcp.push_back(0);
 }

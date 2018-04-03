@@ -3,12 +3,11 @@
 w = raw_input()
 w += '$'
 N = len(w)
-
 sa = []
 
 words = set()
 for i in range(N):
-    for j in range(i + 1,N):
+    for j in range(i + 1, N + 1):
         words.add(w[i:j])
     sa.append((w[i:], i))
 

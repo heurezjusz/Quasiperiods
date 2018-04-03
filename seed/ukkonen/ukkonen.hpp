@@ -19,7 +19,7 @@ struct Node {
 };
 
 struct Tree {
-    int root_;
+    int N;
     std::vector<int> word;
     std::vector<Node> nodes;
     std::vector<int> sa;
@@ -27,11 +27,18 @@ struct Tree {
 
     Tree();
     Node& root();
+    Node& node(int id);
     void create(std::vector<int>& word);
+    void get_word(int node, std::vector<int>& res);
+    void print();
 
     // helpers
-    void add_node(int i);
-    void split_edge(int i);
+    void _add_node(int i);
+    void _split_edge(int i);
+    void _align();
+    void _step_back();
+    void _dfs(int v);
+    void _connect_sl(int id);
 };
 
 #endif
