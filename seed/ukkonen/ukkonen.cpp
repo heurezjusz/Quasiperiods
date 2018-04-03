@@ -69,8 +69,6 @@ namespace {
     map<int, Edge>::iterator active_edge;
 
     int remainder, _lcp;
-
-    vector<int> word;
 }
 
 void Tree::_connect_sl(int id) {
@@ -105,7 +103,8 @@ void Tree::_align(int i) {
     while(active_len && active_edge->second.b != NONE && active_edge->second.len() <= active_len) {
         active_node = active_edge->second.node;
         active_len -= active_edge->second.len();
-        active_edge = nodes[active_node].edges.find(word[i - active_len]);
+        if(active_len)
+            active_edge = nodes[active_node].edges.find(word[i - active_len]);
     }
 }
 
@@ -114,9 +113,10 @@ void Tree::_step_back(int i) {
         if(!active_len)
             return;
         active_len--;
-        if(active_len)
+        if(active_len) {
             active_edge = nodes[ROOT].edges.find(word[active_edge->second.a + 1]);
-        _align(i);
+            _align(i);
+        }
         return;
     }
 
@@ -124,7 +124,9 @@ void Tree::_step_back(int i) {
         active_node = ROOT;
     else
         active_node = nodes[active_node].sl;
-    active_edge = nodes[active_node].edges.find(word[active_edge->second.a]);
+    if(active_len) {
+        active_edge = nodes[active_node].edges.find(word[active_edge->second.a]);
+    }
     _align(i);
 }
 
