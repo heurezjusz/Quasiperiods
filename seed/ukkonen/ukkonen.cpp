@@ -53,7 +53,7 @@ void Tree::get_word(int id, vector<int>& res) {
 void Tree::print() {
     int id = 0;
     for(Node& n: nodes) {
-        printf("%d (%d): ", id, n.parent);
+        printf("%d (%d)<%d>: ", id, n.parent, n.sl);
         vector<int> w;
         get_word(id, w);
         for(int a: w) printf("%c", 'a' + a);
@@ -73,6 +73,12 @@ namespace {
     vector<int> word;
 }
 
+void Tree::_connect_sl(int id) {
+    if(last_creted != NONE)
+        nodes[last_creted].sl = id;
+    last_creted = id;
+}
+
 void Tree::_split_edge(int i) {
     int id_mid = nodes.size();
     nodes.emplace_back(active_node);
@@ -89,9 +95,7 @@ void Tree::_split_edge(int i) {
     e.b = e.a + active_len - 1;
     e.node = id_mid;
 
-    if(last_creted != NONE)
-        nodes[last_creted].sl = id_mid;
-    last_creted = id_mid;
+    _connect_sl(id_mid);
 }
 
 
@@ -102,6 +106,8 @@ void Tree::_align() {
         active_len -= active_edge->second.len();
         active_edge = nodes[active_node].edges.find(word[active_edge->second.b + 1]);
     }
+//     if(active_len == 0)
+//         _connect_sl(active_node);
 }
 
 void Tree::_step_back() {
@@ -134,7 +140,9 @@ void Tree::_add_node(int i) {
             active_edge = nodes[active_node].edges.find(word[i]);
             if(active_edge != nodes[active_node].edges.end()) {
                 active_len++;
+                _connect_sl(active_node);
                 _align();
+
                 break;
             }
             else {
@@ -186,8 +194,15 @@ void Tree::create(vector<int>& word_) {
     word = word_;
     N = word.size();
     
-    for(int i = 0; i < (int)word.size(); ++i)
+    for(int i = 0; i < (int)word.size(); ++i) {
         _add_node(i);
+        
+//         print();
+//         printf("active_node:%d\n", active_node);
+//         printf("active_len:%d\n", active_len);
+//         if(active_len)
+//             printf("active_edge:%c\n", 'a' + word[active_edge->second.a]);
+    }
 
     nodes[ROOT].depth = 0;
     _lcp = NONE;
