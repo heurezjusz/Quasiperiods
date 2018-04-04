@@ -4,6 +4,7 @@
 #include <map>
 
 const int NONE = -1;
+const int ROOT = 0;
 
 struct Edge {
     int a, b, node;
@@ -24,6 +25,7 @@ struct Tree {
     std::vector<Node> nodes;
     std::vector<int> sa;
     std::vector<int> lcp;
+    std::vector<int> suf_map;
 
     Tree();
     Node& root();

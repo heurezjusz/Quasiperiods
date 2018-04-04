@@ -1,10 +1,6 @@
 #include "ukkonen.hpp"
 using namespace std;
 
-namespace {
-    const int ROOT = 0;
-};
-
 Edge::Edge(int target, int a, int b)
 : a(a), b(b), node(target) {}
 
@@ -175,6 +171,7 @@ void Tree::_dfs(int v) {
             lcp.push_back(_lcp);
         _lcp = node.depth;
         sa.push_back(N - node.depth);
+        suf_map[sa.back()] = v;
     }
 
     for(auto &it: node.edges) {
@@ -199,6 +196,7 @@ void Tree::create(vector<int>& word_) {
 
     nodes[ROOT].depth = 0;
     _lcp = NONE;
+    suf_map.resize(N);
     _dfs(ROOT);
     lcp.push_back(0);
 }

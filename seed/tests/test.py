@@ -19,7 +19,7 @@ CORRECT = {
 }
 
 BIN = {
-    "combine": ["combine_str.e"],
+    "combine": ["combine.e"],
     "maxgap": ["maxgap.e"],
     "ukkonen": ["ukkonen.e"],
 }

@@ -2,24 +2,18 @@ include ../makefile.inc
 
 # target: combine
 
-combine: combine_str.e combine_slow.e combine_chk.e
+combine: combine.e combine_slow.e combine_chk.e
 
-COMBINE_O = ../combine/combine.o
+COMBINE_DEP = ../combine/combine.o ../ukkonen/ukkonen.o
 
 combine_slow.o: combine_slow.cpp ../combine/combine.hpp
 	g++ combine_slow.cpp $(CXXFLAGS) -c -o $@
 
-combine_str.o: combine_str.cpp ../combine/combine.hpp
-	g++ combine_str.cpp $(CXXFLAGS) -c -o $@
+combine.o: combine.cpp ../combine/combine.hpp
+	g++ combine.cpp $(CXXFLAGS) -c -o $@
 
-combine_str.e: combine_str.o $(COMBINE_O)
-	g++ combine_str.o $(COMBINE_O) -o $@ $(LFLAGS)
-
-# combine_tree.o: combine_tree.cpp ../combine/combine.hpp
-# 	g++ combine_tree.cpp $(CXXFLAGS) -c -o $@
-
-combine_tree.e: combine_tree.o $(COMBINE_O)
-	g++ combine_tree.o $(COMBINE_O) -o $@ $(LFLAGS)
+combine.e: combine.o $(COMBINE_DEP)
+	g++ combine.o $(COMBINE_DEP) -o $@ $(LFLAGS)
 
 
 # target: maxgap

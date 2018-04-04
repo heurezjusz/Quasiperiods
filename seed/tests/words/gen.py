@@ -33,6 +33,7 @@ for word, fname in [
     (cycle_word(1, 13) + random_word(13), 'mix3.in'),
     (cycle_word(33, 10) + random_word(130), 'mix4.in'),
     (cycle_word(4, 100) + random_word(299), 'mix5.in'),
+    (debug(5000), 'debug1.in'),
  ]:
     with open(fname, 'w') as f:
         f.write(word + '\n')

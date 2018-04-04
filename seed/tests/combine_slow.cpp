@@ -2,8 +2,11 @@
 #include <set>
 #include <cassert>
 #include <algorithm>
-#include "../combine/combine.hpp"
+#include "../structs/structs.hpp"
 using namespace std;
+
+void combine(string& word, vector<vector<Pack>>& packs, vector<Pack>& res);
+
 
 int main() {
     string w; int n;

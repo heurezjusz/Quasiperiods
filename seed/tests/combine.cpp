@@ -1,12 +1,19 @@
 #include <iostream>
-#include <set>
+#include <vector>
 #include "../combine/combine.hpp"
 using namespace std;
 
 
+
 int main() {
+    Tree st;
     string w; int n;
     cin >> w;
+    vector<int> word;
+    for(char c: w) word.push_back(c - 'a');
+    word.push_back(-1);
+    st.create(word);
+
     cin >> n;
     vector<vector<Pack>> inp;
 
@@ -22,9 +29,8 @@ int main() {
 
     vector<Pack> res;
 
-    combine(w, inp, res);
+    combine(st, inp, res);
     cout << res.size() << "\n";
     for(auto p: res)
         cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
 }
-
