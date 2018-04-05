@@ -11,14 +11,25 @@ string cut(string &word, int a, int b) {
     return res;
 }
 
-void get_distinct(set<string>& s, string &word, const char* fname) {
+int get_distinct(set<string>& s, string &word, const char* fname, int req_n = -32) {
     ifstream fin;
     fin.open(fname);
     int N;
     fin >> N;
 
+    if(req_n != -32 && N != req_n) {
+        cout << "WRONG\n";
+        cout << "represantations of different size " << N << " vs " << req_n << "\n";
+        exit(1);
+    }
+
     for(int I, j1, j2, i = 0; i < N; ++i) {
         fin >> I >> j1 >> j2;
+        if(!(I <= j1 && j1 <= j2)) {
+            cout << "WRONG\n";
+            cout << "File " << fname << ": Incorrect representation [" << I << ", " << j1 << ", " << j1 << "]\n";
+            exit(1);    
+        }
         for(int j = j1; j <= j2; ++j) {
             string str = cut(word, I, j);
             if(s.find(str) != s.end()) {
@@ -30,6 +41,7 @@ void get_distinct(set<string>& s, string &word, const char* fname) {
         }
     }
     fin.close();
+    return N;
 }
 
 int main(int argc, char* argv[]) {

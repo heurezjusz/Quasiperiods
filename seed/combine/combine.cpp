@@ -50,7 +50,8 @@ int find(int x) {
 
 void dfs_events(int id) {
     Node& node = st->nodes[id];
-    event[node.depth].emplace_back(conn, id);
+    if(id != ROOT)
+        event[st->nodes[node.parent].depth].emplace_back(conn, id);
     FU[id] = id;
     for(auto const& it: node.edges)
         dfs_events(it.second.node);
@@ -66,12 +67,12 @@ void add_diff(Event const& e) {
 }
 
 void open(int v, int j) {
-    opened[v] = j + 1;
+    opened[v] = j + I[v];
 }
 
 void close(int v, int j) {
     // j = j1 - 1
-    result.emplace_back(I[v] - 1, j + 1, opened[v] - 1);
+    result.emplace_back(I[v] - 1, I[v] + j, opened[v] - 1);
     opened[v] = 0;
 }
 
@@ -83,7 +84,7 @@ void dfs_exec(int v) {
         sum[v] += sum[child];
         if(opened[child]) {
             if(opened[v])
-                close(child, node.depth);
+                close(child, node.depth - 1);
             else {
                 I[v] = I[child];
                 opened[v] = opened[child];
@@ -93,17 +94,17 @@ void dfs_exec(int v) {
             I[v] = I[child];
     }
 
-    int last_j = -1;
-    while(!diffs[v].empty()) {
-        last_j = diffs[v].back().j;
-        sum[v] += diffs[v].back().diff;
-        diffs[v].pop_back();
-        if(!diffs[v].empty() && diffs[v].back().j == last_j)
+    if(sum[v] == M && !opened[v] && (diffs[v].empty() || diffs[v][0].j != node.depth - 1))
+        open(v, node.depth - 1);
+
+    for(int i = 0; i < (int) diffs[v].size(); ++i) {
+        sum[v] += diffs[v][i].diff;
+        if(i + 1 < (int) diffs[v].size() && diffs[v][i].j == diffs[v][i + 1].j)
             continue;
         if(sum[v] == M && !opened[v])
-            open(v, last_j);
+            open(v, diffs[v][i].j);
         if(sum[v] < M && opened[v])
-            close(v, last_j);
+            close(v, diffs[v][i].j);
     }
 }
 
@@ -125,31 +126,14 @@ void combine(Tree& _st, vector<vector<Pack>>& packs, vector<Pack>& res) {
     wn = _st.word.size();
     event.resize(wn + 10);
 
-    _st.print();
     st = &_st;
+
     dfs_events(ROOT);
-
-
-
     for(int i = 0; i < M; ++i) {
         for(Pack const& p: packs[i]) {
-            event[p.j2].emplace_back(change, _st.suf_map[p.i], p.j2, 1);
-            if(p.j1)
-                event[p.j1 - 1].emplace_back(change, _st.suf_map[p.i], p.j1 - 1, -1);
-        }
-    }
-
-    // printing events
-    for(int i = 0; i <= wn; ++i) {
-        if(event[i].size()) {
-            printf("events %d:\n", i);
-            for(Event const& e: event[i]) {
-                if(e.type == conn)
-                    printf("- connect %d\n", e.i);
-                else {
-                    printf("- change suff: %d, j: %d, diff: %d\n", e.i, e.j, e.diff);
-                }
-            }
+            event[p.j2 - p.i].emplace_back(change, _st.suf_map[p.i], p.j2 - p.i, 1);
+            if(p.j1 - p.i)
+                event[p.j1 - p.i - 1].emplace_back(change, _st.suf_map[p.i], p.j1 - p.i - 1, -1);
         }
     }
 
@@ -165,10 +149,8 @@ void combine(Tree& _st, vector<vector<Pack>>& packs, vector<Pack>& res) {
             I[_st.suf_map[i]] = i + 1;
     }
 
-
     dfs_exec(ROOT);
     if(opened[ROOT])
         close(ROOT, -1);
     res.swap(result);
-    puts("NOT IMPLEMENTED");
 }
