@@ -45,6 +45,20 @@ ukkonen.o: ukkonen.cpp
 ukkonen.e: ukkonen.o ../ukkonen/ukkonen.hpp ../ukkonen/ukkonen.cpp ukkonen_o
 	g++ ukkonen.o ../ukkonen/ukkonen.o -o $@ $(LFLAGS)
 
+
+ukkonen_perf: ukkonen_perf.e ukkonen_perf_slow.e
+
+ukkonen_perf.o: ukkonen_perf.cpp
+	g++ ukkonen_perf.cpp $(CXXFLAGS) -c -o $@
+ukkonen_perf.e: ukkonen_perf.o ../ukkonen/ukkonen.hpp ../ukkonen/ukkonen.cpp ukkonen_o
+	g++ ukkonen_perf.o ../ukkonen/ukkonen.o -o $@ $(LFLAGS)
+
+ukkonen_perf_slow.o: ukkonen_perf_slow.cpp
+	g++ ukkonen_perf_slow.cpp $(CXXFLAGS) -c -o $@
+ukkonen_perf_slow.e: ukkonen_perf_slow.o ../ukkonen/ukkonen.hpp ../ukkonen/ukkonen.cpp ukkonen_o
+	g++ ukkonen_perf_slow.o ../ukkonen/ukkonen.o -o $@ $(LFLAGS)
+
+
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)
 
@@ -52,4 +66,4 @@ clean:
 	rm -f *.o
 	rm -f *.e
 
-.PHONY: clean combine maxgap structs ukkonen
+.PHONY: clean combine maxgap structs ukkonen ukkonen_perf

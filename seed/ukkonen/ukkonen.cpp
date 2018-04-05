@@ -46,16 +46,26 @@ void Tree::get_word(int id, vector<int>& res) {
         res.push_back(word[i]);
 }
 
-void Tree::print() {
-    int id = 0;
-    for(Node& n: nodes) {
-        printf("%d (%d)<%d>: ", id, n.parent, n.sl);
-        vector<int> w;
-        get_word(id, w);
-        for(int a: w) printf("%c", 'a' + a);
-        puts("");
-        id++;
+namespace {
+    void spaces(int n) {
+        for(int i = 0; i < n; ++i) printf(" ");
     }
+        
+}
+void Tree::_print_node(int v) {
+    printf("-%d:\n", v);
+    for(auto const& it: nodes[v].edges) {
+        Edge const& e = it.second;
+        spaces(nodes[v].depth + 1);
+        int b = e.b == -1 ? N - 1 : e.b;
+        for(int i = e.a; i <= b; ++i)
+            printf("%c", word[i] == -1 ? '$' : 'a' + word[i]);
+        _print_node(e.node);
+    }
+}
+
+void Tree::print() {
+    _print_node(ROOT);
 }
 
 // ==== create ====

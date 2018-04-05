@@ -3,32 +3,38 @@
 import os
 import sys
 
-PARTS = ["combine", "maxgap", "all", "ukkonen"]
+PARTS = ["combine", "maxgap", "all", "ukkonen", "ukkonen_perf"]
 PARTS.sort()
 
 CHECKER = {
     "combine": "combine_chk.e",
     "maxgap": None,
     "ukkonen": None,
+    "ukkonen_perf": None,
 }
 
 CORRECT = {
     "combine": "combine_slow.e",
     "maxgap": "maxgap_slow.e",
     "ukkonen": "ukkonen_slow.py",
+    "ukkonen_perf": "ukkonen_perf_slow.e",
 }
 
 BIN = {
     "combine": ["combine.e"],
     "maxgap": ["maxgap.e"],
     "ukkonen": ["ukkonen.e"],
+    "ukkonen_perf": ["ukkonen_perf.e"],
 }
 
 TEST_DIR = {
     "combine": "combine",
     "maxgap": "maxgap",
     "ukkonen": "words",
+    "ukkonen_perf": "bigwords",
 }
+
+GENINPUT = ["bigwords"]
 
 
 if len(sys.argv) != 2:
@@ -57,8 +63,10 @@ def safe_exec(command):
         print "Something went wrong :("
         sys.exit(1)
 
+cnt_ok, cnt_all = 0, 0
+
 def test_part(part):
-    global CHECKER, CORRECT, BIN, TEST_DIR
+    global CHECKER, CORRECT, BIN, TEST_DIR, cnt_ok, cnt_all
 
     print '=' * 10, part, '=' * 10
     print_info("building " + part)
@@ -77,6 +85,11 @@ def test_part(part):
                 continue
             path = os.path.join(tst, fname)
             print fname, '\t',
+            
+            if tst in GENINPUT:
+                safe_exec("python ./%s/gen.py < %s > data.in" % (tst, path))
+                path = 'data.in'
+
             safe_exec("./%s < %s > %s" % (corr, path, "out_corr"))
             safe_exec("./%s < %s > %s" % (sol, path, "out_sol"))
             
@@ -92,7 +105,12 @@ def test_part(part):
                 print_good("OK")
                 ok += 1
             safe_exec('rm out_corr out_sol')
+            if tst in GENINPUT:
+                safe_exec('rm data.in')
+            
     print_info('passed %d/%d tests' % (ok, ok + bad))
+    cnt_ok += ok
+    cnt_all += ok + bad
 
 for part in parts:
     if part == "all":
@@ -101,3 +119,9 @@ for part in parts:
                 test_part(p)
     else:
         test_part(part)
+
+if cnt_ok < cnt_all:
+    print_bad('Some errors occured')
+    print_info('passed %d/%d tests' % (cnt_ok, cnt_all))
+else:
+    print_good('\033[1mOK! All tests passed!\033[0m')

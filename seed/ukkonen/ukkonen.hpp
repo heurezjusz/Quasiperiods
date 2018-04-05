@@ -41,6 +41,7 @@ struct Tree {
     void _step_back(int i);
     void _dfs(int v);
     void _connect_sl(int id);
+    void _print_node(int v);
 };
 
 #endif

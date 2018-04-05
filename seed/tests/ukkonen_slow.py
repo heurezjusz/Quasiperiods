@@ -20,7 +20,7 @@ def lcp_(a, b):
     return i - 1
 
 sa.sort()
-# number if words
+# number of words
 print len(words)
 # number of words of some len
 print ' '.join(str(len(x)) for x in wlens)
