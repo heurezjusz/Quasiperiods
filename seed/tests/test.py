@@ -85,14 +85,14 @@ def test_part(part):
                 continue
             path = os.path.join(tst, fname)
             print fname, '\t',
-            
+
             if tst in GENINPUT:
                 safe_exec("python ./%s/gen.py < %s > data.in" % (tst, path))
                 path = 'data.in'
 
             safe_exec("./%s < %s > %s" % (corr, path, "out_corr"))
             safe_exec("./%s < %s > %s" % (sol, path, "out_sol"))
-            
+
             if chk is None:
                 res = os.system('diff out_corr out_sol > /dev/null')
             else:
@@ -107,7 +107,7 @@ def test_part(part):
             safe_exec('rm out_corr out_sol')
             if tst in GENINPUT:
                 safe_exec('rm data.in')
-            
+
     print_info('passed %d/%d tests' % (ok, ok + bad))
     cnt_ok += ok
     cnt_all += ok + bad
