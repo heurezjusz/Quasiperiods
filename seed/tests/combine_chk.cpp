@@ -28,7 +28,7 @@ int get_distinct(set<string>& s, string &word, const char* fname, int req_n = -3
         if(!(I <= j1 && j1 <= j2)) {
             cout << "WRONG\n";
             cout << "File " << fname << ": Incorrect representation [" << I << ", " << j1 << ", " << j1 << "]\n";
-            exit(1);    
+            exit(1);
         }
         for(int j = j1; j <= j2; ++j) {
             string str = cut(word, I, j);

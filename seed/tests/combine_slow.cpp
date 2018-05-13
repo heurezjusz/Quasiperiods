@@ -2,7 +2,7 @@
 #include <set>
 #include <cassert>
 #include <algorithm>
-#include "../structs/structs.hpp"
+#include "../structs.hpp"
 using namespace std;
 
 void combine(string& word, vector<vector<Pack>>& packs, vector<Pack>& res);

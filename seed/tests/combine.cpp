@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "../combine/combine.hpp"
+#include "../combine.hpp"
 using namespace std;
 
 

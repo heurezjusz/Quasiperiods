@@ -1,4 +1,4 @@
-#include "../ukkonen/ukkonen.hpp"
+#include "../ukkonen.hpp"
 #include <iostream>
 using namespace std;
 

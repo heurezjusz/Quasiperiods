@@ -1,5 +1,5 @@
 #include <cstdio>
-#include "../structs/structs.hpp"
+#include "../structs.hpp"
 
 int main() {
     int n, l, x0;

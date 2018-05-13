@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <algorithm>
-#include "../structs/structs.hpp"
+#include "../structs.hpp"
 using namespace std;
 const int maxN = 1e6 + 10;
 

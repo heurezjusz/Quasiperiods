@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/python
 
 s = raw_input()
 
@@ -25,6 +25,7 @@ for i in xrange(len(s)):
         if is_lcand(i, j, s):
             add(res, i, j)
 
+print len(res)
 
 for i, j1, j2 in res:
     print i, j1, j2

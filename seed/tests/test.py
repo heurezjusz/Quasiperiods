@@ -3,11 +3,12 @@
 import os
 import sys
 
-PARTS = ["combine", "maxgap", "all", "ukkonen", "ukkonen_perf"]
+PARTS = ["combine", "maxgap", "all", "ukkonen", "ukkonen_perf", "lcands"]
 PARTS.sort()
 
 CHECKER = {
     "combine": "combine_chk.e",
+    "lcands": "combine_chk.e",
     "maxgap": None,
     "ukkonen": None,
     "ukkonen_perf": None,
@@ -18,6 +19,7 @@ CORRECT = {
     "maxgap": "maxgap_slow.e",
     "ukkonen": "ukkonen_slow.py",
     "ukkonen_perf": "ukkonen_perf_slow.e",
+    "lcands": "lcands_slow.py"
 }
 
 BIN = {
@@ -25,6 +27,7 @@ BIN = {
     "maxgap": ["maxgap.e"],
     "ukkonen": ["ukkonen.e"],
     "ukkonen_perf": ["ukkonen_perf.e"],
+    "lcands": ["lcands.e"]
 }
 
 TEST_DIR = {
@@ -32,6 +35,7 @@ TEST_DIR = {
     "maxgap": "maxgap",
     "ukkonen": "words",
     "ukkonen_perf": "bigwords",
+    "lcands": "words"
 }
 
 GENINPUT = ["bigwords"]
