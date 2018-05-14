@@ -1,11 +1,17 @@
 include makefile.inc
 
-tree.o: tree.cpp
-	g++ tree.cpp $(CXXFLAGS) -c -o tree.o
+all: tree.e
 
-%.e: %.o
+OBJS = tree.o combine.o structs.o ukkonen.o lcands.o
+
+HEADERS = tree.hpp combine.hpp structs.hpp ukkonen.hpp lcands.hpp
+
+%.o: %.cpp %.hpp
+	g++ $< $(CXXFLAGS) -c -o $@
+
+tree.e: $(OBJS) $(HEADERS)
 	g++ $^ -o $@ $(LFLAGS)
 
 clean:
-	make clean -C combine
-	make clean -C tests
+	rm -r $(OBJS) tree.e
+

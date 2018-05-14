@@ -1,5 +1,4 @@
 #include "combine.hpp"
-#include "../ukkonen/ukkonen.hpp"
 #include <vector>
 using namespace std;
 

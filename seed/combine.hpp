@@ -1,8 +1,8 @@
 #ifndef __COMBINE
 #define __COMBINE
 
-#include "../structs/structs.hpp"
-#include "../ukkonen/ukkonen.hpp"
+#include "structs.hpp"
+#include "ukkonen.hpp"
 #include <vector>
 #include <string>
 
