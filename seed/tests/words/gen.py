@@ -15,6 +15,11 @@ def debug(n):
 def many_seeds(n):
     return 'a' * n + 'b' + 'a' * n + 'b' + 'a' * n
 
+def recursive(n):
+    if n <= 0:
+        return 'a'
+    return recursive(n - 1) + chr(ord('a') + n) + recursive(n - 1)
+
 for word, fname in [
     ('abc', 'hand1.in'),
     ('wololo', 'hand2.in'),
@@ -40,6 +45,11 @@ for word, fname in [
     (many_seeds(5), 'ababa5.in'),
     (many_seeds(20), 'ababa20.in'),
     (many_seeds(100), 'ababa100.in'),
+    (recursive(1), 'rec1.in'),
+    (recursive(2), 'rec2.in'),
+    (recursive(3), 'rec3.in'),
+    (recursive(4), 'rec4.in'),
+    (recursive(5), 'rec5.in'),
     (debug(500), 'debug1.in'),
  ]:
     with open(fname, 'w') as f:
