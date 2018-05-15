@@ -2,7 +2,7 @@
 #include <algorithm>
 using namespace std;
 
-const int maxN = 1e5 + 10;
+const int maxN = 3e5 + 10;
 const int mod = 1100000017;
 const int p = 313;
 using ll = long long;

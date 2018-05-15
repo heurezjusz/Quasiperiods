@@ -59,7 +59,7 @@ ukkonen_perf_slow.e: ukkonen_perf_slow.o ../ukkonen.hpp ../ukkonen.cpp ukkonen_o
 	g++ ukkonen_perf_slow.o ../ukkonen.o -o $@ $(LFLAGS)
 
 
-lcands: lcands.e
+lcands: lcands.e combine_chk.e
 
 lcands.e: ../lcands.cpp ../lcands.hpp lcands.o
 	make -C .. lcands.o

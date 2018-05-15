@@ -24,6 +24,15 @@ def points_test(n):
         i += 100
     return ''.join(tst)
 
+def recursive_test(n):
+    if n <= 0:
+        return 'a'
+    return recursive_test(n - 1) + chr(ord('a') + n) + recursive_test(n - 1)
+
+def ababa_test(n):
+    return ('a' * n + 'b') * 2 + 'a' * n
+
+
 if x == "random":
     print random_test(n)
 
@@ -32,3 +41,9 @@ if x == "cycle":
 
 if x == "points":
     print points_test(n)
+
+if x == "recursive":
+    print recursive_test(n)
+
+if x == "ababa":
+    print ababa_test(n)
