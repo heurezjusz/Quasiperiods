@@ -8,16 +8,16 @@ struct Pack {
 };
 
 
-// minimum length of "long seed" is ceil(N / INV_EPS);
-const int INV_EPS = 6;
+#include <vector>
 
+// recognizes MaxGaps >= N / parts
 struct MaxGap {
-    int N, L;
-    int mn[INV_EPS + 1];
-    int mx[INV_EPS + 1];
+    int N, L, parts;
+    std::vector<int> mn;
+    std::vector<int> mx;
     int max_gap_;
 
-    void init(int n, int x = -1);
+    void init(int n, int parts, int x = -1);
     int  max_gap();
     void join(MaxGap const& o);
 };

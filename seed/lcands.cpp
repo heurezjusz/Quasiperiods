@@ -38,5 +38,7 @@ void lcands(vector<int> const& word, vector<Pack> &res) {
 
         stack.emplace_back(pref[j], j);
     }
+
+    // 0...n-1 + word has '#' at the end
     res.emplace_back(0, 0, n - 2);
 }

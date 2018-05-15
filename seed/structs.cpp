@@ -1,14 +1,23 @@
 #include "structs.hpp"
 #include <algorithm>
-#include <cassert>
+#include <cstdio>
 using namespace std;
 
 /* ========================= MaxGap ========================= */
-void MaxGap::init(int n, int x) {
+void MaxGap::init(int n, int _parts, int x)
+{
     N = n;
-    L = N / INV_EPS + 1;
+    if(n >= _parts) {
+        L = N / _parts; // minimum detected len
+        parts = (N + L - 1) / L;
+    } else {
+        parts = N;
+        L = 1;
+    }
+    mn.resize(parts);
+    mx.resize(parts);
 
-    for(int i = 0; i < INV_EPS; ++i)
+    for(int i = 0; i < parts; ++i)
         mn[i] = mx[i] = -1;
     max_gap_ = N + 1;
 
@@ -17,7 +26,6 @@ void MaxGap::init(int n, int x) {
         if(L != 0)
             pos /= L;
         mn[pos] = mx[pos] = x;
-        max_gap_ = max(x + 1, N - x);
     }
 }
 
@@ -27,7 +35,7 @@ int MaxGap::max_gap() {
 
 void MaxGap::join(MaxGap const& o) {
     int last = max_gap_ = -1;
-    for(int i = 0; i < INV_EPS; ++i) {
+    for(int i = 0; i < parts; ++i) {
         if(o.mn[i] != -1) {
             if(mn[i] == -1) {
                 mn[i] = o.mn[i];
@@ -39,9 +47,12 @@ void MaxGap::join(MaxGap const& o) {
         }
 
         if(mn[i] != -1) {
+            if(last == -1)
+                last = mn[i];
             max_gap_ = max(max_gap_, max(mn[i] - last, mx[i] - mn[i]));
             last = mx[i];
         }
     }
-    max_gap_ = max(max_gap_, N - last);
+    if(max_gap_ == -1)
+        max_gap_ = N + 1;
 }

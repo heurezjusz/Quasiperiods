@@ -11,16 +11,16 @@ int max_gap() {
     int res = -1, last = -1;
     for(int i = 0; i <= n; ++i)
         if(B[i]) {
-            res = max(i - last, res);
+            if(last != -1)
+                res = max(i - last, res);
             last = i;
         }
-    return res;
+    return res == -1 ? n + 1 : res;
 }
 
 int main() {
     scanf("%d", &n);
-    L = 1 + n / INV_EPS;
-    B[n] = 1;
+    L = n / 6;
     for(int x, i = 0; i < n; ++i) {
         scanf("%d", &x);
         B[x] = 1;
