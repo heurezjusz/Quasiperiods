@@ -33,6 +33,7 @@ struct Tree {
     void create(std::vector<int>& word);
     void get_word(int node, std::vector<int>& res);
     void print();
+    void print_word_chr(int v);
 
     // helpers
     void _add_node(int i);
@@ -43,5 +44,6 @@ struct Tree {
     void _connect_sl(int id);
     void _print_node(int v);
 };
+
 
 #endif

@@ -50,8 +50,8 @@ namespace {
     void spaces(int n) {
         for(int i = 0; i < n; ++i) printf(" ");
     }
-        
 }
+
 void Tree::_print_node(int v) {
     printf("-%d:\n", v);
     for(auto const& it: nodes[v].edges) {
@@ -209,4 +209,15 @@ void Tree::create(vector<int>& word_) {
     suf_map.resize(N);
     _dfs(ROOT);
     lcp.push_back(0);
+}
+
+
+
+
+void Tree::print_word_chr(int v) {
+    vector<int> w;
+    get_word(v, w);
+    for(int i: w)
+        printf("%c", i == -1 ? '$' : i + 'a');
+    puts("");
 }

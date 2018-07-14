@@ -16,6 +16,6 @@ int main() {
     vector<Pack> res;
     right_and_mid_cands(st, res);
     for(Pack p: res) {
-        cout << p.i << " " << p.j2 << " " << p.j2 << "\n";
+        cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
     }
 }
