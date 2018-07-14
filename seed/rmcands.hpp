@@ -2,6 +2,8 @@
 #define __RMCANDS
 
 #include "ukkonen.hpp"
-void right_and_mid_cands();
+#include "structs.hpp"
+
+void right_and_mid_cands(Tree& tree, std::vector<Pack>& cands);
 
 #endif
