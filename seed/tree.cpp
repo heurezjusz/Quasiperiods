@@ -14,7 +14,7 @@ int main() {
     st.create(word);
 
     vector<Pack> res;
-    right_and_mid_cands(st, res);
+    right_and_mid_cands(st, res, 6);
     for(Pack p: res) {
         cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
     }

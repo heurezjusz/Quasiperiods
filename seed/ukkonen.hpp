@@ -20,7 +20,7 @@ struct Node {
 };
 
 struct Tree {
-    int N;
+    int N; // word size
     std::vector<int> word;
     std::vector<Node> nodes;
     std::vector<int> sa;
@@ -30,6 +30,7 @@ struct Tree {
     Tree();
     Node& root();
     Node& node(int id);
+    int size();
     void create(std::vector<int>& word);
     void get_word(int node, std::vector<int>& res);
     void print();

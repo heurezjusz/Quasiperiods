@@ -22,13 +22,16 @@ Tree::Tree() {
     nodes.emplace_back(NONE);
 }
 
+
 Node& Tree::root() {
    return nodes[ROOT];
 }
 
+
 Node& Tree::node(int id) {
     return nodes[id];
 };
+
 
 void Tree::get_word(int id, vector<int>& res) {
     if(id == ROOT)
@@ -46,11 +49,13 @@ void Tree::get_word(int id, vector<int>& res) {
         res.push_back(word[i]);
 }
 
+
 namespace {
     void spaces(int n) {
         for(int i = 0; i < n; ++i) printf(" ");
     }
 }
+
 
 void Tree::_print_node(int v) {
     printf("-%d:\n", v);
@@ -64,8 +69,23 @@ void Tree::_print_node(int v) {
     }
 }
 
+
 void Tree::print() {
     _print_node(ROOT);
+}
+
+
+int Tree::size() {
+    return nodes.size();
+}
+
+
+void Tree::print_word_chr(int v) {
+    vector<int> w;
+    get_word(v, w);
+    for(int i: w)
+        printf("%c", i == -1 ? '$' : i + 'a');
+    puts("");
 }
 
 // ==== create ====
@@ -209,15 +229,4 @@ void Tree::create(vector<int>& word_) {
     suf_map.resize(N);
     _dfs(ROOT);
     lcp.push_back(0);
-}
-
-
-
-
-void Tree::print_word_chr(int v) {
-    vector<int> w;
-    get_word(v, w);
-    for(int i: w)
-        printf("%c", i == -1 ? '$' : i + 'a');
-    puts("");
 }
