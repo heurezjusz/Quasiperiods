@@ -15,7 +15,7 @@ int max_gap() {
                 res = max(i - last, res);
             last = i;
         }
-    return res == -1 ? n + 1 : res;
+    return res == -1 ? 0 : res;
 }
 
 int main() {

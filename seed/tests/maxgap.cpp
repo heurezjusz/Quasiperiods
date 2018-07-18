@@ -9,7 +9,8 @@ int main() {
 
     scanf("%d\n", &x0);
     mg.init(n, 6, x0);
-    printf("%d\n", mg.max_gap());
+    if(mg.max_gap() < l) puts(".");
+    else printf("%d\n", mg.max_gap());
 
     for(int x, i = 1; i < n; ++i) {
         scanf("%d", &x);

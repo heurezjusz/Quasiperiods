@@ -19,7 +19,7 @@ void MaxGap::init(int n, int _parts, int x)
 
     for(int i = 0; i < parts; ++i)
         mn[i] = mx[i] = -1;
-    max_gap_ = N + 1;
+    max_gap_ = 0;
 
     if(x != -1) {
         int pos = x;
