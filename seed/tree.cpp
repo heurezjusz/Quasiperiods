@@ -15,6 +15,8 @@ int main() {
 
     vector<Pack> res;
     right_and_mid_cands(st, res, 6);
+    
+    printf("%d\n", (int) res.size());
     for(Pack p: res) {
         cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
     }
