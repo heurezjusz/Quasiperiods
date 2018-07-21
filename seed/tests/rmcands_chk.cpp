@@ -33,7 +33,7 @@ int get_distinct(set<string>& s, string &word, const char* fname, int req_n = -3
             cout << "File " << fname << ": Incorrect representation [" << I << ", " << j1 << ", " << j1 << "]\n";
             exit(1);
         }
-        for(int j = max(j + min_len - 1, j1); j <= j2; ++j) {
+        for(int j = max(I + min_len - 1, j1); j <= j2; ++j) {
             string str = cut(word, I, j);
             if(s.find(str) != s.end()) {
                 cout << "WRONG\n";

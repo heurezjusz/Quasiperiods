@@ -18,28 +18,28 @@ CHECKER = {
 CORRECT = {
     "combine": "combine_slow.e",
     "maxgap": "maxgap_slow.e",
+    "lcands": "lcands_slow.py",
+    "rmcands": "rmcands_slow.py",
     "ukkonen": "ukkonen_slow.py",
     "ukkonen_perf": "ukkonen_perf_slow.e",
-    "lcands": "lcands_slow.py",
-    "rmcands": "rmcands_slow.py"
 }
 
 BIN = {
     "combine": ["combine.e"],
     "maxgap": ["maxgap.e"],
+    "lcands": ["lcands.e"],
+    "rmcands": ["rmcands.e"],
     "ukkonen": ["ukkonen.e"],
     "ukkonen_perf": ["ukkonen_perf.e"],
-    "lcands": ["lcands.e"],
-    "rmcands": ["rmcands.e"]
 }
 
 TEST_DIR = {
     "combine": "combine",
+    "lcands": "words",
     "maxgap": "maxgap",
+    "rmcands": "words",
     "ukkonen": "words",
     "ukkonen_perf": "bigwords",
-    "lcands": "words",
-    "rmcands": "words"
 }
 
 GENINPUT = ["bigwords"]
