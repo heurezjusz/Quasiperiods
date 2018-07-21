@@ -59,11 +59,22 @@ ukkonen_perf_slow.e: ukkonen_perf_slow.o ../ukkonen.hpp ../ukkonen.cpp ukkonen_o
 	g++ ukkonen_perf_slow.o ../ukkonen.o -o $@ $(LFLAGS)
 
 
+# target: lcands
 lcands: lcands.e combine_chk.e
 
 lcands.e: ../lcands.cpp ../lcands.hpp lcands.o
 	make -C .. lcands.o
 	g++ lcands.o ../lcands.o -o $@ $(LFLAGS)
+
+# target: rmcands
+rmcands: rmcands.e rmcands_chk.e
+
+rmcands_chk.e: rmcands_chk.cpp
+	g++ rmcands_chk.cpp -o $@ $(CXXFLAGS)
+
+rmcands.e: ../rmcands.o ../structs.o ../ukkonen.o rmcands.o
+	make -C .. rmcands.o
+	g++ rmcands.o ../rmcands.o ../ukkonen.o ../structs.o -o $@ $(LFLAGS)
 
 
 
@@ -74,4 +85,4 @@ clean:
 	rm -f *.o
 	rm -f *.e
 
-.PHONY: clean combine maxgap structs ukkonen ukkonen_perf lcands
+.PHONY: clean combine maxgap structs ukkonen ukkonen_perf lcands rmcands
