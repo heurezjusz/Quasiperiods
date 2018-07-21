@@ -19,7 +19,8 @@ def is_rcand(i, j, s):
     if n - l > j:
         return False
 
-    for b in xrange(i + 1, j + 2):
+    min_end_len = n - j - 1
+    for b in xrange(i + min_end_len, j + 2):
         if s.endswith(s[i:b]):
             break
     else:
