@@ -35,6 +35,23 @@ maxgap.e: maxgap.o $(MAXGAP_O) $(STRUCT_DEP)
 	g++ maxgap.o $(MAXGAP_O) -o $@ $(LFLAGS)
 
 
+# target: maxgap_nlogn
+maxgap_nlogn: maxgap_nlogn_slow.e maxgap_nlogn.e
+
+../nlogn/maxgap.o: ../nlogn/maxgap.cpp ../nlogn/maxgap.h
+	make -C ../nlogn
+
+maxgap_nlogn_slow.e: maxgap_nlogn_slow.cpp
+	g++ maxgap_nlogn_slow.cpp $(CXXFLAGS) -o $@
+
+maxgap_nlogn.o: maxgap_nlogn.cpp
+	g++ maxgap_nlogn.cpp -std=c++11 -W -Wall -c -o $@
+
+maxgap_nlogn.e: maxgap_nlogn.o ../nlogn/maxgap.o ../nlogn/maxgap.cpp ../nlogn/maxgap.h
+	g++ maxgap_nlogn.o ../nlogn/maxgap.o -o $@ $(LFLAGS)
+
+.PHONY: maxgap_nlogn
+
 # target: ukkonen
 ukkonen: ukkonen.e
 ukkonen_o:
