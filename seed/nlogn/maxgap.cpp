@@ -10,29 +10,37 @@ using namespace maxgap;
 typedef long long LL;
 
 
-node::node(int no, int x) : no(no), maxgap(-1), left(nullptr), right(nullptr) {
+node::node(int no, int x) : no(no), maxgap(0), left(nullptr), right(nullptr) {
     if (x == -1) {
         mn = INT_MAX;
         mx = INT_MIN;
     } else
         mn = mx = x;
-};
+}
+
 
 void node::update() {
+    //printf("update");
     if (left == nullptr) {
-        maxgap = -1;
+        maxgap = 0;
+      //  printf(" 0 mn=%d\n", mn);
         return;
     }
     mn = min(mn, left->mn);
     mx = max(mx, right->mx);
-    maxgap = max(max(left->maxgap, right->maxgap), mx - mn);
+    maxgap = max(max(left->maxgap, right->maxgap), right->mn - left->mx);
+    /*printf("([%d %d] %d) + ([%d %d] %d) -> ([%d %d] %d)\n",
+            left->mn, left->mx, left->maxgap,
+            right->mn, right->mx, right->maxgap,
+            mn, mx, maxgap);
+            */
 }
 
-int sz;
 
 inline int clz(int x) {
     return x ? __builtin_clz(x) : 0;
 }
+
 
 inline int lca(node* x, node* y) {
     int n = x->no;
@@ -44,6 +52,7 @@ inline int lca(node* x, node* y) {
         return n;
     return n >>= (__builtin_clz(1) + 1 - __builtin_clz(n ^ m));
 }
+
 
 inline bool leftOf(node* x, node* y) {
     int n = x->no;
@@ -98,6 +107,7 @@ node* merge(node* A, node* B) {
 
 void MaxGap::init(int n, int, int x) {
     base = 1 << (32 - clz(n - 1));
+    //printf("INIT %d (base:%d, no:%d)\n", x, base, base + x);
     if (x != -1) {
         root = new node(base + x, x);
     } else
@@ -106,5 +116,11 @@ void MaxGap::init(int n, int, int x) {
 
 
 void MaxGap::join(MaxGap const& other) {
-root = merge(root, other.root);
+    //printf(">> MERGE <<\n");
+    root = merge(root, other.root);
+}
+
+
+int MaxGap::max_gap() {
+    return root->maxgap;
 }
