@@ -1,4 +1,4 @@
-#ifndef __HEADER
+#ifndef STRUCTS_H
 
 struct Pack {
     // represents a pack of words s[i..j1] to s[i..j2]
@@ -22,5 +22,5 @@ struct MaxGap {
     void join(MaxGap const& o);
 };
 
-#define __HEADER
+#define STRUCTS_H
 #endif

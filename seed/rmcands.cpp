@@ -1,6 +1,6 @@
 #include "rmcands.hpp"
 using namespace std;
-
+// TODO: separate rmcands & lens
 
 namespace {
     vector<int> pref;
@@ -8,10 +8,11 @@ namespace {
     vector<Pack>* res;
     Tree* tree;
     int n, divisor;
+    vector<int> lens;
 };
 
 
-int dfs(int v) {
+int dfs(int v, int tree_dep) {
     int pos = -1;
     Node& node = tree->nodes[v];
     // where is v in the word
@@ -19,11 +20,15 @@ int dfs(int v) {
         node.depth -= 1;
         pos = n - 1 - node.depth;
         occ[v].init(n, divisor, pos);
+        lens[tree_dep]--;
+        lens[tree_dep + 1] ++;
     }
     else {
         occ[v].init(n, divisor);
         for(auto i: node.edges) {
-            pos = max(pos, dfs(i.second.node));
+            lens[tree_dep + 1]++;
+            lens[tree_dep + i.second.len() + 1]--;
+            pos = max(pos, dfs(i.second.node, tree_dep + i.second.len()));
             occ[v].join(occ[i.second.node]);
         }
     }
@@ -44,11 +49,13 @@ int dfs(int v) {
     return pos;
 }
 
-void right_and_mid_cands(Tree& st, std::vector<Pack>& cands, int _divisor) {
+// lens expect to be zeroed
+void right_and_mid_cands_and_word_lens(Tree& st, vector<Pack>& cands, vector<int>& lens_, int _divisor) {
     // word has additional '-1' at the end
     res = &cands;
     tree = &st;
     divisor = _divisor;
+    lens.swap(lens_);
 
     vector<int>& word = st.word;
     n = word.size();
@@ -64,5 +71,8 @@ void right_and_mid_cands(Tree& st, std::vector<Pack>& cands, int _divisor) {
         pref[i] = w + (word[i] == word[n - 2 - w]);
     }
  
-    dfs(ROOT);
+    dfs(ROOT, 0);
+    for(int i = 1; i < n; ++i)
+        lens[i] += lens[i - 1];
+    lens.swap(lens_);
 }
