@@ -1,5 +1,5 @@
 #include <cstdio>
-#include "../structs.hpp"
+#include "../nlogn/maxgap.h"
 
 int main() {
     int n, x0;

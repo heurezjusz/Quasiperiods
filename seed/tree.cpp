@@ -18,7 +18,7 @@ int main() {
     st.create(word);
 
     vector<Pack> res;
-    right_and_mid_cands_and_word_lens(st, res, lens, 6);
+//    right_and_mid_cands_and_word_lens(st, res, lens, 6);
     
     printf("%d\n", (int) res.size());
     for(Pack p: res) {

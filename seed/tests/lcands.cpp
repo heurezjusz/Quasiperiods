@@ -1,4 +1,4 @@
-#include "../lcands.hpp"
+#include "../lcands.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -9,11 +9,11 @@ vector<Pack> res;
 
 int main() {
     cin >> s;
-    for(char c: s)
+    for (char c : s)
         w.push_back(c);
     w.push_back(-1);
     lcands(w, res);
     printf("%d\n", res.size());
-    for(Pack const& p: res)
+    for (Pack const& p : res)
         cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
 }

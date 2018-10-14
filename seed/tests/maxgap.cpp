@@ -1,5 +1,5 @@
+#include "../lin/maxgap.h"
 #include <cstdio>
-#include "../structs.hpp"
 
 int main() {
     int n, l, x0;
@@ -9,14 +9,18 @@ int main() {
 
     scanf("%d\n", &x0);
     mg.init(n, 6, x0);
-    if(mg.max_gap() < l) puts(".");
-    else printf("%d\n", mg.max_gap());
+    if (mg.max_gap() < l)
+        puts(".");
+    else
+        printf("%d\n", mg.max_gap());
 
-    for(int x, i = 1; i < n; ++i) {
+    for (int x, i = 1; i < n; ++i) {
         scanf("%d", &x);
         m_.init(n, 6, x);
         mg.join(m_);
-        if(mg.max_gap() < l) puts(".");
-        else printf("%d\n", mg.max_gap());
+        if (mg.max_gap() < l)
+            puts(".");
+        else
+            printf("%d\n", mg.max_gap());
     }
 }
