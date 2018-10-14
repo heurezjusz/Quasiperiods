@@ -1,4 +1,4 @@
-#include "structs.hpp"
+#include "maxgap.h"
 #include <algorithm>
 #include <cstdio>
 using namespace std;

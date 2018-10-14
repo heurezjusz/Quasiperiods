@@ -1,4 +1,4 @@
-#include "rmcands.hpp"
+#include "rmcands.h"
 #include <iostream>
 using namespace std;
 
