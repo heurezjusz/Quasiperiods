@@ -31,7 +31,15 @@ int main() {
 
     combine(tree, candidates, result);
 
-    printf("%d\n", (int)result.size());
+
+    cout << "lcands\n";
+    for (auto const& p : candidates[0])
+        cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
+    cout << "rcands\n";
+    for (auto const& p : candidates[1])
+        cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
+
+    cout << result.size() << "\n";
     for (auto const& p : result)
         cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
 }

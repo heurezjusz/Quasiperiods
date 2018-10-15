@@ -6,6 +6,10 @@ OBJS = combine.o pack.o maxgap.o ukkonen.o lcands.o rmcands.o
 
 HEADERS = tree.h combine.h pack.h maxgap.h ukkonen.h lcands.h rmcands.h
 
+
+rmcands.o: rmcands.cpp rmcands.h maxgap.o
+	g++ $< $(CXXFLAGS) -c -o $@
+
 %.o: %.cpp %.h
 	g++ $< $(CXXFLAGS) -c -o $@
 

@@ -155,4 +155,4 @@ if cnt_ok < cnt_all:
     print_bad('Some errors occured')
     print_info('passed %d/%d tests' % (cnt_ok, cnt_all))
 else:
-    print_good('\033[1mOK! All tests passed!\033[0m')
+    print_good('\033[1mOK! All tests passed! (%d)\033[0m' % cnt_all)

@@ -1,4 +1,13 @@
 include ../makefile.inc
+CXXFLAGS += -g
+
+
+lin:
+	make -C .. lin
+
+nlogn:
+	make -C .. nlogn
+
 
 # target: combine
 
@@ -83,22 +92,26 @@ lcands.e: ../lcands.cpp ../lcands.h lcands.o
 	make -C .. lcands.o
 	g++ lcands.o ../lcands.o -o $@ $(LFLAGS)
 
+
 # target: rmcands
 rmcands: rmcands.e rmcands_chk.e
 
 rmcands_chk.e: rmcands_chk.cpp
 	g++ rmcands_chk.cpp -o $@ $(CXXFLAGS)
 
-rmcands.e: ../rmcands.o ../lin/maxgap.o ../pack.o ../ukkonen.o rmcands.o
-	make -C .. rmcands.o
+rmcands.e: lin ../rmcands.o ../lin/maxgap.o ../pack.o ../ukkonen.o rmcands.o
+	make -C .. rmcands.o -B
 	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../lin/maxgap.o -o $@ $(LFLAGS)
+
+.PHONY: rmcands
 
 
 # target: rmcands_nlogn
 rmcands_nlogn: rmcands_nlogn.e rmcands_chk.e
 
-rmcands_nlogn.e: ../rmcands.o ../nlogn/maxgap.o ../pack.o ../ukkonen.o rmcands.o
-	make -C .. rmcands.o
+rmcands_nlogn.e: nlogn ../rmcands.o ../nlogn/maxgap.o ../pack.o ../ukkonen.o rmcands.o
+	make -C .. nlogn
+	make -C .. rmcands.o -B
 	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../nlogn/maxgap.o -o $@ $(LFLAGS)
 
 .PHONY: rmcands_nlogn
