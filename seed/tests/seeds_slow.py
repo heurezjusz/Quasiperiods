@@ -51,5 +51,6 @@ for i in xrange(0, n):
             res_s.add(s[i:j])
             res_add(i, j)
 
+print len(res)
 for (i, j1, j2) in res:
     print i, j1, j2

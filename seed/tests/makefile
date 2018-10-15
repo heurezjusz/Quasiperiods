@@ -111,4 +111,11 @@ clean:
 	rm -f *.e
 	make clean -C ..
 
+
+#target: seeds nlogn
+seeds_nlogn:
+	make -C .. nlogn
+	make -C ..
+	cp ../main.e seeds_nlogn.e
+
 .PHONY: clean combine maxgap structs ukkonen ukkonen_perf lcands rmcands

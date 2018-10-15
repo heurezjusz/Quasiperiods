@@ -1,22 +1,37 @@
-#include <cstdio>
-#include "maxgap.h"
+#include <iostream>
+#include "combine.h"
+#include "lcands.h"
+#include "pack.h"
+#include "rmcands.h"
+#include "ukkonen.h"
+using namespace std;
+
+
+int n;
+vector<int> word;
+vector<vector<Pack>> candidates;
+vector<Pack> result;
 
 int main() {
-    MaxGap mg, _mg;
-    mg.init(8, -1, 0);
-    _mg.init(8, -1, 3);
-    mg.join(_mg);
-    printf("%d correct: 3\n", mg.max_gap());
+    string raw_word;
+    cin >> raw_word;
+    n = raw_word.size();
 
-    _mg.init(8, -1, 7);
-    mg.join(_mg);
-    printf("%d correct: 4\n", mg.max_gap());
+    word.resize(n + 1);
+    candidates.resize(2);
 
-    _mg.init(8, -1, 5);
-    mg.join(_mg);
-    printf("%d correct: 3\n", mg.max_gap());
-    
-    _mg.init(8, -1, 1);
-    mg.join(_mg);
-    printf("%d correct: 2\n", mg.max_gap());
+    for (int i = 0; i < n; ++i)
+        word[i] = raw_word[i];
+    word[n] = -1;
+
+    Tree tree;
+    tree.create(word);
+    lcands(word, candidates[0]);
+    right_and_mid_cands(tree, candidates[1], -1);
+
+    combine(tree, candidates, result);
+
+    printf("%d\n", (int)result.size());
+    for (auto const& p : result)
+        cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
 }
