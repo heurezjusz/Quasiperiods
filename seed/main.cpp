@@ -17,7 +17,7 @@ int main() {
     cin >> raw_word;
     n = raw_word.size();
 
-    word.resize(n + 10);
+    word.resize(n + 1);
     candidates.resize(2);
 
     for (int i = 0; i < n; ++i)
@@ -33,5 +33,5 @@ int main() {
 
     printf("%d\n", (int)result.size());
     for (auto const& p : result)
-        cout << p.i << p.j1 << p.j2 << "\n";
+        cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
 }

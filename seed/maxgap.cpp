@@ -20,10 +20,10 @@ node::node(int no, int x) : no(no), maxgap(0), left(nullptr), right(nullptr) {
 
 
 void node::update() {
-    //printf("update");
+    // printf("update");
     if (left == nullptr) {
         maxgap = 0;
-      //  printf(" 0 mn=%d\n", mn);
+        //  printf(" 0 mn=%d\n", mn);
         return;
     }
     mn = min(mn, left->mn);
@@ -68,7 +68,7 @@ node* merge(node* A, node* B) {
     if (A->no == B->no) {
         A->left = merge(A->left, B->left);
         A->right = merge(A->right, B->right);
-    //    delete B;
+        delete B;
         A->update();
         return A;
     } else {
@@ -107,7 +107,7 @@ node* merge(node* A, node* B) {
 
 void MaxGap::init(int n, int, int x) {
     base = 1 << (32 - clz(n - 1));
-    //printf("INIT %d (base:%d, no:%d)\n", x, base, base + x);
+    // printf("INIT %d (base:%d, no:%d)\n", x, base, base + x);
     if (x != -1) {
         root = new node(base + x, x);
     } else
@@ -116,8 +116,12 @@ void MaxGap::init(int n, int, int x) {
 
 
 void MaxGap::join(MaxGap const& other) {
-    //printf(">> MERGE <<\n");
-    root = merge(root, other.root);
+    // printf(">> MERGE <<\n");
+    // printf("me: %p he:%p\n", root, other.root);
+    if (root == nullptr)
+        root = other.root;
+    else
+        root = merge(root, other.root);
 }
 
 

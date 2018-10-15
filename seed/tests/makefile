@@ -74,7 +74,7 @@ ukkonen_perf_slow.o: ukkonen_perf_slow.cpp
 	g++ ukkonen_perf_slow.cpp $(CXXFLAGS) -c -o $@
 ukkonen_perf_slow.e: ukkonen_perf_slow.o ../ukkonen.h ../ukkonen.cpp ukkonen_o
 	g++ ukkonen_perf_slow.o ../ukkonen.o -o $@ $(LFLAGS)
-
+.PHONY: ukkonen
 
 # target: lcands
 lcands: lcands.e combine_chk.e
@@ -89,11 +89,19 @@ rmcands: rmcands.e rmcands_chk.e
 rmcands_chk.e: rmcands_chk.cpp
 	g++ rmcands_chk.cpp -o $@ $(CXXFLAGS)
 
-rmcands.e: ../rmcands.o ../maxgap.o ../pack.o ../ukkonen.o rmcands.o
+rmcands.e: ../rmcands.o ../lin/maxgap.o ../pack.o ../ukkonen.o rmcands.o
 	make -C .. rmcands.o
-	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../maxgap.o -o $@ $(LFLAGS)
+	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../lin/maxgap.o -o $@ $(LFLAGS)
 
 
+# target: rmcands_nlogn
+rmcands_nlogn: rmcands_nlogn.e rmcands_chk.e
+
+rmcands_nlogn.e: ../rmcands.o ../nlogn/maxgap.o ../pack.o ../ukkonen.o rmcands.o
+	make -C .. rmcands.o
+	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../nlogn/maxgap.o -o $@ $(LFLAGS)
+
+.PHONY: rmcands_nlogn
 
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)
@@ -101,5 +109,6 @@ rmcands.e: ../rmcands.o ../maxgap.o ../pack.o ../ukkonen.o rmcands.o
 clean:
 	rm -f *.o
 	rm -f *.e
+	make clean -C ..
 
 .PHONY: clean combine maxgap structs ukkonen ukkonen_perf lcands rmcands

@@ -3,7 +3,8 @@
 import os
 import sys
 
-PARTS = ["combine", "maxgap", "all", "ukkonen", "ukkonen_perf", "lcands", "rmcands", "maxgap_nlogn"]
+PARTS = ["combine", "maxgap", "all", "ukkonen", "ukkonen_perf",
+         "lcands", "rmcands", "maxgap_nlogn", "rmcands_nlogn"]
 PARTS.sort()
 
 CHECKER = {
@@ -12,6 +13,7 @@ CHECKER = {
     "maxgap": None,
     "maxgap_nlogn": None,
     "rmcands": "rmcands_chk.e",
+    "rmcands_nlogn": "rmcands_chk.e",
     "ukkonen": None,
     "ukkonen_perf": None,
 }
@@ -22,6 +24,7 @@ CORRECT = {
     "maxgap_nlogn": "maxgap_nlogn_slow.e",
     "lcands": "lcands_slow.py",
     "rmcands": "rmcands_slow.py",
+    "rmcands_nlogn": "rmcands_slow.py",
     "ukkonen": "ukkonen_slow.py",
     "ukkonen_perf": "ukkonen_perf_slow.e",
 }
@@ -32,6 +35,7 @@ BIN = {
     "maxgap_nlogn": ["maxgap_nlogn.e"],
     "lcands": ["lcands.e"],
     "rmcands": ["rmcands.e"],
+    "rmcands_nlogn": ["rmcands_nlogn.e"],
     "ukkonen": ["ukkonen.e"],
     "ukkonen_perf": ["ukkonen_perf.e"],
 }
@@ -42,6 +46,7 @@ TEST_DIR = {
     "maxgap": "maxgap",
     "maxgap_nlogn": "maxgap",
     "rmcands": "words",
+    "rmcands_nlogn": "words",
     "ukkonen": "words",
     "ukkonen_perf": "bigwords",
 }
@@ -64,10 +69,15 @@ for part in parts:
 
 def print_good(x):
     print '\033[32m' + x + '\033[39m'
+
+
 def print_bad(x):
     print '\033[31m' + x + '\033[39m'
+
+
 def print_info(x):
     print '\033[33m' + x + '\033[39m'
+
 
 def safe_exec(command):
     res = os.system(command)
@@ -75,7 +85,9 @@ def safe_exec(command):
         print "Something went wrong :("
         sys.exit(1)
 
+
 cnt_ok, cnt_all = 0, 0
+
 
 def test_part(part):
     global CHECKER, CORRECT, BIN, TEST_DIR, cnt_ok, cnt_all
@@ -83,7 +95,7 @@ def test_part(part):
     print '=' * 10, part, '=' * 10
     print_info("building " + part)
     safe_exec('make ' + part)
-    
+
     ok, bad = 0, 0
 
     for sol in BIN[part]:
@@ -108,7 +120,8 @@ def test_part(part):
             if chk is None:
                 res = os.system('diff out_corr out_sol > /dev/null')
             else:
-                res = os.system('./%s %s out_corr out_sol > /dev/null' % (chk, path))
+                res = os.system(
+                    './%s %s out_corr out_sol > /dev/null' % (chk, path))
 
             if res != 0:
                 print_bad("WRONG")
@@ -123,6 +136,7 @@ def test_part(part):
     print_info('passed %d/%d tests' % (ok, ok + bad))
     cnt_ok += ok
     cnt_all += ok + bad
+
 
 for part in parts:
     if part == "all":

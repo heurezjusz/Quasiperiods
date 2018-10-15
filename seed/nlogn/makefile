@@ -1,8 +1,8 @@
 include ../makefile.inc
 
-default: main
+default: maxgap.o
 
 clean:
-	rm main *.o -f
+	rm *.o -f
 
 .PHONY: default clean
