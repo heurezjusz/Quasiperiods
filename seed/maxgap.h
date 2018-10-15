@@ -1,17 +1,24 @@
 #ifndef MAXGAP_H
-#include <vector>
+#define MAXGAP_H
 
-// recognizes MaxGaps >= N / parts
+namespace maxgap {
+struct node {
+    int no, maxgap, mn, mx;
+    node *left, *right;
+
+    node(int no, int x = -1);
+
+    void update();
+};
+}
+
 struct MaxGap {
-    int N, L, parts;
-    std::vector<int> mn;
-    std::vector<int> mx;
-    int max_gap_;
+    int base;
+    maxgap::node* root;
 
     void init(int n, int parts, int x = -1);
-    int  max_gap();
+    int max_gap();
     void join(MaxGap const& o);
 };
 
-#define MAXGAP_H
 #endif

@@ -1,16 +1,19 @@
 include makefile.inc
 
-all: tree.e
+all: tree.e main.e
 
-OBJS = tree.o combine.o pack.o maxgap.o ukkonen.o lcands.o rmcands.o
+OBJS = combine.o pack.o maxgap.o ukkonen.o lcands.o rmcands.o
 
 HEADERS = tree.h combine.h pack.h maxgap.h ukkonen.h lcands.h rmcands.h
 
 %.o: %.cpp %.h
 	g++ $< $(CXXFLAGS) -c -o $@
 
-tree.e: $(OBJS) $(HEADERS)
-	g++ $(OBJS) -o $@ $(LFLAGS)
+tree.e: tree.o $(OBJS) $(HEADERS)
+	g++ tree.o $(OBJS) -o $@ $(LFLAGS)
+
+main.e: main.o $(OBJS) $(HEADERS)
+	g++ main.o $(OBJS) -o $@ $(LFLAGS)
 
 clean:
 	rm -r $(OBJS) tree.e
