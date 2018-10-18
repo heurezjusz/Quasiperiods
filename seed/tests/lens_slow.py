@@ -10,6 +10,5 @@ for i in xrange(n):
         sets[j - i].add(s[i:j])
 
 for i in xrange(1, n + 1):
-    print ("%d:%d" % (i, len(sets[i]))),
+    print ("%d:%d" % (i, len(sets[i])))
 
-print ''

@@ -1,6 +1,8 @@
 #include "ukkonen.h"
 using namespace std;
 
+// TODO: remove lcp from tree creation
+
 Edge::Edge(int target, int a, int b) : a(a), b(b), node(target) {}
 
 int Edge::len() const {

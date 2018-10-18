@@ -17,7 +17,7 @@ main.e: main.o $(OBJS) $(HEADERS)
 	g++ main.o $(OBJS) -o $@ $(LFLAGS)
 
 clean:
-	rm -r $(OBJS) tree.e
+	rm -rf $(OBJS) tree.e main.o main.e
 
 nlogn:
 	cp nlogn/maxgap.* nlogn/main.cpp .
