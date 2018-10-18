@@ -8,15 +8,15 @@ PARTS = ["combine", "maxgap", "all", "ukkonen", "ukkonen_perf",
 PARTS.sort()
 
 CHECKER = {
-    "combine": "combine_chk.e",
-    "lcands": "combine_chk.e",
+    "combine": "packs_chk.e",
+    "lcands": "packs_chk.e",
     "maxgap": None,
     "maxgap_nlogn": None,
     "rmcands": "rmcands_chk.e",
     "rmcands_nlogn": "rmcands_chk.e",
     "ukkonen": None,
     "ukkonen_perf": None,
-    "seeds_nlogn": "rmcands_chk.e",
+    "seeds_nlogn": "packs_chk.e",
 }
 
 CORRECT = {

@@ -11,7 +11,7 @@ nlogn:
 
 # target: combine
 
-combine: combine.e combine_slow.e combine_chk.e
+combine: combine.e combine_slow.e packs_chk.e
 
 COMBINE_DEP = ../combine.o ../ukkonen.o
 
@@ -86,7 +86,7 @@ ukkonen_perf_slow.e: ukkonen_perf_slow.o ../ukkonen.h ../ukkonen.cpp ukkonen_o
 .PHONY: ukkonen
 
 # target: lcands
-lcands: lcands.e combine_chk.e
+lcands: lcands.e packs_chk.e
 
 lcands.e: ../lcands.cpp ../lcands.h lcands.o
 	make -C .. lcands.o
@@ -126,7 +126,7 @@ clean:
 
 
 #target: seeds nlogn
-seeds_nlogn:
+seeds_nlogn: packs_chk.e
 	make -C .. nlogn
 	make -C ..
 	cp ../main.e seeds_nlogn.e
