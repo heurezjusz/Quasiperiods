@@ -4,7 +4,7 @@ using namespace std;
 
 Tree st;
 string w;
-vector<int> word;
+vector<int> word, _ign;
 
 int main() {
     cin >> w;
@@ -14,7 +14,7 @@ int main() {
     st.create(word);
 
     vector<Pack> res;
-    right_and_mid_cands(st, res, 6);
+    right_mid_cands_and_subwords_lens(st, 6, res, _ign);
 
     printf("%d\n", (int)res.size());
     for (Pack p : res) {

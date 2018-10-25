@@ -4,12 +4,12 @@ using namespace std;
 
 namespace {
 
-vector<int> pref;
-vector<MaxGap> occ;
-vector<Pack>* res;
-Tree* tree;
-int n, divisor;
-vector<int> lens;
+    vector<int> pref;
+    vector<MaxGap> occ;
+    vector<Pack>* res;
+    vector<int> lens;
+    Tree* tree;
+    int n, divisor;
 };
 
 
@@ -45,8 +45,10 @@ int dfs(int v, int tree_dep) {
     return pos;
 }
 
-// lens expect to be zeroed
-void right_and_mid_cands(Tree& st, vector<Pack>& cands, int _divisor) {
+
+void right_mid_cands_and_subwords_lens(Tree& st, int _divisor,
+                                       vector<Pack>& cands,
+                                       vector<int>& lens_res) {
     // word has additional '-1' at the end
     res = &cands;
     tree = &st;
@@ -55,6 +57,7 @@ void right_and_mid_cands(Tree& st, vector<Pack>& cands, int _divisor) {
     vector<int>& word = st.word;
     n = word.size();
     pref.resize(n);
+    lens.resize(n + 1);
     occ.resize(st.size());
     pref[n - 2] = 0;
 
@@ -67,4 +70,6 @@ void right_and_mid_cands(Tree& st, vector<Pack>& cands, int _divisor) {
     }
 
     dfs(ROOT, 0);
+
+    lens_res.swap(lens);
 }
