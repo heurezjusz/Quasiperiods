@@ -17,7 +17,6 @@ int dfs(int v, int tree_dep) {
     Node& node = tree->nodes[v];
     // where is v in the word
     if (node.is_leaf()) {
-        node.depth -= 1;
         pos = n - 1 - node.depth;
         occ[v].init(n, pos);
     } else {

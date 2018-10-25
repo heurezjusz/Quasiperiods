@@ -3,13 +3,14 @@
 import os
 import sys
 
-PARTS = ["combine", "maxgap", "all", "ukkonen", "ukkonen_perf",
-         "lcands", "rmcands", "maxgap_nlogn", "rmcands_nlogn", "seeds_nlogn"]
-PARTS.sort()
+PARTS = sorted(["combine", "maxgap", "all", "ukkonen", "ukkonen_perf",
+                "lcands", "rmcands", "maxgap_nlogn", "rmcands_nlogn", "seeds_nlogn",
+                "lens"])
 
 CHECKER = {
     "combine": "packs_chk.e",
     "lcands": "packs_chk.e",
+    "lens": None,
     "maxgap": None,
     "maxgap_nlogn": None,
     "rmcands": "rmcands_chk.e",
@@ -24,6 +25,7 @@ CORRECT = {
     "maxgap": "maxgap_slow.e",
     "maxgap_nlogn": "maxgap_nlogn_slow.e",
     "lcands": "lcands_slow.py",
+    "lens": "lens_slow.py",
     "rmcands": "rmcands_slow.py",
     "rmcands_nlogn": "rmcands_slow.py",
     "ukkonen": "ukkonen_slow.py",
@@ -36,6 +38,7 @@ BIN = {
     "maxgap": ["maxgap.e"],
     "maxgap_nlogn": ["maxgap_nlogn.e"],
     "lcands": ["lcands.e"],
+    "lens": ["lens.e"],
     "rmcands": ["rmcands.e"],
     "rmcands_nlogn": ["rmcands_nlogn.e"],
     "ukkonen": ["ukkonen.e"],
@@ -47,6 +50,7 @@ BIN = {
 TEST_DIR = {
     "combine": "combine",
     "lcands": "words",
+    "lens": "words",
     "maxgap": "maxgap",
     "maxgap_nlogn": "maxgap",
     "rmcands": "words",

@@ -27,12 +27,11 @@ int dfs(int v, int tree_dep) {
             occ[v].join(occ[i.second.node]);
         }
     }
-    lens[node.depth] += 1;
-
-    if (v == ROOT)
+    if (v != ROOT) {
+        lens[node.depth]++;
+        lens[tree->nodes[node.parent].depth]--;
+    } else
         return -1;
-    else
-        lens[tree->nodes[node.parent].depth] -= 1;
 
     // cycle size
     int cycle = n - 1 - pos - pref[pos];
@@ -73,5 +72,7 @@ void right_mid_cands_and_subwords_lens(Tree& st, int _divisor,
 
     dfs(ROOT, 0);
 
+    for (int i = n - 2; i >= 0; --i)
+        lens[i] += lens[i + 1];
     lens_res.swap(lens);
 }

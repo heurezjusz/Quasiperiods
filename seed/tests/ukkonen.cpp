@@ -17,8 +17,10 @@ void dfs_count(int v) {
         dfs_count(e.node);
     }
 
-    dp[node.depth]++;
-    dp[st.nodes[node.parent].depth]--;
+    if (v != ROOT) {
+        dp[node.depth]++;
+        dp[st.nodes[node.parent].depth]--;
+    }
     sum -= node.is_leaf();  // erasing subwords containing '$'
 }
 
