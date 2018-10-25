@@ -18,7 +18,6 @@ int dfs(int v, int tree_dep) {
     Node& node = tree->nodes[v];
     // where is v in the word
     if (node.is_leaf()) {
-        node.depth -= 1;
         pos = n - 1 - node.depth;
         occ[v].init(n, divisor, pos);
     } else {
@@ -28,9 +27,12 @@ int dfs(int v, int tree_dep) {
             occ[v].join(occ[i.second.node]);
         }
     }
+    lens[node.depth] += 1;
 
     if (v == ROOT)
         return -1;
+    else
+        lens[tree->nodes[node.parent].depth] -= 1;
 
     // cycle size
     int cycle = n - 1 - pos - pref[pos];
@@ -57,7 +59,7 @@ void right_mid_cands_and_subwords_lens(Tree& st, int _divisor,
     vector<int>& word = st.word;
     n = word.size();
     pref.resize(n);
-    lens.resize(n + 1);
+    lens.resize(n);
     occ.resize(st.size());
     pref[n - 2] = 0;
 

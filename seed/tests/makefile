@@ -104,10 +104,18 @@ rmcands_nlogn.e: make_sup rmcands_nlogn.o
 	g++ rmcands_nlogn.o ../rmcands_nlogn.o ../ukkonen.o ../pack.o ../maxgap_nlogn.o -o $@ $(LFLAGS)
 
 
-#target: seeds nlogn
+#target: seeds_nlogn
 seeds_nlogn: packs_chk.e make_sup
 	cp ../main_nlogn.e seeds_nlogn.e
 .PHONY: seeds_nlogn
+
+
+#target: lens
+lens: lens.e
+.PHONY: lens
+
+lens.e: make_sup lens.o
+	g++ lens.o ../rmcands.o ../maxgap.o ../ukkonen.o ../pack.o -o $@ $(LFLAGS)
 
 
 %.e: %.o

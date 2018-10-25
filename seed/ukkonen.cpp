@@ -51,10 +51,10 @@ void Tree::get_word(int id, vector<int>& res) {
 
 
 namespace {
-void spaces(int n) {
-    for (int i = 0; i < n; ++i)
-        printf(" ");
-}
+    void spaces(int n) {
+        for (int i = 0; i < n; ++i)
+            printf(" ");
+    }
 }
 
 
@@ -92,10 +92,10 @@ void Tree::print_word_chr(int v) {
 // ==== create ====
 namespace {
 
-int active_node, active_len, last_creted;
-map<int, Edge>::iterator active_edge;
+    int active_node, active_len, last_creted;
+    map<int, Edge>::iterator active_edge;
 
-int remainder, _lcp;
+    int remainder, _lcp;
 }
 
 void Tree::_connect_sl(int id) {
@@ -127,8 +127,8 @@ void Tree::_split_edge(int i) {
 void Tree::_align(int i) {
     // move active node if active_len > active_edge.len()
 
-    while (active_len && active_edge->second.b != NONE &&
-           active_edge->second.len() <= active_len) {
+    while (active_len && active_edge->second.b != NONE
+           && active_edge->second.len() <= active_len) {
         active_node = active_edge->second.node;
         active_len -= active_edge->second.len();
         if (active_len)
@@ -203,6 +203,7 @@ void Tree::_dfs(int v) {
         _lcp = node.depth;
         sa.push_back(N - node.depth);
         suf_map[sa.back()] = v;
+        nodes[v].depth -= 1;
     }
 
     for (auto& it : node.edges) {

@@ -8,14 +8,18 @@ vector<int> word;
 
 int sum;
 vector<int> dp;
-void dfs_count(Node& v) {
-    for (auto& it : v.edges) {
+void dfs_count(int v) {
+    Node& node = st.nodes[v];
+
+    for (auto& it : node.edges) {
         Edge& e = it.second;
-        dp[v.depth + 1]++;
-        dp[st.node(e.node).depth + 1]--;
         sum += e.len();
-        dfs_count(st.node(e.node));
+        dfs_count(e.node);
     }
+
+    dp[node.depth]++;
+    dp[st.nodes[node.parent].depth]--;
+    sum -= node.is_leaf();  // erasing subwords containing '$'
 }
 
 void print_word(int id) {
@@ -49,13 +53,14 @@ int main() {
     st.create(word);
 
     dp.resize(word.size() + 10);
-    dfs_count(st.root());
+    dfs_count(ROOT);
     printf("%d\n", sum);
-    printf("0");
-    for (int i = 1; i <= N; ++i) {
-        dp[i] += dp[i - 1];
+
+    for (int i = N - 1; i >= 0; --i)
+        dp[i] += dp[i + 1];
+    printf("%d", dp[0]);
+    for (int i = 1; i <= N; ++i)
         printf(" %d", dp[i]);
-    }
     puts("");
 
     printf("%d", st.sa[0]);

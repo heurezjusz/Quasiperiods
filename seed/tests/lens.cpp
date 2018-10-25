@@ -1,26 +1,22 @@
-#include "../rmcands.hpp"
 #include <iostream>
+#include "../rmcands.h"
 using namespace std;
 
 Tree st;
 string w;
 vector<int> word;
-bector<int> lens;
+vector<int> lens;
 
 int main() {
     cin >> w;
-    for(char c: w)
+    for (char c : w)
         word.push_back(c - 97);
     word.push_back(-1);
     st.create(word);
-    n = word.size();
-    lens.resize(n + 10);
 
-    vector<Pack> res;
-    right_and_mid_cands(st, res, 6);
-    
-    printf("%d\n", (int) res.size());
-    for(Pack p: res) {
-        cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
-    }
+    vector<Pack> _ign;
+    right_mid_cands_and_subwords_lens(st, 6, _ign, lens);
+
+    for (int i = 1; i < (int)word.size(); ++i)
+        printf("%d:%d\n", i, lens[i]);
 }
