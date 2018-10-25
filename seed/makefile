@@ -1,29 +1,26 @@
 include makefile.inc
 
-all: main.e
+all: main.e main_nlogn.e
 
-OBJS = combine.o pack.o maxgap.o ukkonen.o lcands.o rmcands.o
+OBJS = combine.o pack.o ukkonen.o lcands.o
+OBJS_N = maxgap.o rmcands.o $(OBJS)
+OBJS_NLOGN = maxgap_nlogn.o rmcands_nlogn.o $(OBJS)
 
-HEADERS = tree.h combine.h pack.h maxgap.h ukkonen.h lcands.h rmcands.h
+HEADERS = $(wildcard *.h)
 
-
-rmcands.o: rmcands.cpp rmcands.h maxgap.o
-	g++ $< $(CXXFLAGS) -c -o $@
 
 %.o: %.cpp %.h
 	g++ $< $(CXXFLAGS) -c -o $@
 
-main.e: main.o $(OBJS) $(HEADERS)
-	g++ main.o $(OBJS) -o $@ $(LFLAGS)
+main.e: main.o $(OBJS_N) $(HEADERS)
+	g++ main.o $(OBJS_N) -o $@ $(LFLAGS)
+
+main_nlogn.e: main_nlogn.o $(OBJS_NLOGN) $(HEADERS)
+	g++ main_nlogn.o $(OBJS_NLOGN) -o $@ $(LFLAGS)
 
 clean:
-	rm -rf $(OBJS) tree.e main.o main.e
+	rm -rf *.o *.e
 
-nlogn:
-	cp nlogn/maxgap.* nlogn/main.cpp .
 
-lin:
-	cp lin/maxgap.*  .
-
-.PHONY: clean all nlogn lin
+.PHONY: clean all
 

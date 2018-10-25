@@ -1,19 +1,16 @@
 include ../makefile.inc
 CXXFLAGS += -g
+DEP = $(wildcard ../*.cpp ../*.h)
 
-
-lin:
-	make -C .. lin
-
-nlogn:
-	make -C .. nlogn
+make_sup: $(DEP)
+	make -C ..
+.PHONY: make_sup
 
 
 # target: combine
 
 combine: combine.e combine_slow.e packs_chk.e
-
-COMBINE_DEP = ../combine.o ../ukkonen.o
+.PHONY: combine
 
 combine_slow.o: combine_slow.cpp ../combine.h
 	g++ combine_slow.cpp $(CXXFLAGS) -c -o $@
@@ -21,18 +18,13 @@ combine_slow.o: combine_slow.cpp ../combine.h
 combine.o: combine.cpp ../combine.h
 	g++ combine.cpp $(CXXFLAGS) -c -o $@
 
-combine.e: combine.o $(COMBINE_DEP)
-	g++ combine.o $(COMBINE_DEP) -o $@ $(LFLAGS)
+combine.e: combine.o make_sup
+	g++ combine.o ../ukkonen.o ../combine.o -o $@ $(LFLAGS)
 
 
 # target: maxgap
 maxgap: maxgap_slow.e maxgap.e
 .PHONY: maxgap
-
-../lin/maxgap.o:
-	make -C ../lin
-
-MAXGAP_O = ../lin/maxgap.o
 
 maxgap_slow.e: maxgap_slow.cpp ../pack.h
 	g++ maxgap_slow.cpp $(CXXFLAGS) -o $@
@@ -40,15 +32,13 @@ maxgap_slow.e: maxgap_slow.cpp ../pack.h
 maxgap.o: maxgap.cpp
 	g++ maxgap.cpp -std=c++11 -W -Wall -c -o $@
 
-maxgap.e: maxgap.o $(MAXGAP_O) ../pack.o
-	g++ maxgap.o $(MAXGAP_O) ../pack.o -o $@ $(LFLAGS)
+maxgap.e: maxgap.o make_sup
+	g++ maxgap.o ../maxgap.o ../pack.o -o $@ $(LFLAGS)
 
 
 # target: maxgap_nlogn
 maxgap_nlogn: maxgap_nlogn_slow.e maxgap_nlogn.e
-
-../nlogn/maxgap.o: ../nlogn/maxgap.cpp ../nlogn/maxgap.h
-	make -C ../nlogn
+.PHONY: maxgap_nlogn
 
 maxgap_nlogn_slow.e: maxgap_nlogn_slow.cpp
 	g++ maxgap_nlogn_slow.cpp $(CXXFLAGS) -o $@
@@ -56,65 +46,69 @@ maxgap_nlogn_slow.e: maxgap_nlogn_slow.cpp
 maxgap_nlogn.o: maxgap_nlogn.cpp
 	g++ maxgap_nlogn.cpp -std=c++11 -W -Wall -c -o $@
 
-maxgap_nlogn.e: maxgap_nlogn.o ../nlogn/maxgap.o ../nlogn/maxgap.cpp ../nlogn/maxgap.h
-	g++ maxgap_nlogn.o ../nlogn/maxgap.o -o $@ $(LFLAGS)
+maxgap_nlogn.e: maxgap_nlogn.o make_sup
+	g++ maxgap_nlogn.o ../maxgap_nlogn.o -o $@ $(LFLAGS)
 
-.PHONY: maxgap_nlogn
 
 # target: ukkonen
 ukkonen: ukkonen.e
-ukkonen_o:
-	make -C .. ukkonen.o
+.PHONY: ukkonen
 
 ukkonen.o: ukkonen.cpp
 	g++ ukkonen.cpp $(CXXFLAGS) -c -o $@
-ukkonen.e: ukkonen.o ../ukkonen.h ../ukkonen.cpp ukkonen_o
+ukkonen.e: ukkonen.o make_sup
 	g++ ukkonen.o ../ukkonen.o -o $@ $(LFLAGS)
 
 
+# target: ukkonen_perf
 ukkonen_perf: ukkonen_perf.e ukkonen_perf_slow.e
+.PHONY: ukkonen_perf
 
 ukkonen_perf.o: ukkonen_perf.cpp
 	g++ ukkonen_perf.cpp $(CXXFLAGS) -c -o $@
-ukkonen_perf.e: ukkonen_perf.o ../ukkonen.h ../ukkonen.cpp ukkonen_o
+
+ukkonen_perf.e: ukkonen_perf.o make_sup
 	g++ ukkonen_perf.o ../ukkonen.o -o $@ $(LFLAGS)
 
 ukkonen_perf_slow.o: ukkonen_perf_slow.cpp
 	g++ ukkonen_perf_slow.cpp $(CXXFLAGS) -c -o $@
-ukkonen_perf_slow.e: ukkonen_perf_slow.o ../ukkonen.h ../ukkonen.cpp ukkonen_o
+
+ukkonen_perf_slow.e: ukkonen_perf_slow.o make_sup
 	g++ ukkonen_perf_slow.o ../ukkonen.o -o $@ $(LFLAGS)
-.PHONY: ukkonen
+
 
 # target: lcands
 lcands: lcands.e packs_chk.e
+.PHONY: lcands
 
-lcands.e: ../lcands.cpp ../lcands.h lcands.o
-	make -C .. lcands.o
+lcands.e: make_sup lcands.o
 	g++ lcands.o ../lcands.o -o $@ $(LFLAGS)
 
 
 # target: rmcands
 rmcands: rmcands.e rmcands_chk.e
+.PHONY: rmcands
 
 rmcands_chk.e: rmcands_chk.cpp
 	g++ rmcands_chk.cpp -o $@ $(CXXFLAGS)
 
-rmcands.e: lin ../rmcands.o ../lin/maxgap.o ../pack.o ../ukkonen.o rmcands.o
-	make -C .. rmcands.o -B
-	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../lin/maxgap.o -o $@ $(LFLAGS)
-
-.PHONY: rmcands
+rmcands.e: make_sup rmcands.o
+	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../maxgap.o -o $@ $(LFLAGS)
 
 
 # target: rmcands_nlogn
 rmcands_nlogn: rmcands_nlogn.e rmcands_chk.e
-
-rmcands_nlogn.e: nlogn ../rmcands.o ../nlogn/maxgap.o ../pack.o ../ukkonen.o rmcands.o
-	make -C .. nlogn
-	make -C .. rmcands.o -B
-	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../nlogn/maxgap.o -o $@ $(LFLAGS)
-
 .PHONY: rmcands_nlogn
+
+rmcands_nlogn.e: make_sup rmcands.o
+	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../maxgap_nlogn.o -o $@ $(LFLAGS)
+
+
+#target: seeds nlogn
+seeds_nlogn: packs_chk.e make_sup
+	cp ../main_nlogn.e seeds_nlogn.e
+.PHONY: seeds_nlogn
+
 
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)
@@ -123,12 +117,4 @@ clean:
 	rm -f *.o
 	rm -f *.e
 	make clean -C ..
-
-
-#target: seeds nlogn
-seeds_nlogn: packs_chk.e
-	make -C .. nlogn
-	make -C ..
-	cp ../main.e seeds_nlogn.e
-
-.PHONY: clean combine maxgap structs ukkonen ukkonen_perf lcands rmcands
+.PHONY: clean 

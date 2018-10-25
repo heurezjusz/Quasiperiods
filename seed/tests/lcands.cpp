@@ -13,7 +13,7 @@ int main() {
         w.push_back(c);
     w.push_back(-1);
     lcands(w, res);
-    printf("%d\n", res.size());
+    printf("%d\n", (int)res.size());
     for (Pack const& p : res)
         cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
 }
