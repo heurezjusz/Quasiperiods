@@ -1,5 +1,5 @@
+#include "../maxgap_nlogn.h"
 #include <cstdio>
-#include "../nlogn/maxgap.h"
 
 int main() {
     int n, x0;
@@ -7,14 +7,14 @@ int main() {
     MaxGap mg, m_, m__;
 
     scanf("%d\n", &x0);
-    mg.init(n, 6, x0);
+    mg.init(n, x0);
 
     for (int x, i = 1; i < n; ++i) {
         scanf("%d", &x);
         if (i % 3 == 1)
-            m_.init(n, 6, x);
+            m_.init(n, x);
         else {
-            m__.init(n, 6, x);
+            m__.init(n, x);
             m_.join(m__);
         }
         if (i % 3 == 0) {

@@ -105,7 +105,7 @@ node* merge(node* A, node* B) {
 }
 
 
-void MaxGap::init(int n, int, int x) {
+void MaxGap::init(int n, int x) {
     base = 1 << (32 - clz(n - 1));
     // printf("INIT %d (base:%d, no:%d)\n", x, base, base + x);
     if (x != -1) {

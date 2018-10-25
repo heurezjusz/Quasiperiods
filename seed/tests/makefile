@@ -100,8 +100,8 @@ rmcands.e: make_sup rmcands.o
 rmcands_nlogn: rmcands_nlogn.e rmcands_chk.e
 .PHONY: rmcands_nlogn
 
-rmcands_nlogn.e: make_sup rmcands.o
-	g++ rmcands.o ../rmcands.o ../ukkonen.o ../pack.o ../maxgap_nlogn.o -o $@ $(LFLAGS)
+rmcands_nlogn.e: make_sup rmcands_nlogn.o
+	g++ rmcands_nlogn.o ../rmcands_nlogn.o ../ukkonen.o ../pack.o ../maxgap_nlogn.o -o $@ $(LFLAGS)
 
 
 #target: seeds nlogn

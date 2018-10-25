@@ -1,15 +1,14 @@
-#include "rmcands.h"
+#include "rmcands_nlogn.h"
 using namespace std;
 // TODO: separate rmcands & lens
 
 namespace {
-
-vector<int> pref;
-vector<MaxGap> occ;
-vector<Pack>* res;
-Tree* tree;
-int n, divisor;
-vector<int> lens;
+    vector<int> pref;
+    vector<MaxGap> occ;
+    vector<Pack>* res;
+    Tree* tree;
+    int n;
+    vector<int> lens;
 };
 
 
@@ -20,9 +19,9 @@ int dfs(int v, int tree_dep) {
     if (node.is_leaf()) {
         node.depth -= 1;
         pos = n - 1 - node.depth;
-        occ[v].init(n, divisor, pos);
+        occ[v].init(n, pos);
     } else {
-        occ[v].init(n, divisor);
+        occ[v].init(n);
         for (auto i : node.edges) {
             pos = max(pos, dfs(i.second.node, tree_dep + i.second.len()));
             occ[v].join(occ[i.second.node]);
@@ -41,16 +40,14 @@ int dfs(int v, int tree_dep) {
     if (dep_from <= dep_to)
         res->emplace_back(pos, pos + dep_from - 1, pos + dep_to - 1);
 
-
     return pos;
 }
 
-// lens expect to be zeroed
-void right_and_mid_cands(Tree& st, vector<Pack>& cands, int _divisor) {
+
+void right_and_mid_cands(Tree& st, vector<Pack>& cands) {
     // word has additional '-1' at the end
     res = &cands;
     tree = &st;
-    divisor = _divisor;
 
     vector<int>& word = st.word;
     n = word.size();
