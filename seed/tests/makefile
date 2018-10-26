@@ -117,6 +117,13 @@ lens: lens.e
 lens.e: make_sup lens.o
 	g++ lens.o ../rmcands.o ../maxgap.o ../ukkonen.o ../pack.o -o $@ $(LFLAGS)
 
+#target: choose_sub
+choose_sub: choose_sub.e
+.PHONY: choose_sub
+
+choose_sub.e: make_sup choose_sub.o
+	g++ choose_sub.o ../ukkonen.o -o $@ $(LFLAGS)
+
 
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)

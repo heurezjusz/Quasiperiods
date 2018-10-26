@@ -42,7 +42,6 @@ int dfs(int v, int tree_dep) {
     if (dep_from <= dep_to)
         res->emplace_back(pos, pos + dep_from - 1, pos + dep_to - 1);
 
-
     return pos;
 }
 
