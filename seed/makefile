@@ -1,22 +1,28 @@
 include makefile.inc
 
-all: main.e main_nlogn.e
+all: seed_lin.e seed_nlogn.e
 
-OBJS = combine.o pack.o ukkonen.o lcands.o
-OBJS_N = maxgap.o rmcands.o $(OBJS)
-OBJS_NLOGN = maxgap_nlogn.o rmcands_nlogn.o $(OBJS)
+OBJS = combine.o pack.o ukkonen.o lcands.o main.o
+OBJS_N = maxgap.o rmcands.o algorithm.o $(OBJS)
+OBJS_NLOGN = maxgap_nlogn.o rmcands_nlogn.o algorithm_nlogn.o $(OBJS)
 
 HEADERS = $(wildcard *.h)
 
 
+main.o: main.cpp
+	g++ $< $(CXXFLAGS) -c -o $@
+
+algorithm_nlogn.o: algorithm_nlogn.cpp algorithm.h
+	g++ $< $(CXXFLAGS) -c -o $@
+
 %.o: %.cpp %.h
 	g++ $< $(CXXFLAGS) -c -o $@
 
-main.e: main.o $(OBJS_N) $(HEADERS)
-	g++ main.o $(OBJS_N) -o $@ $(LFLAGS)
+seed_lin.e: main.o $(OBJS_N) $(HEADERS)
+	g++ $(OBJS_N) -o $@ $(LFLAGS)
 
-main_nlogn.e: main_nlogn.o $(OBJS_NLOGN) $(HEADERS)
-	g++ main_nlogn.o $(OBJS_NLOGN) -o $@ $(LFLAGS)
+seed_nlogn.e: $(OBJS_NLOGN) $(HEADERS)
+	g++ $(OBJS_NLOGN) -o $@ $(LFLAGS)
 
 clean:
 	rm -rf *.o *.e

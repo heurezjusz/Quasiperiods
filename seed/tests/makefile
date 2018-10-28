@@ -106,7 +106,7 @@ rmcands_nlogn.e: make_sup rmcands_nlogn.o
 
 #target: seeds_nlogn
 seeds_nlogn: packs_chk.e make_sup
-	cp ../main_nlogn.e seeds_nlogn.e
+	cp ../seed_nlogn.e seeds_nlogn.e
 .PHONY: seeds_nlogn
 
 

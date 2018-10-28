@@ -1,33 +1,24 @@
-#include "rmcands.h"
 #include <iostream>
+#include "algorithm.h"
 using namespace std;
 
-Tree st;
-string w;
-vector<int> word;
-vector<int> lens;
 
+vector<int> word;
+vector<Pack> result;
 
 int main() {
-    cin >> w;
-    for(char c: w)
-        word.push_back(c - 97);
-    word.push_back(-1);
-    int n = w.size(); // |w| = n
-    lens.resize(n + 10);
-    st.create(word);
+    string raw_word;
+    cin >> raw_word;
+    int n = raw_word.size();
 
-    vector<Pack> res;
-//    right_and_mid_cands_and_word_lens(st, res, lens, 6);
-    
-    printf("%d\n", (int) res.size());
-    for(Pack p: res) {
+    word.resize(n);
+
+    for (int i = 0; i < n; ++i)
+        word[i] = raw_word[i];
+
+    algorithm(word, result);
+
+    cout << result.size() << "\n";
+    for (auto const& p : result)
         cout << p.i << " " << p.j1 << " " << p.j2 << "\n";
-    }
-    
-    for(int i = 0; i <= n; ++i) {
-        printf("%d:%d ", i, lens[i]);
-    }
-    puts("");
-    
 }
