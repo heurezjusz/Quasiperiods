@@ -1,8 +1,10 @@
 #include <iostream>
+#include "../combine.h"
+#include "../pack.h"
 #include "../ukkonen.h"
 using namespace std;
 
-Tree *st;
+Tree* st;
 string w;
 vector<int> word;
 vector<int> I;
@@ -10,7 +12,12 @@ vector<int> chosen;
 int len;
 
 
-#define TEST_CHOOSE
+void algorithm(vector<int>& word, vector<Pack>&) {
+    for (int c : word)
+        cout << (char)(c + 'a');
+    cout << "\n";
+}
+#define TEST_CALL_SMALLER
 #include "../algorithm.cpp"
 
 int main() {
@@ -28,14 +35,7 @@ int main() {
     for (int i = 0; i < n; ++i)
         I[tree.suf_map[i]] = i;
 
+    vector<Pack> _ign;
     dfs_fill_chosen(ROOT, len);
-
-    for (int sum = 0, i = 0; i < n; ++i) {
-        sum += chosen[i];
-        if (sum)
-            printf("x");
-        else
-            printf(".");
-    }
-    puts("");
+    call_smaller(tree, word, _ign);
 }

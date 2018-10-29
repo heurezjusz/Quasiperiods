@@ -125,6 +125,14 @@ choose_sub.e: make_sup choose_sub.o
 	g++ choose_sub.o ../ukkonen.o -o $@ $(LFLAGS)
 
 
+#target: call_smaller
+call_smaller: call_smaller.e
+.PHONY: call_smaller
+
+call_smaller.e: make_sup call_smaller.o
+	g++ call_smaller.o ../ukkonen.o ../pack.o ../combine.o -o $@ $(LFLAGS)
+
+
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)
 
