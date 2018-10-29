@@ -133,6 +133,14 @@ call_smaller.e: make_sup call_smaller.o
 	g++ call_smaller.o ../ukkonen.o ../pack.o ../combine.o -o $@ $(LFLAGS)
 
 
+#target: call_parts
+call_parts: call_parts.e
+.PHONY: call_parts
+
+call_parts.e: make_sup call_parts.o
+	g++ call_parts.o ../ukkonen.o ../pack.o ../combine.o -o $@ $(LFLAGS)
+
+
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)
 

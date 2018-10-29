@@ -1,5 +1,6 @@
-#ifndef TEST_CHOOSE
+#ifndef TEST_CALL_PARTS
 #ifndef TEST_CALL_SMALLER
+#ifndef TEST_CHOOSE
 
 #include "algorithm.h"
 #include "combine.h"
@@ -29,14 +30,21 @@ void dfs_fill_chosen(int v, int len) {
         chosen[I[v] + len]--;
     }
 }
+#endif
 
+
+#ifndef TEST_CALL_SMALLER
+#ifndef TEST_CHOOSE
+void call_parts(vector<int>& word, vector<Pack>& result, int len) {}
+#endif
+#endif
 
 #ifndef TEST_CHOOSE
+#ifndef TEST_CALL_PARTS
 void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result) {
     int sum = 0, n = word.size() - 1;
     vector<int> small_word;
     vector<vector<Pack>> small_results;
-    vector<Pack> small_results_tmp;
     int last = -1;
     vector<int> chosen_;
     chosen_.swap(chosen);
@@ -45,12 +53,9 @@ void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result) {
         sum += chosen_[i];
         if (sum == 0) {
             if (small_word.size() != 0) {
-                algorithm(small_word, small_results_tmp);
-                small_results.emplace_back();
-                for (Pack const& p : small_results_tmp)
-                    small_results.back().emplace_back(
-                        p.i + last + 1, p.j1 + last + 1, p.j2 + last + 1);
-                small_results_tmp.clear();
+                algorithm(small_word, small_results.back());
+                for (Pack& p : small_results.back())
+                    p.move(last + 1);
                 small_word.clear();
             }
 
@@ -63,7 +68,6 @@ void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result) {
 
     combine(tree, small_results, result);
 }
-
 
 #ifndef TEST_CALL_SMALLER
 
@@ -84,5 +88,6 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
     call_smaller(tree, word, result);
 }
 
+#endif
 #endif
 #endif
