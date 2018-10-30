@@ -2,9 +2,12 @@
 
 word, ln = raw_input().split()
 n = len(word)
-ln = min(4 * int(ln), n - 2)
+ln = 4 * int(ln)
 
-for i in range(0, n - ln, ln / 2):
-    print word[i:i + ln]
+if ln > n:
+    print 0, word
+else:
+    for i in range(0, n - ln, ln / 2):
+        print i, word[i:i + ln]
 
-print word[-ln:]
+    print n-ln, word[-ln:]

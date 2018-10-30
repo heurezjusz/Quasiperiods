@@ -12,12 +12,14 @@ vector<int> chosen;
 int len;
 
 
-void algorithm(vector<int>& word, vector<Pack>&) {
+void candidates_from_word(vector<int>& word, int offset,
+                          vector<vector<Pack>>&) {
+    cout << offset << " ";
     for (int c : word)
         cout << (char)(c + 'a');
     cout << "\n";
 }
-#define TEST_CALL_PARTS
+#define TEST_QUASISEED_PARTS
 #include "../algorithm.cpp"
 
 int main() {
@@ -30,12 +32,11 @@ int main() {
     tree.create(word);
     I.resize(tree.size());
     int n = word.size() - 1;
-    len = min(4 * len, n - 2);
     chosen.resize(n + 1);
 
     for (int i = 0; i < n; ++i)
         I[tree.suf_map[i]] = i;
 
     vector<Pack> _ign;
-    call_parts(word, _ign, len);
+    quasiseed_parts(tree, 4 * len, _ign);
 }
