@@ -143,16 +143,19 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
         right_mid_cands_and_subwords_lens(tree, 6, big_seeds.back(), lens);
 
         int chosen_len = 1;
-        while (chosen_len < n / 4) {
+        while (chosen_len <= (n + 3) / 4) {
             if (lens[chosen_len] + chosen_len - 1 >= 2 * n / 3)
                 break;
             chosen_len++;
         }
+        chosen_len--;
 
-        dfs_fill_chosen(ROOT, chosen_len);
-        call_smaller(tree, word, result);
+        if (chosen_len) {
+            dfs_fill_chosen(ROOT, chosen_len);
+            call_smaller(tree, word, result);
 
-        quasiseed_parts(tree, chosen_len * 16, result);
+            quasiseed_parts(tree, chosen_len * 16, result);
+        }
     } else {
         vector<int> _ign;
         right_mid_cands_and_subwords_lens(tree, 6, big_seeds.back(), _ign);
