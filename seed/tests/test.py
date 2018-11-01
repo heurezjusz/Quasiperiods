@@ -5,13 +5,14 @@ import sys
 
 PARTS = sorted(["combine", "maxgap", "all", "ukkonen", "ukkonen_perf",
                 "lcands", "rmcands", "maxgap_nlogn", "rmcands_nlogn", "seeds_nlogn",
-                "lens", "choose_sub", "call_smaller", "call_parts", "seeds"])
+                "lens", "choose_sub", "call_smaller", "call_parts", "seeds", "combine2"])
 
 CHECKER = {
     "call_parts": None,
     "call_smaller": None,
     "choose_sub": None,
     "combine": "packs_chk.e",
+    "combine2": "packs_chk.e",
     "lcands": "packs_chk.e",
     "lens": None,
     "maxgap": None,
@@ -29,6 +30,7 @@ CORRECT = {
     "call_smaller": "call_smaller_slow.py",
     "choose_sub": "choose_sub_slow.py",
     "combine": "combine_slow.e",
+    "combine2": "combine2_slow.e",
     "maxgap": "maxgap_slow.e",
     "maxgap_nlogn": "maxgap_nlogn_slow.e",
     "lcands": "lcands_slow.py",
@@ -46,6 +48,7 @@ BIN = {
     "call_smaller": ["call_smaller.e"],
     "choose_sub": ["choose_sub.e"],
     "combine": ["combine.e"],
+    "combine2": ["combine2.e"],
     "maxgap": ["maxgap.e"],
     "maxgap_nlogn": ["maxgap_nlogn.e"],
     "lcands": ["lcands.e"],
@@ -64,6 +67,7 @@ TEST_DIR = {
     "call_smaller": "words_with_num",
     "choose_sub": "words_with_num",
     "combine": "combine",
+    "combine2": "combine2",
     "lcands": "words",
     "lens": "words",
     "maxgap": "maxgap",

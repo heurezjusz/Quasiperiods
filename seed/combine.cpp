@@ -25,7 +25,7 @@ namespace {
     vector<vector<Event>> event;
     vector<vector<Diff>> diffs;
     vector<Pack>* result;
-    int tree_N, word_N, M;
+    int tree_N, word_N, M, minlen, maxlen;
     Tree* st;
 
 
@@ -75,7 +75,11 @@ namespace {
 
 
     void close(int v, int depth) {
-        result->emplace_back(I[v] - 1, I[v] - 1 + depth, I[v] + opened[v] - 2);
+        int i = I[v] - 1;
+        int j1 = max(i + minlen - 1, I[v] - 1 + depth);
+        int j2 = min(i + maxlen - 1, I[v] + opened[v] - 2);
+        if (j1 <= j2)
+            result->emplace_back(i, j1, j2);
         opened[v] = 0;
     }
 
@@ -133,7 +137,8 @@ namespace {
 }
 
 
-void combine(Tree& _st, vector<vector<Pack>>& packs, vector<Pack>& res) {
+void combine(Tree& _st, vector<vector<Pack>>& packs, vector<Pack>& res,
+             int _minlen /*= 0*/, int _maxlen /*= -1*/) {
     Clear clr;
 
     tree_N = _st.nodes.size();
@@ -147,6 +152,9 @@ void combine(Tree& _st, vector<vector<Pack>>& packs, vector<Pack>& res) {
     M = packs.size();
     word_N = _st.word.size();
     event.resize(word_N + 10);
+
+    minlen = _minlen;
+    maxlen = _maxlen == -1 ? word_N + 10 : _maxlen;
 
     st = &_st;
 
