@@ -22,6 +22,21 @@ combine.e: combine.o make_sup
 	g++ combine.o ../ukkonen.o ../combine.o -o $@ $(LFLAGS)
 
 
+# target: combine2
+
+combine2: combine2.e combine2_slow.e packs_chk.e
+.PHONY: combine2
+
+combine2_slow.o: combine2_slow.cpp ../combine.h
+	g++ combine2_slow.cpp $(CXXFLAGS) -c -o $@
+
+combine2.o: combine2.cpp ../combine.h
+	g++ combine2.cpp $(CXXFLAGS) -c -o $@
+
+combine2.e: combine2.o make_sup
+	g++ combine2.o ../ukkonen.o ../combine.o -o $@ $(LFLAGS)
+
+
 # target: maxgap
 maxgap: maxgap_slow.e maxgap.e
 .PHONY: maxgap
