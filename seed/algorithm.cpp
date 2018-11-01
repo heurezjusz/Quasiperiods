@@ -4,6 +4,8 @@
 
 #include "algorithm.h"
 #include "combine.h"
+#include "lcands.h"
+#include "rmcands.h"
 #include "ukkonen.h"
 using namespace std;
 
@@ -65,8 +67,21 @@ void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result) {
 #ifndef TEST_QUASISEED_PARTS
 #ifndef TEST_CALL_SMALLER
 void candidates_from_word(vector<int>& word, int offset,
-                          vector<vector<Pack>> results) {
+                          vector<vector<Pack>>& results) {
     word.push_back(-1);
+
+    Tree st;
+    st.create(word);
+    results.emplace_back();
+    vector<int> _ign;
+    right_mid_cands_and_subwords_lens(st, 16, results.back(), _ign);
+    for (Pack& p : results.back())
+        p.move(offset);
+
+    results.emplace_back();
+    lcands(word, results.back());
+    for (Pack& p : results.back())
+        p.move(offset);
 }
 #endif
 #endif
@@ -118,9 +133,31 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
     for (int i = 0; i < n; ++i)
         I[tree.suf_map[i]] = i;
 
-    dfs_fill_chosen(ROOT, 5);
+    vector<vector<Pack>> big_seeds;
+    big_seeds.emplace_back();
+    lcands(word, big_seeds.back());
+    big_seeds.emplace_back();
+    if (n > 6) {
+        vector<int> lens;
+        right_mid_cands_and_subwords_lens(tree, 6, big_seeds.back(), lens);
 
-    call_smaller(tree, word, result);
+        int chosen_len = 1;
+        while (chosen_len < n / 4) {
+            if (lens[chosen_len] + chosen_len - 1 >= 2 * n / 3)
+                break;
+            chosen_len++;
+        }
+
+        dfs_fill_chosen(ROOT, chosen_len);
+        call_smaller(tree, word, result);
+
+        quasiseed_parts(tree, chosen_len * 16, result);
+    } else {
+        vector<int> _ign;
+        right_mid_cands_and_subwords_lens(tree, 6, big_seeds.back(), _ign);
+    }
+
+    combine(tree, big_seeds, result);
     // quasiseed_parts();
 }
 
