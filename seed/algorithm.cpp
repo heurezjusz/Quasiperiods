@@ -33,7 +33,7 @@ void dfs_fill_chosen(int v, int len) {
     }
 }
 
-
+#ifndef TEST_CHOOSE
 void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result,
                   int maxlen) {
     int sum = 0, n = word.size() - 1;
@@ -63,6 +63,7 @@ void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result,
 
     combine(tree, small_results, result, 0, maxlen);
 }
+#endif
 #endif  // QUASISEED_PARTS
 
 #ifndef TEST_CHOOSE
@@ -171,8 +172,6 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
         right_mid_cands_and_subwords_lens(tree, 6, big_seeds.back(), _ign);
         combine(tree, big_seeds, result);
     }
-
-    // quasiseed_parts();
 }
 
 #endif

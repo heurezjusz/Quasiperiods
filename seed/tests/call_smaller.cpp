@@ -37,5 +37,5 @@ int main() {
 
     vector<Pack> _ign;
     dfs_fill_chosen(ROOT, len);
-    call_smaller(tree, word, _ign);
+    call_smaller(tree, word, _ign, n + 10);
 }

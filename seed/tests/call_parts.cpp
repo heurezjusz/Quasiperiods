@@ -38,5 +38,5 @@ int main() {
         I[tree.suf_map[i]] = i;
 
     vector<Pack> _ign;
-    quasiseed_parts(tree, 4 * len, _ign);
+    quasiseed_parts(tree, 4 * len, _ign, 0, n + 10);
 }
