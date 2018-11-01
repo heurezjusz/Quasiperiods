@@ -34,7 +34,8 @@ void dfs_fill_chosen(int v, int len) {
 }
 
 
-void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result) {
+void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result,
+                  int maxlen) {
     int sum = 0, n = word.size() - 1;
     vector<int> small_word;
     vector<vector<Pack>> small_results;
@@ -60,7 +61,7 @@ void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result) {
         }
     }
 
-    combine(tree, small_results, result);
+    combine(tree, small_results, result, 0, maxlen);
 }
 #endif  // QUASISEED_PARTS
 
@@ -90,7 +91,11 @@ void candidates_from_word(vector<int>& word, int offset,
 
 #ifndef TEST_CALL_SMALLER
 #ifndef TEST_CHOOSE
-void quasiseed_parts(Tree& tree, int len, vector<Pack>& result) {
+void quasiseed_parts(Tree& tree, int len, vector<Pack>& result, int minlen,
+                     int maxlen) {
+    if (minlen > maxlen)
+        return;
+
     vector<int>& word = tree.word;
     int n = word.size() - 1;
 
@@ -113,7 +118,7 @@ void quasiseed_parts(Tree& tree, int len, vector<Pack>& result) {
         candidates_from_word(part_word, n - len, part_results);
     }
 
-    combine(tree, part_results, result);
+    combine(tree, part_results, result, minlen, maxlen);
 }
 #endif
 #endif
@@ -152,16 +157,21 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
 
         if (chosen_len) {
             dfs_fill_chosen(ROOT, chosen_len);
-            call_smaller(tree, word, result);
+            call_smaller(tree, word, result, chosen_len);
 
-            quasiseed_parts(tree, chosen_len * 16, result);
-        }
+            quasiseed_parts(tree, chosen_len * 16, result, chosen_len + 1,
+                            2 * n / 3 - 1);
+            combine(tree, big_seeds, result, 2 * n / 3);
+
+        } else
+            combine(tree, big_seeds, result);
+
     } else {
         vector<int> _ign;
         right_mid_cands_and_subwords_lens(tree, 6, big_seeds.back(), _ign);
+        combine(tree, big_seeds, result);
     }
 
-    combine(tree, big_seeds, result);
     // quasiseed_parts();
 }
 
