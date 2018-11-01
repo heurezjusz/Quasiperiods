@@ -110,6 +110,12 @@ seeds_nlogn: packs_chk.e make_sup
 .PHONY: seeds_nlogn
 
 
+#target: seeds
+seeds: packs_chk.e make_sup
+	cp ../seed_lin.e seeds_lin.e
+.PHONY: seeds
+
+
 #target: lens
 lens: lens.e
 .PHONY: lens

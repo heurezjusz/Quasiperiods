@@ -46,6 +46,7 @@ void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result) {
         sum += chosen_[i];
         if (sum == 0) {
             if (small_word.size() != 0) {
+                small_results.emplace_back();
                 algorithm(small_word, small_results.back());
                 for (Pack& p : small_results.back())
                     p.move(last + 1);
