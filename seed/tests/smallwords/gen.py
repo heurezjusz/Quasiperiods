@@ -27,6 +27,7 @@ def recursive(n):
 
 
 for word, fname in [
+    ('ababaabaab', 'example.in'),
     ('abc', 'hand1.in'),
     ('wololo', 'hand2.in'),
     ('abcabxabcd', 'hand3.in'),

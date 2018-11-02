@@ -150,14 +150,14 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
 
         int chosen_len = 1;
         while (chosen_len <= (n + 3) / 4) {
-            if (lens[chosen_len] + chosen_len - 1 >= 2 * n / 3)
+            if (lens[4 * chosen_len - 3] + 4 * chosen_len - 4 >= 2 * n / 3)
                 break;
             chosen_len++;
         }
         chosen_len--;
 
         if (chosen_len) {
-            dfs_fill_chosen(ROOT, chosen_len);
+            dfs_fill_chosen(ROOT, 2 * chosen_len - 1);
             call_smaller(tree, word, result, chosen_len);
 
             quasiseed_parts(tree, chosen_len * 16, result, chosen_len + 1,
