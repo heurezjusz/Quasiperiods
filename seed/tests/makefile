@@ -173,6 +173,10 @@ seeds_vs: seeds_lin.e seeds_nlogn.e packs_chk_combine.e
 packs_chk.e: packs_chk.o
 	g++ packs_chk.o -o $@ $(LFLAGS)
 
+#target: packs_chk_diff.e
+packs_chk_diff.e: packs_chk_diff.o
+	g++ packs_chk_diff.o -o $@ $(LFLAGS)
+
 
 #target: packs_chk_combine.e
 packs_chk_combine.e: packs_chk_combine.o make_sup

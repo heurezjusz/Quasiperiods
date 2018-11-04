@@ -162,8 +162,8 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
             call_smaller(tree, word, result, chosen_len);
 
             quasiseed_parts(tree, chosen_len * 16, result, chosen_len + 1,
-                            2 * n / 3 - 1);
-            combine(tree, big_seeds, I, result, 2 * n / 3);
+                            n / 4);
+            combine(tree, big_seeds, I, result, n / 4 + 1);
 
         } else
             combine(tree, big_seeds, I, result);
