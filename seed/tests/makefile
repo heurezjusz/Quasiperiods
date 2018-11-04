@@ -120,16 +120,18 @@ rmcands_nlogn.e: make_sup rmcands_nlogn.o
 
 
 #target: seeds_nlogn
-seeds_nlogn: packs_chk.e make_sup
-	cp ../seed_nlogn.e seeds_nlogn.e
+seeds_nlogn: packs_chk.e seeds_nlogn.e
 .PHONY: seeds_nlogn
 
+seeds_nlogn.e: make_sup
+	cp ../seed_nlogn.e seeds_nlogn.e
 
 #target: seeds
-seeds: packs_chk.e make_sup
-	cp ../seed_lin.e seeds_lin.e
+seeds: seeds_lin.e packs_chk.e
 .PHONY: seeds
 
+seeds_lin.e: make_sup
+	cp ../seed_lin.e seeds_lin.e
 
 #target: lens
 lens: lens.e
@@ -162,9 +164,15 @@ call_parts.e: make_sup call_parts.o
 	g++ call_parts.o ../ukkonen.o ../pack.o ../combine.o -o $@ $(LFLAGS)
 
 
+#target: seeds_vs
+seeds_vs: seeds_lin.e seeds_nlogn.e packs_chk_combine.e
+.PHONY: seeds_vs
+
+
 #target: packs_chk.e
 packs_chk.e: packs_chk.o
 	g++ packs_chk.o -o $@ $(LFLAGS)
+
 
 #target: packs_chk_combine.e
 packs_chk_combine.e: packs_chk_combine.o make_sup

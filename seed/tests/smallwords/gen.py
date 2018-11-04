@@ -32,6 +32,7 @@ for word, fname in [
     ('wololo', 'hand2.in'),
     ('abcabxabcd', 'hand3.in'),
     ('xabxac', 'hand4.in'),
+    ('aabaabaacaabaabaa', 'hand5.in'),
     ('baeebcaebc', 'special1.in'),
     ('eccdeaaccc', 'special2.in'),
     ('adcbddadda', 'special3.in'),

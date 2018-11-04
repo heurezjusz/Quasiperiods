@@ -3,9 +3,11 @@
 import os
 import sys
 
-PARTS = sorted(["combine", "maxgap", "all", "ukkonen", "ukkonen_perf",
-                "lcands", "rmcands", "maxgap_nlogn", "rmcands_nlogn", "seeds_nlogn",
-                "lens", "choose_sub", "call_smaller", "call_parts", "seeds", "combine2"])
+PARTS = sorted([
+    "combine", "maxgap", "all", "ukkonen", "ukkonen_perf", "lcands", "rmcands",
+    "maxgap_nlogn", "rmcands_nlogn", "seeds_nlogn", "lens", "choose_sub",
+    "call_smaller", "call_parts", "seeds", "combine2", "seeds_vs"
+])
 
 CHECKER = {
     "call_parts": None,
@@ -21,8 +23,9 @@ CHECKER = {
     "rmcands_nlogn": "rmcands_chk.e",
     "ukkonen": None,
     "ukkonen_perf": None,
+    "seeds": "packs_chk.e",
     "seeds_nlogn": "packs_chk.e",
-    "seeds": "packs_chk.e"
+    "seeds_vs": "packs_chk_combine.e"
 }
 
 CORRECT = {
@@ -39,8 +42,9 @@ CORRECT = {
     "rmcands_nlogn": "rmcands_slow.py",
     "ukkonen": "ukkonen_slow.py",
     "ukkonen_perf": "ukkonen_perf_slow.e",
+    "seeds": "seeds_slow.py",
     "seeds_nlogn": "seeds_slow.py",
-    "seeds": "seeds_slow.py"
+    "seeds_vs": "seeds_nlogn.e",
 }
 
 BIN = {
@@ -57,10 +61,10 @@ BIN = {
     "rmcands_nlogn": ["rmcands_nlogn.e"],
     "ukkonen": ["ukkonen.e"],
     "ukkonen_perf": ["ukkonen_perf.e"],
+    "seeds": ["seeds_lin.e"],
     "seeds_nlogn": ["seeds_nlogn.e"],
-    "seeds": ["seeds_lin.e"]
+    "seeds_vs": ["seeds_lin.e"],
 }
-
 
 TEST_DIR = {
     "call_parts": "words_with_num",
@@ -76,18 +80,17 @@ TEST_DIR = {
     "rmcands_nlogn": "words",
     "ukkonen": "words",
     "ukkonen_perf": "bigwords",
+    "seeds": "smallwords",
     "seeds_nlogn": "smallwords",
-    "seeds": "smallwords"
+    "seeds_vs": "words",
 }
 
 GENINPUT = ["bigwords"]
-
 
 if len(sys.argv) != 2:
     print "Usage:", sys.argv[0], "PART1[,PART2,...]"
     print "Available parts are: ", ','.join(PARTS)
     sys.exit(1)
-
 
 parts = sys.argv[1].split(',')
 for part in parts:
