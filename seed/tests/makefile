@@ -169,6 +169,11 @@ seeds_vs: seeds_lin.e seeds_nlogn.e packs_chk_combine.e
 .PHONY: seeds_vs
 
 
+#target: seeds_vs_big
+seeds_vs_big: seeds_vs
+.PHONY: seeds_vs_big
+
+
 #target: packs_chk.e
 packs_chk.e: packs_chk.o
 	g++ packs_chk.o -o $@ $(LFLAGS)

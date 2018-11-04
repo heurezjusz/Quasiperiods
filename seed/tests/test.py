@@ -6,7 +6,8 @@ import sys
 PARTS = sorted([
     "combine", "maxgap", "all", "ukkonen", "ukkonen_perf", "lcands", "rmcands",
     "maxgap_nlogn", "rmcands_nlogn", "seeds_nlogn", "lens", "choose_sub",
-    "call_smaller", "call_parts", "seeds", "combine2", "seeds_vs"
+    "call_smaller", "call_parts", "seeds", "combine2", "seeds_vs",
+    "seeds_vs_big"
 ])
 
 CHECKER = {
@@ -25,7 +26,8 @@ CHECKER = {
     "ukkonen_perf": None,
     "seeds": "packs_chk.e",
     "seeds_nlogn": "packs_chk.e",
-    "seeds_vs": "packs_chk_combine.e"
+    "seeds_vs": "packs_chk_combine.e",
+    "seeds_vs_big": "packs_chk_combine.e"
 }
 
 CORRECT = {
@@ -45,6 +47,7 @@ CORRECT = {
     "seeds": "seeds_slow.py",
     "seeds_nlogn": "seeds_slow.py",
     "seeds_vs": "seeds_nlogn.e",
+    "seeds_vs_big": "seeds_nlogn.e",
 }
 
 BIN = {
@@ -64,6 +67,7 @@ BIN = {
     "seeds": ["seeds_lin.e"],
     "seeds_nlogn": ["seeds_nlogn.e"],
     "seeds_vs": ["seeds_lin.e"],
+    "seeds_vs_big": ["seeds_lin.e"],
 }
 
 TEST_DIR = {
@@ -83,6 +87,7 @@ TEST_DIR = {
     "seeds": "smallwords",
     "seeds_nlogn": "smallwords",
     "seeds_vs": "words",
+    "seeds_vs_big": "bigwords",
 }
 
 GENINPUT = ["bigwords"]
