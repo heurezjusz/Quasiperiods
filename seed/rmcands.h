@@ -5,9 +5,5 @@
 #include "pack.h"
 #include "ukkonen.h"
 
-/* vector "lens" is expected to be empty */
-void right_mid_cands_and_subwords_lens(Tree& tree, int divisor,
-                                       std::vector<Pack>& cands,
-                                       std::vector<int>& lens);
-
+void right_mid_cands(Tree& tree, int divisor, std::vector<Pack>& cands);
 #endif
