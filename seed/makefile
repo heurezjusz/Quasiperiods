@@ -3,11 +3,13 @@ include makefile.inc
 all: seed_lin.e seed_nlogn.e
 
 OBJS = combine.o pack.o ukkonen.o lcands.o main.o
-OBJS_N = maxgap.o rmcands.o algorithm.o $(OBJS)
+OBJS_N = maxgap.o rmcands.o rmcands_lens.o algorithm.o $(OBJS)
 OBJS_NLOGN = maxgap_nlogn.o rmcands_nlogn.o algorithm_nlogn.o $(OBJS)
 
 HEADERS = $(wildcard *.h)
 
+rmcands_lens.o: rmcands.cpp rmcands_lens.h
+	g++ $< $(CXXFLAGS) -DLENS -c -o $@
 
 main.o: main.cpp
 	g++ $< $(CXXFLAGS) -c -o $@

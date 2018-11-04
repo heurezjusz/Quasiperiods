@@ -136,7 +136,7 @@ lens: lens.e
 .PHONY: lens
 
 lens.e: make_sup lens.o
-	g++ lens.o ../rmcands.o ../maxgap.o ../ukkonen.o ../pack.o -o $@ $(LFLAGS)
+	g++ lens.o ../rmcands_lens.o ../maxgap.o ../ukkonen.o ../pack.o -o $@ $(LFLAGS)
 
 #target: choose_sub
 choose_sub: choose_sub.e

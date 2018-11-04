@@ -6,6 +6,7 @@
 #include "combine.h"
 #include "lcands.h"
 #include "rmcands.h"
+#include "rmcands_lens.h"
 #include "ukkonen.h"
 using namespace std;
 
@@ -133,7 +134,7 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
     Tree tree;
     tree.create(word);
     st = &tree;
-    if (I.size() < tree.size())
+    if ((int)I.size() < tree.size())
         I.resize(tree.size());
     int n = word.size() - 1;
     chosen.resize(n + 1);

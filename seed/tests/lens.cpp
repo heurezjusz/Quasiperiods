@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../rmcands.h"
+#include "../rmcands_lens.h"
 using namespace std;
 
 Tree st;

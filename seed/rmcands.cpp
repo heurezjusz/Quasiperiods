@@ -1,4 +1,8 @@
+#ifdef LENS
+#include "rmcands_lens.h"
+#else
 #include "rmcands.h"
+#endif
 using namespace std;
 // TODO: separate rmcands & lens
 
@@ -10,46 +14,52 @@ namespace {
     vector<int> lens;
     Tree* tree;
     int n, divisor;
+
+
+    int dfs(int v, int tree_dep) {
+        int pos = -1;
+        Node& node = tree->nodes[v];
+        // where is v in the word
+        if (node.is_leaf()) {
+            pos = n - 1 - node.depth;
+            occ[v].init(n, divisor, pos);
+        } else {
+            occ[v].init(n, divisor);
+            for (auto i : node.edges) {
+                pos = max(pos, dfs(i.second.node, tree_dep + i.second.len()));
+                occ[v].join(occ[i.second.node]);
+            }
+        }
+        if (v == ROOT)
+            return -1;
+#ifdef LENS
+        else {
+            lens[node.depth]++;
+            lens[tree->nodes[node.parent].depth]--;
+        }
+#endif
+
+        // cycle size
+        int cycle = n - 1 - pos - pref[pos];
+        int dep_from = max(tree->nodes[node.parent].depth + 1,
+                           max(cycle, occ[v].max_gap()));
+        int dep_to = node.depth;
+
+        if (dep_from <= dep_to)
+            res->emplace_back(pos, pos + dep_from - 1, pos + dep_to - 1);
+
+        return pos;
+    }
 };
 
-
-int dfs(int v, int tree_dep) {
-    int pos = -1;
-    Node& node = tree->nodes[v];
-    // where is v in the word
-    if (node.is_leaf()) {
-        pos = n - 1 - node.depth;
-        occ[v].init(n, divisor, pos);
-    } else {
-        occ[v].init(n, divisor);
-        for (auto i : node.edges) {
-            pos = max(pos, dfs(i.second.node, tree_dep + i.second.len()));
-            occ[v].join(occ[i.second.node]);
-        }
-    }
-    if (v == ROOT)
-        return -1;
-    else {
-        lens[node.depth]++;
-        lens[tree->nodes[node.parent].depth]--;
-    }
-
-    // cycle size
-    int cycle = n - 1 - pos - pref[pos];
-    int dep_from =
-        max(tree->nodes[node.parent].depth + 1, max(cycle, occ[v].max_gap()));
-    int dep_to = node.depth;
-
-    if (dep_from <= dep_to)
-        res->emplace_back(pos, pos + dep_from - 1, pos + dep_to - 1);
-
-    return pos;
-}
-
-
+#ifdef LENS
 void right_mid_cands_and_subwords_lens(Tree& st, int _divisor,
                                        vector<Pack>& cands,
-                                       vector<int>& lens_res) {
+                                       vector<int>& lens_res)
+#else
+void right_mid_cands(Tree& st, int _divisor, vector<Pack>& cands)
+#endif
+{
     // word has additional '-1' at the end
     res = &cands;
     tree = &st;
@@ -69,11 +79,15 @@ void right_mid_cands_and_subwords_lens(Tree& st, int _divisor,
         pref[i] = w + (word[i] == word[n - 2 - w]);
     }
 
+#ifdef LENS
     lens.resize(n);
+#endif
 
     dfs(ROOT, 0);
 
+#ifdef LENS
     for (int i = n - 2; i >= 0; --i)
         lens[i] += lens[i + 1];
     lens_res.swap(lens);
+#endif
 }
