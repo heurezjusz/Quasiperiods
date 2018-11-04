@@ -29,8 +29,10 @@ int main() {
     }
 
     vector<Pack> res;
+    vector<int> buff;
+    buff.resize(st.size());
 
-    combine(st, inp, res);
+    combine(st, inp, buff, res);
     cout << res.size() << "\n";
     for (auto p : res)
         cout << p.i << " " << p.j1 << " " << p.j2 << "\n";

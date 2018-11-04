@@ -7,6 +7,7 @@
 #include "ukkonen.h"
 
 void combine(Tree& st, std::vector<std::vector<Pack>>& packs,
-             std::vector<Pack>& res, int minlen = 0, int maxlen = -1);
+             std::vector<int>& tree_size_buf, std::vector<Pack>& res,
+             int minlen = 0, int maxlen = -1);
 
 #endif

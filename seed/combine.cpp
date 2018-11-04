@@ -86,6 +86,8 @@ namespace {
 
     void dfs_exec_events(int v) {
         Node& node = st->nodes[v];
+        if (!node.is_leaf())
+            I[v] = 0;
 
         // go for kids, sum results
         for (auto const& it : node.edges) {
@@ -101,7 +103,7 @@ namespace {
             sum[v] += diffs[v][current_event].diff;
         }
 
-        // get_some_I, see whether you are opened & some of them too
+        // get_some_I, see whether you are opened & some of your children too
         for (auto const& it : node.edges) {
             int a = it.second.node;
             if (!I[v])
@@ -137,14 +139,14 @@ namespace {
 }
 
 
-void combine(Tree& _st, vector<vector<Pack>>& packs, vector<Pack>& res,
-             int _minlen /*= 0*/, int _maxlen /*= -1*/) {
+void combine(Tree& _st, vector<vector<Pack>>& packs, vector<int>& tree_size_buf,
+             vector<Pack>& res, int _minlen /*= 0*/, int _maxlen /*= -1*/) {
     Clear clr;
 
     tree_N = _st.nodes.size();
     FU.resize(tree_N);
     diffs.resize(tree_N);
-    I.resize(tree_N);
+    I.swap(tree_size_buf);
     opened.resize(tree_N);
     sum.resize(tree_N);
     result = &res;
@@ -181,4 +183,5 @@ void combine(Tree& _st, vector<vector<Pack>>& packs, vector<Pack>& res,
     }
 
     dfs_exec_events(ROOT);
+    I.swap(tree_size_buf);
 }

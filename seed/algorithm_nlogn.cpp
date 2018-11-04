@@ -17,5 +17,8 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
     lcands(word, candidates[0]);
     right_and_mid_cands(tree, candidates[1]);
 
-    combine(tree, candidates, result);
+    vector<int> buff;
+    buff.resize(tree.size());
+
+    combine(tree, candidates, buff, result);
 }

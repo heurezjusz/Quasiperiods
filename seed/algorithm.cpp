@@ -61,7 +61,7 @@ void call_smaller(Tree& tree, vector<int>& word, vector<Pack>& result,
         }
     }
 
-    combine(tree, small_results, result, 0, maxlen);
+    combine(tree, small_results, I, result, 0, maxlen);
 }
 #endif
 #endif  // QUASISEED_PARTS
@@ -119,7 +119,7 @@ void quasiseed_parts(Tree& tree, int len, vector<Pack>& result, int minlen,
         candidates_from_word(part_word, n - len, part_results);
     }
 
-    combine(tree, part_results, result, minlen, maxlen);
+    combine(tree, part_results, I, result, minlen, maxlen);
 }
 #endif
 #endif
@@ -133,7 +133,8 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
     Tree tree;
     tree.create(word);
     st = &tree;
-    I.resize(tree.size());
+    if (I.size() < tree.size())
+        I.resize(tree.size());
     int n = word.size() - 1;
     chosen.resize(n + 1);
 
@@ -162,15 +163,15 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
 
             quasiseed_parts(tree, chosen_len * 16, result, chosen_len + 1,
                             2 * n / 3 - 1);
-            combine(tree, big_seeds, result, 2 * n / 3);
+            combine(tree, big_seeds, I, result, 2 * n / 3);
 
         } else
-            combine(tree, big_seeds, result);
+            combine(tree, big_seeds, I, result);
 
     } else {
         vector<int> _ign;
         right_mid_cands_and_subwords_lens(tree, 6, big_seeds.back(), _ign);
-        combine(tree, big_seeds, result);
+        combine(tree, big_seeds, I, result);
     }
 }
 
