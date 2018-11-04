@@ -77,8 +77,7 @@ void candidates_from_word(vector<int>& word, int offset,
     Tree st;
     st.create(word);
     results.emplace_back();
-    vector<int> _ign;
-    right_mid_cands_and_subwords_lens(st, 16, results.back(), _ign);
+    right_mid_cands(st, 16, results.back());
     for (Pack& p : results.back())
         p.move(offset);
 
@@ -171,7 +170,7 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
 
     } else {
         vector<int> _ign;
-        right_mid_cands_and_subwords_lens(tree, 6, big_seeds.back(), _ign);
+        right_mid_cands(tree, 6, big_seeds.back());
         combine(tree, big_seeds, I, result);
     }
 }
