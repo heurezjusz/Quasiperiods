@@ -174,9 +174,9 @@ seeds_vs_big: seeds_vs
 .PHONY: seeds_vs_big
 
 
-#target: packs_chk.e
-packs_chk.e: packs_chk.o
-	g++ packs_chk.o -o $@ $(LFLAGS)
+#target: *.e
+%.e: %.o
+	g++ $^ -o $@ $(LFLAGS)
 
 #target: packs_chk_diff.e
 packs_chk_diff.e: packs_chk_diff.o
