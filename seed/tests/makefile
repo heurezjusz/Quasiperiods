@@ -162,8 +162,13 @@ call_parts.e: make_sup call_parts.o
 	g++ call_parts.o ../ukkonen.o ../pack.o ../combine.o -o $@ $(LFLAGS)
 
 
-%.e: %.o
-	g++ $^ -o $@ $(LFLAGS)
+#target: packs_chk.e
+packs_chk.e: packs_chk.o
+	g++ packs_chk.o -o $@ $(LFLAGS)
+
+#target: packs_chk_combine.e
+packs_chk_combine.e: packs_chk_combine.o make_sup
+	g++ packs_chk_combine.o ../combine.o ../ukkonen.o ../pack.o -o $@ $(LFLAGS)
 
 clean:
 	rm -f *.o
