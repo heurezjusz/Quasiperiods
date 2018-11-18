@@ -9,7 +9,7 @@ int main() {
 
     scanf("%d\n", &x0);
     mg.init(n, x0);
-    if (mg.max_gap < l)
+    if (mg.max_gap <= l)
         puts(".");
     else
         printf("%d\n", mg.max_gap);
@@ -18,7 +18,7 @@ int main() {
         scanf("%d", &x);
         m_.init(n, x);
         mg.join(m_);
-        if (mg.max_gap < l)
+        if (mg.max_gap <= l)
             puts(".");
         else
             printf("%d\n", mg.max_gap);

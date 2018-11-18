@@ -24,7 +24,7 @@ int main() {
         scanf("%d", &x);
         B[x] = 1;
         x = max_gap();
-        if (x < L)
+        if (x <= L)
             puts(".");
         else
             printf("%d\n", x);
