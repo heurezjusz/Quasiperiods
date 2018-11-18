@@ -58,23 +58,23 @@ namespace {
     }
 
 
-    void connect_(int i) {
+    inline void connect_(int i) {
         FU[i] = st->nodes[i].parent;
     }
 
 
-    void add_diff(Event const& e) {
+    inline void add_diff(Event const& e) {
         int v = find(e.node);
         diffs[v].emplace_back(e.depth, e.diff);
     }
 
 
-    void open(int v, int depth) {
+    inline void open(int v, int depth) {
         opened[v] = depth;
     }
 
 
-    void close(int v, int depth) {
+    inline void close(int v, int depth) {
         int i = I[v] - 1;
         int j1 = max(i + minlen - 1, I[v] - 1 + depth);
         int j2 = min(i + maxlen - 1, I[v] + opened[v] - 2);

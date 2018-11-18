@@ -1,2 +1,2 @@
-CXXFLAGS = -g -W -Wall -std=c++11
-LFLAGS = -std=c++11
+CXXFLAGS =  -g -W -Wall -std=c++11
+LFLAGS = -g -std=c++11

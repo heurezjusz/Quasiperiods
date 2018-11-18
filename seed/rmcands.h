@@ -5,5 +5,5 @@
 #include "pack.h"
 #include "ukkonen.h"
 
-void right_mid_cands(Tree& tree, int divisor, std::vector<Pack>& cands);
+void right_mid_cands(Tree& tree, std::vector<Pack>& cands);
 #endif

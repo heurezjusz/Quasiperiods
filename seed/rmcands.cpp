@@ -1,20 +1,28 @@
 #ifdef LENS
 #include "rmcands_lens.h"
 #else
+#ifdef MX16
+#include "rmcands16.h"
+#else
 #include "rmcands.h"
 #endif
+#endif
 using namespace std;
-// TODO: separate rmcands & lens
 
 namespace {
 
     vector<int> pref;
-    vector<MaxGap> occ;
+
+#ifdef MX16
+    vector<MaxGap<16>> occ;
+#else
+    vector<MaxGap<6>> occ;
+#endif
+
     vector<Pack>* res;
     vector<int> lens;
     Tree* tree;
-    int n, divisor;
-
+    int n;
 
     int dfs(int v, int tree_dep) {
         int pos = -1;
@@ -22,9 +30,9 @@ namespace {
         // where is v in the word
         if (node.is_leaf()) {
             pos = n - 1 - node.depth;
-            occ[v].init(n, divisor, pos);
+            occ[v].init(n, pos);
         } else {
-            occ[v].init(n, divisor);
+            occ[v].init(n);
             for (auto i : node.edges) {
                 pos = max(pos, dfs(i.second.node, tree_dep + i.second.len()));
                 occ[v].join(occ[i.second.node]);
@@ -53,17 +61,19 @@ namespace {
 };
 
 #ifdef LENS
-void right_mid_cands_and_subwords_lens(Tree& st, int _divisor,
-                                       vector<Pack>& cands,
+void right_mid_cands_and_subwords_lens(Tree& st, vector<Pack>& cands,
                                        vector<int>& lens_res)
 #else
-void right_mid_cands(Tree& st, int _divisor, vector<Pack>& cands)
+#ifdef MX16
+void right_mid_cands16(Tree& st, vector<Pack>& cands)
+#else
+void right_mid_cands(Tree& st, vector<Pack>& cands)
+#endif
 #endif
 {
     // word has additional '-1' at the end
     res = &cands;
     tree = &st;
-    divisor = _divisor;
 
     vector<int>& word = st.word;
     n = word.size();

@@ -5,10 +5,10 @@ int main() {
     int n, l, x0;
     scanf("%d", &n);
     l = n / 6;
-    MaxGap mg, m_;
+    MaxGap<6> mg, m_;
 
     scanf("%d\n", &x0);
-    mg.init(n, 6, x0);
+    mg.init(n, x0);
     if (mg.max_gap() < l)
         puts(".");
     else
@@ -16,7 +16,7 @@ int main() {
 
     for (int x, i = 1; i < n; ++i) {
         scanf("%d", &x);
-        m_.init(n, 6, x);
+        m_.init(n, x);
         mg.join(m_);
         if (mg.max_gap() < l)
             puts(".");

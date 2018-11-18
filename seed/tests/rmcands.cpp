@@ -14,7 +14,7 @@ int main() {
     st.create(word);
 
     vector<Pack> res;
-    right_mid_cands(st, 6, res);
+    right_mid_cands(st, res);
 
     printf("%d\n", (int)res.size());
     for (Pack p : res) {
