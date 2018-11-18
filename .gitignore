@@ -1,4 +1,5 @@
 bigdata/
+*/bigdata/
 *.e
 *.o
 *.swp
