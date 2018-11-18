@@ -1,6 +1,5 @@
 #include "rmcands_nlogn.h"
 using namespace std;
-// TODO: separate rmcands & lens
 
 namespace {
     vector<int> pref;

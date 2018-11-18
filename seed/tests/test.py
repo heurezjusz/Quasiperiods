@@ -124,6 +124,7 @@ def safe_exec(command):
 
 
 cnt_ok, cnt_all = 0, 0
+parts_failed = []
 
 
 def test_part(part):
@@ -173,6 +174,8 @@ def test_part(part):
     print_info('passed %d/%d tests' % (ok, ok + bad))
     cnt_ok += ok
     cnt_all += ok + bad
+    if bad != 0:
+        parts_failed.append(part)
 
 
 for part in parts:
@@ -184,7 +187,7 @@ for part in parts:
         test_part(part)
 
 if cnt_ok < cnt_all:
-    print_bad('Some errors occured')
+    print_bad('Some errors occured in parts: %s' % (",".join(parts_failed)))
     print_info('passed %d/%d tests' % (cnt_ok, cnt_all))
 else:
     print_good('\033[1mOK! All tests passed! (%d)\033[0m' % cnt_all)

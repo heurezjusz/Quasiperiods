@@ -6,10 +6,9 @@ template <int P>
 struct MaxGap {
     int mn[P];
     int mx[P];
-    int max_gap_;
+    int max_gap;
 
     void init(int n, int x = -1);
-    int max_gap();
     void join(MaxGap const& o);
 };
 
@@ -19,7 +18,7 @@ template <int P>
 void MaxGap<P>::init(int n, int x) {
     for (int i = 0; i < P; ++i)
         mn[i] = mx[i] = -1;
-    max_gap_ = 0;
+    max_gap = 0;
 
     if (x != -1) {
         int L = (n + P - 1) / P;
@@ -28,14 +27,10 @@ void MaxGap<P>::init(int n, int x) {
     }
 }
 
-template <int P>
-int MaxGap<P>::max_gap() {
-    return max_gap_;
-}
 
 template <int P>
 void MaxGap<P>::join(MaxGap const& o) {
-    int last = max_gap_ = -1;
+    int last = max_gap = -1;
     for (int i = 0; i < P; ++i) {
         if (o.mn[i] != -1) {
             if (mn[i] == -1) {
@@ -50,8 +45,7 @@ void MaxGap<P>::join(MaxGap const& o) {
         if (mn[i] != -1) {
             if (last == -1)
                 last = mn[i];
-            max_gap_ =
-                std::max(max_gap_, std::max(mn[i] - last, mx[i] - mn[i]));
+            max_gap = std::max(max_gap, std::max(mn[i] - last, mx[i] - mn[i]));
             last = mx[i];
         }
     }

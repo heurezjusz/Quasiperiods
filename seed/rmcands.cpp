@@ -49,8 +49,8 @@ namespace {
 
         // cycle size
         int cycle = n - 1 - pos - pref[pos];
-        int dep_from = max(tree->nodes[node.parent].depth + 1,
-                           max(cycle, occ[v].max_gap()));
+        int dep_from =
+            max(tree->nodes[node.parent].depth + 1, max(cycle, occ[v].max_gap));
         int dep_to = node.depth;
 
         if (dep_from <= dep_to)

@@ -9,18 +9,18 @@ int main() {
 
     scanf("%d\n", &x0);
     mg.init(n, x0);
-    if (mg.max_gap() < l)
+    if (mg.max_gap < l)
         puts(".");
     else
-        printf("%d\n", mg.max_gap());
+        printf("%d\n", mg.max_gap);
 
     for (int x, i = 1; i < n; ++i) {
         scanf("%d", &x);
         m_.init(n, x);
         mg.join(m_);
-        if (mg.max_gap() < l)
+        if (mg.max_gap < l)
             puts(".");
         else
-            printf("%d\n", mg.max_gap());
+            printf("%d\n", mg.max_gap);
     }
 }
