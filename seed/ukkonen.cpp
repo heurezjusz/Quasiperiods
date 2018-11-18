@@ -95,7 +95,7 @@ namespace {
     int active_node, active_len, last_creted;
     map<int, Edge>::iterator active_edge;
 
-    int remainder, _lcp;
+    int remainder;
 }
 
 void Tree::_connect_sl(int id) {
@@ -198,11 +198,7 @@ void Tree::_add_node(int i) {
 void Tree::_dfs(int v) {
     Node& node = nodes[v];
     if (node.is_leaf()) {
-        if (_lcp != NONE)
-            lcp.push_back(_lcp);
-        _lcp = node.depth;
-        sa.push_back(N - node.depth);
-        suf_map[sa.back()] = v;
+        suf_map[N - node.depth] = v;
         nodes[v].depth -= 1;
     }
 
@@ -210,7 +206,6 @@ void Tree::_dfs(int v) {
         Edge& e = it.second;
         if (e.b == NONE)
             e.b = N - 1;
-        _lcp = min(_lcp, node.depth);
         nodes[e.node].depth = node.depth + e.len();
         _dfs(e.node);
     }
@@ -227,8 +222,6 @@ void Tree::create(vector<int>& word_) {
         _add_node(i);
 
     nodes[ROOT].depth = 0;
-    _lcp = NONE;
     suf_map.resize(N);
     _dfs(ROOT);
-    lcp.push_back(0);
 }

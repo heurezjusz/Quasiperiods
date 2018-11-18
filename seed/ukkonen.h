@@ -1,7 +1,7 @@
 #ifndef __UKKONEN
 #define __UKKONEN
-#include <vector>
 #include <map>
+#include <vector>
 
 const int NONE = -1;
 const int ROOT = 0;
@@ -20,11 +20,9 @@ struct Node {
 };
 
 struct Tree {
-    int N; // word size
+    int N;  // word size
     std::vector<int> word;
     std::vector<Node> nodes;
-    std::vector<int> sa;
-    std::vector<int> lcp;
     std::vector<int> suf_map;
 
     Tree();
