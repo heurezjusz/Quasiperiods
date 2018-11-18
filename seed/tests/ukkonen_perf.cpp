@@ -6,17 +6,45 @@ Tree st;
 string w;
 vector<int> word;
 
+int _lcp, N;
+vector<int> lcp;
+vector<int> suf_arr;
+
+
+void dfs_count(int v) {
+    Node& node = st.nodes[v];
+
+    if (node.is_leaf()) {
+        if (_lcp != NONE)
+            lcp.push_back(_lcp);
+        _lcp = node.depth;
+        suf_arr.push_back(N - node.depth - 1);
+    }
+
+    for (auto& it : node.edges) {
+        Edge& e = it.second;
+        _lcp = min(_lcp, node.depth);
+        dfs_count(e.node);
+    }
+}
+
+
 int main() {
     cin >> w;
+    N = w.size() + 1;
     for (char c : w)
         word.push_back(c - 97);
     word.push_back(-1);
     st.create(word);
 
-    for (int a : st.sa)
+    _lcp = NONE;
+    dfs_count(ROOT);
+    lcp.push_back(0);
+
+    for (int a : suf_arr)
         printf("%d ", a);
     puts("");
-    for (int a : st.lcp)
+    for (int a : lcp)
         printf("%d ", a);
     puts("");
 }
