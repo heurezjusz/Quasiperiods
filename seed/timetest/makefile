@@ -9,6 +9,8 @@ bin:
 	cp ../seed_lin.e .
 	cp ../seed_nlogn.e .
 
+report:
+	./run.sh
 
 
-.PHONY: ingen clean bin
+.PHONY: ingen clean bin report

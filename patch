@@ -1,0 +1,108 @@
+diff --git a/seed/makefile.inc b/seed/makefile.inc
+index ec2c28d..03029ca 100644
+--- a/seed/makefile.inc
++++ b/seed/makefile.inc
+@@ -1,2 +1,2 @@
+-CXXFLAGS =  -g -W -Wall -std=c++11
+-LFLAGS = -g -std=c++11
++CXXFLAGS =  -O3 -W -Wall -std=c++11
++LFLAGS = -O3 -std=c++11
+diff --git a/seed/maxgap.h b/seed/maxgap.h
+index a507fa8..f0f5a72 100644
+--- a/seed/maxgap.h
++++ b/seed/maxgap.h
+@@ -16,38 +16,50 @@ struct MaxGap {
+ /* ========================= MaxGap implementation  ========================= */
+ template <int P>
+ void MaxGap<P>::init(int n, int x) {
+-    for (int i = 0; i < P; ++i)
+-        mn[i] = mx[i] = -1;
+-    max_gap = 0;
+-
+     if (x != -1) {
++        for (int i = 0; i < P; ++i)
++            mn[i] = mx[i] = -1;
++        max_gap = 0;
++
+         int L = (n + P - 1) / P;
+         int pos = x / L;
+         mn[pos] = mx[pos] = x;
+-    }
++    } else
++        max_gap = -1;
+ }
+ 
+ 
+ template <int P>
+ void MaxGap<P>::join(MaxGap const& o) {
+-    int last = max_gap = -1;
+-    for (int i = 0; i < P; ++i) {
+-        if (o.mn[i] != -1) {
+-            if (mn[i] == -1) {
+-                mn[i] = o.mn[i];
+-                mx[i] = o.mx[i];
+-            } else {
+-                mn[i] = std::min(mn[i], o.mn[i]);
+-                mx[i] = std::max(mx[i], o.mx[i]);
++    if (max_gap != -1) {
++        int last = max_gap = -1;
++        for (int i = 0; i < P; ++i) {
++            if (o.mn[i] != -1) {
++                if (mn[i] == -1) {
++                    mn[i] = o.mn[i];
++                    mx[i] = o.mx[i];
++                } else {
++                    mn[i] = std::min(mn[i], o.mn[i]);
++                    mx[i] = std::max(mx[i], o.mx[i]);
++                }
++            }
++
++            if (mn[i] != -1) {
++                if (last == -1)
++                    last = mn[i];
++                max_gap =
++                    std::max(max_gap, std::max(mn[i] - last, mx[i] - mn[i]));
++                last = mx[i];
+             }
+         }
++    }
+ 
+-        if (mn[i] != -1) {
+-            if (last == -1)
+-                last = mn[i];
+-            max_gap = std::max(max_gap, std::max(mn[i] - last, mx[i] - mn[i]));
+-            last = mx[i];
++    else {
++        for (int i = 0; i < P; ++i) {
++            mn[i] = o.mn[i];
++            mx[i] = o.mx[i];
+         }
++        max_gap = o.max_gap;
+     }
+ }
+ #define MAXGAP_H
+diff --git a/seed/timetest/gen.py b/seed/timetest/gen.py
+index 2045965..4375773 100644
+--- a/seed/timetest/gen.py
++++ b/seed/timetest/gen.py
+@@ -27,7 +27,6 @@ def write_test(fname, test):
+ random.seed(42)
+ 
+ IDs = ['1e4', '3e4', '1e5', '3e5', '1e6']
+-IDs = ['5', '10', '20']
+ Ns = [int(float(x)) for x in IDs]
+ 
+ for ID, N in zip(IDs, Ns):
+diff --git a/seed/timetest/makefile b/seed/timetest/makefile
+index c14904a..87cadee 100644
+--- a/seed/timetest/makefile
++++ b/seed/timetest/makefile
+@@ -5,7 +5,7 @@ clean:
+ 	rm -f *.in *.out *.e
+ 
+ bin:
+-	make -C ..
++	make -B -C ..
+ 	cp ../seed_lin.e .
+ 	cp ../seed_nlogn.e .
+ 

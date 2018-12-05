@@ -9,6 +9,51 @@ def aaaaa(N):
     return 'a' * N
 
 
+def presuf(s):
+    n = len(s)
+    s = '$' + s
+    p = [0] * (n + 1)
+    w = 0
+    for i in xrange(2, n + 1):
+        while w != 0 and s[i] != s[w + 1]:
+            w = p[w]
+        if s[i] == s[w + 1]:
+            w += 1
+        p[i] = w
+
+    res = []
+    w = n
+    while w != 0:
+        w = p[w]
+        res.append(w)
+    return res
+
+
+def seed_test(N, seed):
+    res = seed
+    prefs = presuf(seed)
+    while len(res) < N + 20:
+        overlap = random.choice(prefs)
+        res += seed[overlap:]
+    return res[10:-10]
+
+
+def short_aba(N):
+    return seed_test(N, 100 * 'a' + 'b' + 100 * 'a')
+
+
+def short_rec(N):
+    return seed_test(N, rec(100))
+
+
+def long_aba(N):
+    return seed_test(N, (N // 10) * 'a' + 'b' + (N // 10) * 'a')
+
+
+def long_rec(N):
+    return seed_test(N, rec(N // 10))
+
+
 def rec(N):
     res = 'a'
     i = 1
@@ -33,3 +78,7 @@ for ID, N in zip(IDs, Ns):
     write_test('random%s.in' % ID, random_test(N))
     write_test('aaaaa%s.in' % ID, aaaaa(N))
     write_test('rec%s.in' % ID, rec(N))
+    write_test('short_aba%s.in' % ID, short_aba(N))
+    write_test('long_rec%s.in' % ID, long_rec(N))
+    write_test('long_aba%s.in' % ID, long_aba(N))
+    write_test('short_rec%s.in' % ID, short_rec(N))

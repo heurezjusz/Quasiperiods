@@ -9,4 +9,3 @@ do
 done
 
 python parse_report.py
-rm report.out -f
