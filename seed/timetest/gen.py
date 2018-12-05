@@ -27,7 +27,6 @@ def write_test(fname, test):
 random.seed(42)
 
 IDs = ['1e4', '3e4', '1e5', '3e5', '1e6']
-IDs = ['5', '10', '20']
 Ns = [int(float(x)) for x in IDs]
 
 for ID, N in zip(IDs, Ns):
