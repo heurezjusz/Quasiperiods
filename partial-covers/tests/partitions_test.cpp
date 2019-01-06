@@ -40,6 +40,7 @@ void ans() {
 int main() {
     scanf("%d", &N);
     P = new Partition(N);
+    new_label = N;
 
     for (int i = 1; i < N; ++i) {
         new_label++;
