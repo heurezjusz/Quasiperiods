@@ -22,6 +22,8 @@ def write_test(fname, test):
         f.write("\n")
 
 
+write_test("hand1.in", [(1, 2), (3, 5), (4, 3), (1, 3)])
+
 for i in [5, 10, 15, 20, 30, 50, 100, 1000]:
     write_test("line%d.in" % i, line(i))
     write_test("invline%d.in" % i, line(i)[::-1])

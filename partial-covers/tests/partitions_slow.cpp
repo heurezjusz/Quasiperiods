@@ -41,6 +41,7 @@ void ans() {
             printf("%d %d\n", el, next[el]);
         }
     }
+
     puts("NEXT");
     for (int i = 1; i <= N; ++i)
         printf("%d ", next[i]);

@@ -20,6 +20,9 @@ BIN = {
 
 TEST_DIR = {"partitions": "linetrees"}
 
+GENINPUT = []
+
+
 if len(sys.argv) != 2:
     print "Usage:", sys.argv[0], "PART1[,PART2,...]"
     print "Available parts are: ", ','.join(PARTS)

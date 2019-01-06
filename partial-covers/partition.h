@@ -27,6 +27,7 @@ struct Partition {
     int find(int x);
 
     /* joins sets [old_labels] as new set [new_label] filling [change_list] */
+/* assumption: all old_labels exists and are distinct */
     void union_(std::vector<int> const& old_labels, int new_label,
                 std::vector<Change>& change_list);
 

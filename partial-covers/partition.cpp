@@ -16,13 +16,14 @@ Partition::Partition(int n) : N(n), _union_id(0) {
 }
 
 
+/* assumption: all old_labels exists and are distinct */
 void Partition::union_(vector<int> const& old_labels, int new_label,
                        vector<Change>& change_list) {
     if ((int)label_to_set.size() <= new_label)
         label_to_set.resize(new_label + 1);
 
     int the_set = label_to_set[old_labels[0]];
-    if (old_labels.size() > 1) {
+    if (old_labels.size()) {
         ++_union_id;
         vector<int> raw_change_list;
         for (int i = 1; i < (int)old_labels.size(); ++i)
@@ -43,6 +44,7 @@ int Partition::find(int x) {
 }
 
 
+/* assuption: gets 2 non-empty, different sets */
 int Partition::_union(int a, int b, vector<int>& change_list) {
     if (sets[a].size() > sets[b].size())
         swap(a, b);
@@ -57,12 +59,14 @@ int Partition::_union(int a, int b, vector<int>& change_list) {
 
             if (*it != prev) {
                 // updating prev data
-                auto it_next = sets[b].upper_bound(prev);
-                if (it_next != sets[b].end()) {
-                    next[prev] = *it_next;
-                    if (visited[prev] != _union_id) {
-                        change_list.push_back(prev);
-                        visited[prev] = _union_id;
+                if (prev != -1) {
+                    auto it_next = sets[b].upper_bound(prev);
+                    if (it_next != sets[b].end()) {
+                        next[prev] = *it_next;
+                        if (visited[prev] != _union_id) {
+                            change_list.push_back(prev);
+                            visited[prev] = _union_id;
+                        }
                     }
                 }
 
@@ -79,14 +83,12 @@ int Partition::_union(int a, int b, vector<int>& change_list) {
     }
 
     // updating prev last time
-    if (prev != -1) {
-        auto it_next = sets[b].upper_bound(prev);
-        if (it_next != sets[b].end()) {
-            next[prev] = *it_next;
-            if (visited[prev] != _union_id) {
-                change_list.push_back(prev);
-                visited[prev] = _union_id;
-            }
+    auto it_next = sets[b].upper_bound(prev);
+    if (it_next != sets[b].end()) {
+        next[prev] = *it_next;
+        if (visited[prev] != _union_id) {
+            change_list.push_back(prev);
+            visited[prev] = _union_id;
         }
     }
 
