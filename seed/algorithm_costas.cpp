@@ -10,7 +10,16 @@ using namespace std;
 int N;
 vector<int> p;
 
-void kmp(vector<int> const& word) {}
+void kmp(vector<int> const& word) {
+    p.resize(N);
+    for (int w = 0, i = 1; i < N; ++i) {
+        while (w > 0 && word[i] != word[w])
+            w = p[w - 1];
+        if (word[i] == word[w])
+            w++;
+        p[i] = w;
+    }
+}
 
 
 struct Class {
@@ -207,20 +216,20 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
         printf("%d ", a);
     }
     puts("");
-    /*
-        kmp(word);
-        for (int i : p)
-            cout << i << " ";
-        cout << "\n";
 
-        /* easy seeds /
-        int period = N - p[N - 1];
-        for (int i = 0; i < period; i++) {
-            if (i + period > N)
-                break;
-            result.emplace_back(i, i + period - 1, N - 1);
-        }
-    */
+    kmp(word);
+    for (int i : p)
+        cout << i << " ";
+    cout << "\n";
+
+    /* easy seeds */
+    int period = N - p[N - 1];
+    for (int i = 0; i < period; i++) {
+        if (i + period > N)
+            break;
+        result.emplace_back(i, i + period - 1, N - 1);
+    }
+
     int max_letter = 0;
     for (int a : word)
         max_letter = max(a, max_letter);
