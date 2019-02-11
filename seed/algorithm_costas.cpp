@@ -59,12 +59,20 @@ struct Class {
 };
 
 
+struct SmallClass {
+    list<int> positions;
+    int id;
+
+    SmallClass(Class const& c) : positions(list<int>{c.positions}), id(c.id) {}
+};
+
+
 struct Partitioning {
     vector<Class> classes;
     vector<int> position_to_class;
     vector<list<int>::iterator> position_iterator;
 
-    vector<int> small_classes;
+    vector<SmallClass> small_classes;
     vector<int> last_subclass_from;
     vector<int> last_subclass_k;
     vector<int> has_subclasses;
@@ -93,9 +101,8 @@ struct Partitioning {
         N = word.size();
 
         // create empty classes
-        for (int i = 0; i < max_alph_size; ++i) {
-            small_classes.push_back(create_new_class(1));
-        }
+        for (int i = 0; i < max_alph_size; ++i)
+            int cid = create_new_class(1);
 
         // put positions to classes
         for (int i = 0; i < (int)word.size(); ++i) {
@@ -103,6 +110,10 @@ struct Partitioning {
             position_to_class.push_back(word[i]);
             position_iterator.push_back(it);
         }
+
+        // initialize small classes
+        for (int i = 0; i < max_alph_size; ++i)
+            small_classes.emplace_back(classes[i]);
     }
 
 
@@ -123,51 +134,32 @@ struct Partitioning {
         last_subclass_from.at(cid) = pid;
         int sid = create_new_class(k + 1);
         subclasses.at(cid).push_back(sid);
-        // printf("%d gets subclass %d\n", cid, sid);
 
         return sid;
     }
 
 
     void move_element(int x, int from, int to) {
-        // printf("move %d %d->%d\n", x, from, to);
         auto it = position_iterator[x];
         classes[from].register_decomposition(k);
         classes[from].positions.erase(it);
         position_iterator[x] = classes[to].append(x);
         position_to_class[x] = to;
-        /*
-                printf(">");
-                classes[from].print();
-                printf(">");
-                classes[to].print();
-          */
     }
 
 
     void do_a_step() {
         // paritioning
-        // puts("=== PARTITION ===");
-        for (int pid : small_classes) {
-            //  printf("small class %d\n", pid);
-            if (classes[pid].size() + new_class_id >= (int)classes.capacity())
-                classes.reserve(classes.capacity() * 2);
-
-            for (auto i : classes[pid].positions) {
-                //   printf("(%d|%d)\n", classes[pid].id, i);
-                //   printf("|");
-                //   classes[pid].print();
-
+        for (auto P : small_classes) {
+            for (auto i : P.positions) {
                 if (i == 0)
                     continue;
 
                 int cid = position_to_class[i - 1];
-                int sid = get_subclass_id(cid, pid);
+                int sid = get_subclass_id(cid, P.id);
                 move_element(i - 1, cid, sid);
             }
         }
-
-        // puts("=== END PARTITION ===");
 
         small_classes.clear();
         // choice of new small classes
@@ -186,7 +178,7 @@ struct Partitioning {
                 if (classes[sid].size() == bestsize)
                     bestsize = -1;
                 else
-                    small_classes.push_back(sid);
+                    small_classes.emplace_back(classes[sid]);
 
             subclasses[cid].clear();
         }
