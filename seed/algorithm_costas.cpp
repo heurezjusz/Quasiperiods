@@ -10,25 +10,15 @@ using namespace std;
 int N;
 vector<int> p;
 
-void kmp(vector<int> const& word) {
-    p.resize(N);
-    for (int len = 0, i = 1; i <= N; ++i) {
-        while (len > 0 && word[i] != word[len])
-            len = p[len - 1];
-        if (word[i] == word[len])
-            len++;
-        p[i] = len;
-    }
-}
+void kmp(vector<int> const& word) {}
 
 
 struct Class {
     list<int> positions;
     int id, k0;
-    bool decomposed;
+    bool decomposed, printed;
 
-    Class(int id, int k0)
-        : id(id), k0(k0), decomposed(false), has_subclasses(false) {}
+    Class(int id, int k0) : id(id), k0(k0), decomposed(false), printed(false) {}
 
     int size() {
         return positions.size();
@@ -57,6 +47,15 @@ struct Class {
         it--;
         return it;
     }
+
+
+    void print() {
+        printf("%d:", id);
+        for (int p : positions)
+            printf(" %d", p);
+        puts("");
+        printed = true;
+    }
 };
 
 
@@ -71,7 +70,7 @@ struct Partitioning {
     vector<int> has_subclasses;
     vector<vector<int>> subclasses;
 
-    int new_class_id, max_alph_size, k;
+    int new_class_id, max_alph_size, k, N;
 
 
     Partitioning(int max_alph_size)  // assumes letters 0...max_alph_size-1
@@ -91,6 +90,8 @@ struct Partitioning {
 
 
     void create(vector<int> const& word) {
+        N = word.size();
+
         // create empty classes
         for (int i = 0; i < max_alph_size; ++i) {
             small_classes.push_back(create_new_class(1));
@@ -111,37 +112,52 @@ struct Partitioning {
 
 
     int get_subclass_id(int cid, int pid) {
-        if (last_subclass_from[cid] == pid)
-            return subclasses[cid].back();
+        if (last_subclass_from.at(cid) == pid)
+            return subclasses.at(cid).back();
 
         // we need to create subclass
         if (last_subclass_k[cid] != k)
             has_subclasses.push_back(cid);
 
-        last_subclass_k[cid] = k;
-        last_subclass_from[cid] = pid;
+        last_subclass_k.at(cid) = k;
+        last_subclass_from.at(cid) = pid;
         int sid = create_new_class(k + 1);
+        subclasses.at(cid).push_back(sid);
+        // printf("%d gets subclass %d\n", cid, sid);
 
-        subclasses[cid].push_back(sid);
         return sid;
     }
 
 
     void move_element(int x, int from, int to) {
+        // printf("move %d %d->%d\n", x, from, to);
         auto it = position_iterator[x];
         classes[from].register_decomposition(k);
         classes[from].positions.erase(it);
         position_iterator[x] = classes[to].append(x);
         position_to_class[x] = to;
+        /*
+                printf(">");
+                classes[from].print();
+                printf(">");
+                classes[to].print();
+          */
     }
 
 
     void do_a_step() {
         // paritioning
+        // puts("=== PARTITION ===");
         for (int pid : small_classes) {
-            Class& P = classes[pid];
+            //  printf("small class %d\n", pid);
+            if (classes[pid].size() + new_class_id >= (int)classes.capacity())
+                classes.reserve(classes.capacity() * 2);
 
-            for (int i : P.positions) {
+            for (auto i : classes[pid].positions) {
+                //   printf("(%d|%d)\n", classes[pid].id, i);
+                //   printf("|");
+                //   classes[pid].print();
+
                 if (i == 0)
                     continue;
 
@@ -150,6 +166,8 @@ struct Partitioning {
                 move_element(i - 1, cid, sid);
             }
         }
+
+        // puts("=== END PARTITION ===");
 
         small_classes.clear();
         // choice of new small classes
@@ -177,21 +195,49 @@ struct Partitioning {
 
         k += 1;
     }
+
+
+    void print() {
+        printf("-- %d --\n", k);
+        for (int i = 0; i < N; ++i)
+            if (!classes[position_to_class[i]].printed)
+                classes[position_to_class[i]].print();
+        for (int i = 0; i < N; ++i)
+            classes[position_to_class[i]].printed = false;
+    }
 };
 
 
 void algorithm(vector<int>& word, vector<Pack>& result) {
     N = word.size();
-    kmp(word);
-    for (int i : p)
-        cout << i << " ";
-    cout << "\n";
+    for (int& a : word) {
+        a -= 'a';
+        printf("%d ", a);
+    }
+    puts("");
+    /*
+        kmp(word);
+        for (int i : p)
+            cout << i << " ";
+        cout << "\n";
 
-    /* easy seeds */
-    int period = N - p[N - 1];
-    for (int i = 0; i < period; i++) {
-        if (i + period > N)
-            break;
-        result.emplace_back(i, i + period - 1, N - 1);
+        /* easy seeds /
+        int period = N - p[N - 1];
+        for (int i = 0; i < period; i++) {
+            if (i + period > N)
+                break;
+            result.emplace_back(i, i + period - 1, N - 1);
+        }
+    */
+    int max_letter = 0;
+    for (int a : word)
+        max_letter = max(a, max_letter);
+
+    Partitioning partitioning(max_letter + 1);
+    partitioning.create(word);
+    partitioning.print();
+    while (!partitioning.end()) {
+        partitioning.do_a_step();
+        partitioning.print();
     }
 }
