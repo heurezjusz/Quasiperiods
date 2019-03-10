@@ -1,16 +1,24 @@
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <list>
 #include <vector>
 
 #include "algorithm.h"
+#include "maxgap_costas.h"
 #include "pack.h"
 using namespace std;
 
 int N;
+vector<int> B;
+vector<int> F;
+vector<int> MF;
 vector<int> p;
+vector<Pack> global_res;
+int global_period_size;
 
-void kmp(vector<int> const& word) {
+
+void kmp(vector<int> const &word) {
     p.resize(N);
     for (int w = 0, i = 1; i < N; ++i) {
         while (w > 0 && word[i] != word[w])
@@ -22,57 +30,89 @@ void kmp(vector<int> const& word) {
 }
 
 
-struct Class {
-    list<int> positions;
+void kmp_B(vector<int> const &word) {
+    B.resize(N);
+    for (int w = 0, i = N - 2; i >= 0; --i) {
+        while (w > 0 && word[i] != word[N - 1 - w])
+            w = B[N - 1 - w + 1];
+        if (word[i] == word[N - 1 - w])
+            w++;
+        B[i] = w;
+    }
+
+    // for (int i = 0; i < N; ++i)
+    //     printf("%d ", B[i]);
+    // puts("");
+}
+
+
+void kmp_F(vector<int> const &word) {
+    F.resize(N);
+    MF.resize(N + 1);
+    for (int w = 0, i = 1; i < N; ++i) {
+        while (w > 0 && word[i] != word[w])
+            w = F[w - 1];
+        if (word[i] == word[w])
+            w++;
+        F[i] = w;
+        MF[i + 1 - F[i]] = i;
+    }
+    for (int i = 1; i < N; ++i)
+        MF[i] = max(MF[i - 1], MF[i]);
+}
+
+
+struct Class : Maxgap {
     int id, k0;
     bool decomposed, printed;
 
     Class(int id, int k0) : id(id), k0(k0), decomposed(false), printed(false) {}
 
-    int size() {
-        return positions.size();
-    }
-
-
-    void register_decomposition(int /*k_last*/) {
+    void register_decomposition(int k_last) {
         if (decomposed)
             return;
         decomposed = true;
 
-        // TODO: costas stuff
-    }
+        // costas stuff
+        int e1 = positions.front() + 1, et = positions.back() + 1;
+        int k = (N - et + 1) - B[et - 1];  // length
+        int s = (MF[k] + 1) + 1 - e1;      // length
 
+        // printf("%d: MIN len: %d\n", id, k);
+        // printf("%d: MAX len: %d\n", id, s);
+
+        k = max(maxgap(), max(k, k0));
+        s = min(min(k_last, s), global_period_size);
+        if (k <= s) {
+            e1 -= 1;
+            global_res.emplace_back(e1, e1 + k - 1, e1 + s - 1);
+            // printf("<%d:%d>, (%d %d %d)\n", k, s, e1, e1 + k - 1, e1 + s -
+            // 1);
+        }
+    }
 
     void reopen(int _k0) {
         k0 = _k0;
         decomposed = false;
     }
 
-
-    list<int>::iterator append(int x) {
-        assert(!decomposed);
-        positions.push_back(x);
-        auto it = positions.end();
-        it--;
-        return it;
-    }
-
-
     void print() {
-        printf("%d:", id);
+        printf("%d: {", id);
         for (int p : positions)
             printf(" %d", p);
-        puts("");
+        printf(" } maxgap: %d\n", maxgap());
         printed = true;
     }
 };
 
 
 struct SmallClass {
+    /* represents "small class" from crochmere partitioning. Its a list with ID
+     */
     list<int> positions;
     int id;
 
-    SmallClass(Class const& c) : positions(list<int>{c.positions}), id(c.id) {}
+    SmallClass(Class const &c) : positions(list<int>{c.positions}), id(c.id) {}
 };
 
 
@@ -87,8 +127,8 @@ struct Partitioning {
     vector<int> has_subclasses;
     vector<vector<int>> subclasses;
 
-    int new_class_id, max_alph_size, k, N;
 
+    int new_class_id, max_alph_size, k, N;
 
     Partitioning(int max_alph_size)  // assumes letters 0...max_alph_size-1
         : new_class_id(0),
@@ -96,7 +136,7 @@ struct Partitioning {
           k(1) {}
 
 
-    int create_new_class(int k0) {
+    int _create_new_class(int k0) {
         int id = new_class_id;
         classes.emplace_back(new_class_id++, k0);
         subclasses.emplace_back();
@@ -105,13 +145,12 @@ struct Partitioning {
         return id;
     }
 
-
-    void create(vector<int> const& word) {
+    void _create(vector<int> const &word) {
         N = word.size();
 
         // create empty classes
         for (int i = 0; i < max_alph_size; ++i)
-            int cid = create_new_class(1);
+            _create_new_class(1);
 
         // put positions to classes
         for (int i = 0; i < (int)word.size(); ++i) {
@@ -131,31 +170,29 @@ struct Partitioning {
     }
 
 
-    int get_subclass_id(int cid, int pid) {
+    int _get_subclass_id(int cid, int pid) {
         if (last_subclass_from.at(cid) == pid)
             return subclasses.at(cid).back();
 
-        // we need to create subclass
+        // we need to _create subclass
         if (last_subclass_k[cid] != k)
             has_subclasses.push_back(cid);
 
         last_subclass_k.at(cid) = k;
         last_subclass_from.at(cid) = pid;
-        int sid = create_new_class(k + 1);
+        int sid = _create_new_class(k + 1);
         subclasses.at(cid).push_back(sid);
 
         return sid;
     }
 
-
-    void move_element(int x, int from, int to) {
+    void _move_element(int x, int from, int to) {
         auto it = position_iterator[x];
         classes[from].register_decomposition(k);
-        classes[from].positions.erase(it);
+        classes[from].erase(it);
         position_iterator[x] = classes[to].append(x);
         position_to_class[x] = to;
     }
-
 
     void do_a_step() {
         // paritioning
@@ -165,8 +202,8 @@ struct Partitioning {
                     continue;
 
                 int cid = position_to_class[i - 1];
-                int sid = get_subclass_id(cid, P.id);
-                move_element(i - 1, cid, sid);
+                int sid = _get_subclass_id(cid, P.id);
+                _move_element(i - 1, cid, sid);
             }
         }
 
@@ -198,6 +235,15 @@ struct Partitioning {
     }
 
 
+    void kill(int k_last) {
+        printf("KILL %d\n", k_last);
+        for (int i = 0; i < N; ++i) {
+            if (!classes[position_to_class[i]].decomposed)
+                classes[position_to_class[i]].register_decomposition(k_last);
+        }
+    }
+
+
     void print() {
         printf("-- %d --\n", k);
         for (int i = 0; i < N; ++i)
@@ -209,18 +255,8 @@ struct Partitioning {
 };
 
 
-void algorithm(vector<int>& word, vector<Pack>& result) {
-    N = word.size();
-    for (int& a : word) {
-        a -= 'a';
-        printf("%d ", a);
-    }
-    puts("");
-
+void easy_seeds(vector<int> &word, vector<Pack> &result) {
     kmp(word);
-    for (int i : p)
-        cout << i << " ";
-    cout << "\n";
 
     /* easy seeds */
     int period = N - p[N - 1];
@@ -230,15 +266,70 @@ void algorithm(vector<int>& word, vector<Pack>& result) {
         result.emplace_back(i, i + period - 1, N - 1);
     }
 
-    int max_letter = 0;
-    for (int a : word)
+    // printf("perdiod = %d\n", period);
+}
+
+
+void hard_seeds(vector<int> &word, vector<Pack> &result) {
+    kmp_B(word);
+    kmp_F(word);
+    result.swap(global_res);
+
+    global_period_size = N - B[0];
+    assert(global_period_size == N - F[N - 1]);
+
+    int max_letter = 0, min_letter = word[0];
+    for (int a : word) {
         max_letter = max(a, max_letter);
+        min_letter = min(a, min_letter);
+    }
+    for (int &a : word)
+        a -= min_letter;
+    max_letter -= min_letter;
+
+    // for (int a : word) {
+    //     printf("%c", 'a' + a);
+    // }
+    // puts("");
+    // for (int i = 0; i < N; ++i) {
+    //     printf("%d", i % 10);
+    // }
+    // puts("");
+
 
     Partitioning partitioning(max_letter + 1);
-    partitioning.create(word);
-    partitioning.print();
-    while (!partitioning.end()) {
+    partitioning._create(word);
+    // partitioning.print();
+
+    for (int i = 0; i < global_period_size && !partitioning.end(); i++) {
         partitioning.do_a_step();
-        partitioning.print();
+        // partitioning.print();
     }
+    if (!partitioning.end())
+        partitioning.kill(global_period_size - 1);
+
+    result.swap(global_res);
+}
+
+
+void reverse_packs(vector<Pack> &packs) {
+    for (auto &p : packs) {
+        p.i = N - 1 - p.i;
+        p.j1 = N - 1 - p.j1;
+        p.j2 = N - 1 - p.j2;
+    }
+}
+
+
+void algorithm(vector<int> &word, vector<Pack> &result) {
+    N = word.size();
+    easy_seeds(word, result);
+    hard_seeds(word, result);
+
+    reverse(word.begin(), word.end());
+    vector<Pack> reversed_packs;
+    hard_seeds(word, reversed_packs);
+    for (auto const &p : reversed_packs)
+        // i, j1, j2 -> j, i2, i1
+        result.emplace_back(N - 1 - p.i, N - 1 - p.j1, N - 1 - p.j2);
 }

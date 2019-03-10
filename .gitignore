@@ -3,3 +3,4 @@ bigdata/
 *.e
 *.o
 *.swp
+*/.vscode/*
