@@ -173,6 +173,14 @@ seeds_vs: seeds_lin.e seeds_nlogn.e packs_chk_combine.e
 seeds_vs_big: seeds_vs
 .PHONY: seeds_vs_big
 
+seeds_costas_slow.e: make_sup
+	cp ../seed_costas_slow.e seeds_costas_slow.e
+
+#target: seeds_costas_slow
+seeds_costas_slow: packs_chk_costas.e seeds_costas_slow.e seeds_nlogn.e
+.PHONY: seeds_costas_slow
+
+
 
 #target: *.e
 %.e: %.o

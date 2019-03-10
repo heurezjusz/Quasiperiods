@@ -9,6 +9,8 @@
 #include "pack.h"
 using namespace std;
 
+// #define DEB
+
 int N;
 vector<int> B;
 vector<int> F;
@@ -49,6 +51,9 @@ void kmp_B(vector<int> const &word) {
 void kmp_F(vector<int> const &word) {
     F.resize(N);
     MF.resize(N + 1);
+
+    for (int i = 1; i <= N; ++i)
+        MF[i] = 0;
     for (int w = 0, i = 1; i < N; ++i) {
         while (w > 0 && word[i] != word[w])
             w = F[w - 1];
@@ -57,7 +62,7 @@ void kmp_F(vector<int> const &word) {
         F[i] = w;
         MF[i + 1 - F[i]] = i;
     }
-    for (int i = 1; i < N; ++i)
+    for (int i = 1; i <= N; ++i)
         MF[i] = max(MF[i - 1], MF[i]);
 }
 
@@ -78,16 +83,18 @@ struct Class : Maxgap {
         int k = (N - et + 1) - B[et - 1];  // length
         int s = (MF[k] + 1) + 1 - e1;      // length
 
-        // printf("%d: MIN len: %d\n", id, k);
-        // printf("%d: MAX len: %d\n", id, s);
-
+#ifdef DEB
+        printf("%d: MIN len: %d\n", id, k);
+        printf("%d: MAX len: %d\n", id, s);
+#endif
         k = max(maxgap(), max(k, k0));
-        s = min(min(k_last, s), global_period_size);
+        s = min(min(k_last, s), global_period_size - 1);
         if (k <= s) {
             e1 -= 1;
             global_res.emplace_back(e1, e1 + k - 1, e1 + s - 1);
-            // printf("<%d:%d>, (%d %d %d)\n", k, s, e1, e1 + k - 1, e1 + s -
-            // 1);
+#ifdef DEB
+            printf("<%d:%d>, (%d %d %d)\n", k, s, e1, e1 + k - 1, e1 + s - 1);
+#endif
         }
     }
 
@@ -96,11 +103,12 @@ struct Class : Maxgap {
         decomposed = false;
     }
 
+
     void print() {
         printf("%d: {", id);
         for (int p : positions)
             printf(" %d", p);
-        printf(" } maxgap: %d\n", maxgap());
+        printf(" }%s maxgap: %d\n", decomposed ? "*" : "", maxgap());
         printed = true;
     }
 };
@@ -236,7 +244,9 @@ struct Partitioning {
 
 
     void kill(int k_last) {
+#ifdef DEB
         printf("KILL %d\n", k_last);
+#endif
         for (int i = 0; i < N; ++i) {
             if (!classes[position_to_class[i]].decomposed)
                 classes[position_to_class[i]].register_decomposition(k_last);
@@ -266,7 +276,9 @@ void easy_seeds(vector<int> &word, vector<Pack> &result) {
         result.emplace_back(i, i + period - 1, N - 1);
     }
 
-    // printf("perdiod = %d\n", period);
+#ifdef DEB
+    printf("perdiod = %d\n", period);
+#endif
 }
 
 
@@ -287,26 +299,47 @@ void hard_seeds(vector<int> &word, vector<Pack> &result) {
         a -= min_letter;
     max_letter -= min_letter;
 
-    // for (int a : word) {
-    //     printf("%c", 'a' + a);
-    // }
-    // puts("");
-    // for (int i = 0; i < N; ++i) {
-    //     printf("%d", i % 10);
-    // }
-    // puts("");
+#ifdef DEB
+    for (int a : word)
+        printf("%c", 'a' + a);
+    puts("");
 
+    for (int i = 0; i < N; ++i)
+        printf("%d", i % 10);
+    puts("");
+
+    for (int i = 0; i < N; ++i)
+        printf("%d", F[i]);
+    puts("");
+
+    for (int i = 0; i < N; ++i)
+        printf("%d", i + 1 - F[i]);
+    puts("");
+
+    for (int i = 0; i <= N; ++i)
+        printf("%d", MF[i]);
+    puts("");
+
+    for (int i = 0; i < N; ++i)
+        printf("%d", B[i]);
+    puts("");
+
+#endif
 
     Partitioning partitioning(max_letter + 1);
     partitioning._create(word);
-    // partitioning.print();
+#ifdef DEB
+    partitioning.print();
+#endif
 
     for (int i = 0; i < global_period_size && !partitioning.end(); i++) {
         partitioning.do_a_step();
-        // partitioning.print();
+#ifdef DEB
+        partitioning.print();
+#endif
     }
-    if (!partitioning.end())
-        partitioning.kill(global_period_size - 1);
+    // if (!partitioning.end())
+    partitioning.kill(global_period_size - 1);
 
     result.swap(global_res);
 }
