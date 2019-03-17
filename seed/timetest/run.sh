@@ -6,6 +6,7 @@ do
     echo "$i" >> report.out
     \time -f "%e" ./seed_lin.e < $i > lin.out 2>> report.out
     \time -f "%e" ./seed_nlogn.e < $i > nlogn.out 2>> report.out
+    \time -f "%e" ./seed_costas_slow.e < $i > costas.out 2>> report.out
 done
 
 python parse_report.py
