@@ -5,7 +5,7 @@ using namespace std;
 
 
 /* seed of length 6, all possibilities of 1 and 2 prefix-sufixes
-    tested on 10 words of length 15 and 20
+    tested on 5 words of length 15 and 20
 */
 
 void write_to_file(string fname, vector<int> word) {
@@ -23,7 +23,7 @@ void write_to_file(string fname, vector<int> word) {
 int main() {
     srand(1);
 
-    for (int v = 1; v <= 10; ++v) {
+    for (int v = 1; v <= 5; ++v) {
         for (int i = 1; i < 6; ++i) {
             write_to_file(
                 "one_" + to_string(i) + "_15_v" + to_string(v) + ".in",

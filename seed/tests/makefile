@@ -216,6 +216,14 @@ seeds_costas_slow_int_alot: seeds_costas_int
 .PHONY: seeds_costas_slow_int_alot
 
 
+#target: seeds_vs_int_alot
+seeds_lin_int.e: make_sup
+	cp ../seed_lin_int.e seeds_lin_int.e
+
+seeds_vs_int_alot: seeds_nlogn_int.e seeds_lin_int.e packs_chk_costas_int.e
+.PHONY: seeds_costas_int_alot
+
+
 #target: *.e
 %.e: %.o
 	g++ $^ -o $@ $(LFLAGS)
