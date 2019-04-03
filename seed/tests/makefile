@@ -190,6 +190,23 @@ seeds_costas: packs_chk_costas.e seeds_costas.e seeds_nlogn.e
 .PHONY: seeds_costas
 
 
+#target: seeds_costas_int
+seeds_nlogn_int.e: make_sup
+	cp ../seed_nlogn_int.e seeds_nlogn_int.e
+
+seeds_costas_int.e: make_sup
+	cp ../seed_costas_int.e seeds_costas_int.e
+
+seeds_costas_int: packs_chk_costas_int.e seeds_costas_int.e seeds_nlogn_int.e
+.PHONY: seeds_costas_int
+
+#target: seeds_costas_slow_int
+seeds_costas_slow_int.e: make_sup
+	cp ../seed_costas_slow_int.e seeds_costas_slow_int.e
+
+seeds_costas_slow_int: packs_chk_costas_int.e seeds_costas_slow_int.e seeds_nlogn_int.e
+.PHONY: seeds_costas_slow_int
+
 
 #target: *.e
 %.e: %.o
