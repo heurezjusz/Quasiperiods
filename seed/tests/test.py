@@ -23,6 +23,7 @@ PARTS = sorted([
     "seeds_vs",
     "seeds_vs_big",
     "seeds_costas_slow",
+    "seeds_costas",
 ])
 
 CHECKER = {
@@ -44,6 +45,7 @@ CHECKER = {
     "seeds_vs": "packs_chk_combine.e",
     "seeds_vs_big": "packs_chk_combine.e",
     "seeds_costas_slow": "packs_chk_costas.e",
+    "seeds_costas": "packs_chk_costas.e",
 }
 
 CORRECT = {
@@ -64,7 +66,8 @@ CORRECT = {
     "seeds_nlogn": "seeds_slow.py",
     "seeds_vs": "seeds_nlogn.e",
     "seeds_vs_big": "seeds_nlogn.e",
-    "seeds_costas_slow": "seeds_nlogn.e"
+    "seeds_costas_slow": "seeds_nlogn.e",
+    "seeds_costas": "seeds_nlogn.e",
 }
 
 BIN = {
@@ -85,7 +88,8 @@ BIN = {
     "seeds_nlogn": ["seeds_nlogn.e"],
     "seeds_vs": ["seeds_lin.e"],
     "seeds_vs_big": ["seeds_lin.e"],
-    "seeds_costas_slow": ["seeds_costas_slow.e"]
+    "seeds_costas_slow": ["seeds_costas_slow.e"],
+    "seeds_costas": ["seeds_costas.e"],
 }
 
 TEST_DIR = {
@@ -107,6 +111,7 @@ TEST_DIR = {
     "seeds_vs": "words",
     "seeds_vs_big": "bigwords",
     "seeds_costas_slow": "smallwords",
+    "seeds_costas": "smallwords",
 }
 
 GENINPUT = ["bigwords"]
