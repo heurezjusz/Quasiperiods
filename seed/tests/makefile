@@ -207,6 +207,14 @@ seeds_costas_slow_int.e: make_sup
 seeds_costas_slow_int: packs_chk_costas_int.e seeds_costas_slow_int.e seeds_nlogn_int.e
 .PHONY: seeds_costas_slow_int
 
+#target: seeds_costas_int_alot
+seeds_costas_int_alot: seeds_costas_int
+.PHONY: seeds_costas_int_alot
+
+#target: seeds_costas_slow_int_alot
+seeds_costas_slow_int_alot: seeds_costas_int
+.PHONY: seeds_costas_slow_int_alot
+
 
 #target: *.e
 %.e: %.o

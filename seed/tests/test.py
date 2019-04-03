@@ -24,8 +24,10 @@ PARTS = sorted([
     "seeds_vs_big",
     "seeds_costas",
     "seeds_costas_int",
+    "seeds_costas_int_alot",
     "seeds_costas_slow",
     "seeds_costas_slow_int",
+    "seeds_costas_slow_int_alot",
 ])
 
 CHECKER = {
@@ -48,8 +50,10 @@ CHECKER = {
     "seeds_vs_big": "packs_chk_combine.e",
     "seeds_costas": "packs_chk_costas.e",
     "seeds_costas_int": "packs_chk_costas_int.e",
+    "seeds_costas_int_alot": "packs_chk_costas_int.e",
     "seeds_costas_slow": "packs_chk_costas.e",
     "seeds_costas_slow_int": "packs_chk_costas_int.e",
+    "seeds_costas_slow_int_alot": "packs_chk_costas_int.e",
 }
 
 CORRECT = {
@@ -72,8 +76,10 @@ CORRECT = {
     "seeds_vs_big": "seeds_nlogn.e",
     "seeds_costas": "seeds_nlogn.e",
     "seeds_costas_int": "seeds_nlogn_int.e",
+    "seeds_costas_int_alot": "seeds_nlogn_int.e",
     "seeds_costas_slow": "seeds_nlogn.e",
     "seeds_costas_slow_int": "seeds_nlogn_int.e",
+    "seeds_costas_slow_int_alot": "seeds_nlogn_int.e",
 }
 
 BIN = {
@@ -96,8 +102,10 @@ BIN = {
     "seeds_vs_big": ["seeds_lin.e"],
     "seeds_costas": ["seeds_costas.e"],
     "seeds_costas_int": ["seeds_costas_int.e"],
+    "seeds_costas_int_alot": ["seeds_costas_int.e"],
     "seeds_costas_slow": ["seeds_costas_slow.e"],
     "seeds_costas_slow_int": ["seeds_costas_slow_int.e"],
+    "seeds_costas_slow_int_alot": ["seeds_costas_slow_int.e"],
 }
 
 TEST_DIR = {
@@ -120,11 +128,13 @@ TEST_DIR = {
     "seeds_vs_big": "bigwords",
     "seeds_costas": "smallwords",
     "seeds_costas_int": "small_intwords",
+    "seeds_costas_int_alot": "intwords_alot",
     "seeds_costas_slow": "smallwords",
     "seeds_costas_slow_int": "small_intwords",
+    "seeds_costas_slow_int_alot": "intwords_alot",
 }
 
-GENINPUT = ["bigwords"]
+GENINPUT = ["bigwords", "small_intwords", "intwords_alot"]
 
 if len(sys.argv) != 2:
     print "Usage:", sys.argv[0], "PART1[,PART2,...]"

@@ -38,6 +38,7 @@ int get_all(set<string>& s, vector<int>& word, const char* fname) {
     return N;
 }
 
+
 void print_set_diff(set<string>& s1, set<string>& s2) {
     cout << "diffs:\n";
 

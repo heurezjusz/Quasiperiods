@@ -2,6 +2,7 @@
 #include "sommer.h"
 
 #include <algorithm>
+#include <cstdio>
 using namespace std;
 
 
@@ -34,15 +35,26 @@ vector<int> gen_word(int N, int seed_len, vector<int> possible_presuf) {
         occurences.pop_back();
     reverse(occurences.begin(), occurences.end());
 
+    // printf("occurences\n");
+    // for (int o : occurences)
+    //     printf("%d ", o);
+    // puts("");
+
     vector<Rownosc> R;
     for (int i = 1; i < (int)occurences.size() - 2; i++)
         R.emplace_back(occurences[i] + 1, occurences[i + 1] + 1, seed_len);
 
     int first_part_len = seed_len + occurences[0];
-    R.emplace_back(1, occurences[1] + 1, first_part_len);
+    R.emplace_back(1, occurences[1] + 1 + seed_len - first_part_len,
+                   first_part_len);
 
     int last_part_len = N - occurences.back();
     R.emplace_back(occurences[1] + 1, occurences.back() + 1, last_part_len);
+
+    // for (auto r : R)
+    //     printf("[%d %d] == [%d %d]\n", r.i - 1, r.i + r.len - 2, r.j - 1,
+    //            r.j + r.len - 2);
+    // puts("");
 
     Solution s;
     s.main(N, R, result);

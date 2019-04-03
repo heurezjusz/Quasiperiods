@@ -38,5 +38,7 @@ void Maxgap::erase(std::list<int>::iterator it) {
 
 
 int Maxgap::maxgap() {
+    if (size() <= 1)
+        return 0;
     return maxgap_;
 }

@@ -30,4 +30,7 @@ int main() {
     write_to_file("simple_big3.in", gen_word(200, 30, {6, 18}));
     write_to_file("simple_big4.in", gen_word(200, 20, {2, 4, 9}));
     write_to_file("simple_big5.in", gen_word(200, 90, {5, 10, 15, 23}));
+
+    write_to_file("special1.in",
+                  {1, 2, 3, 1, 2, 3, 1, 4, 5, 1, 2, 3, 1, 4, 5, 1, 2, 3, 1, 4});
 }
