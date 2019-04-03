@@ -1,13 +1,13 @@
 include makefile.inc
 
-all: seed_lin.e seed_nlogn.e seed_costas_slow.e
+all: seed_lin.e seed_nlogn.e seed_costas_slow.e seed_costas.e
 
 OBJS = combine.o pack.o ukkonen.o lcands.o main.o
 OBJS_N = maxgap.o rmcands.o rmcands_lens.o rmcands_16.o algorithm.o $(OBJS)
 OBJS_NLOGN = maxgap_nlogn.o rmcands_nlogn.o algorithm_nlogn.o $(OBJS)
 
-OBJS_COSTAS = main.o pack.o
-OBJS_COSTAS_SLOW = $(OBJS_COSTAS) maxgap_costas_nlogn.o algorithm_costas_slow.o
+OBJS_COSTAS = main.o pack.o maxgap_costas.o algorithm_costas.o
+OBJS_COSTAS_SLOW = main.o pack.o maxgap_costas_nlogn.o algorithm_costas_slow.o
 
 HEADERS = $(wildcard *.h)
 
@@ -19,6 +19,9 @@ rmcands_16.o: rmcands.cpp rmcands16.h
 	g++ $< $(CXXFLAGS) -DMX16 -c -o $@
 
 maxgap_costas_nlogn.o: maxgap_costas_nlogn.cpp maxgap_costas.h
+	g++ $< $(CXXFLAGS) -c -o $@
+
+maxgap_costas.o: maxgap_costas.cpp maxgap_costas.h
 	g++ $< $(CXXFLAGS) -c -o $@
 
 
@@ -47,6 +50,10 @@ seed_nlogn.e: $(OBJS_NLOGN) $(HEADERS)
 
 seed_costas_slow.e: $(OBJS_COSTAS_SLOW) $(HEADERS)
 	g++ $(OBJS_COSTAS_SLOW) -o $@ $(LFLAGS)
+
+seed_costas.e: $(OBJS_COSTAS) $(HEADERS)
+	g++ $(OBJS_COSTAS) -o $@ $(LFLAGS)
+
 
 clean:
 	rm -rf *.o *.e

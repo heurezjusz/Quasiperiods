@@ -19,9 +19,8 @@ struct Maxgap {
 
 #ifdef MXGAP_NLOGN
     std::multiset<int> gaps;
-
-
 #else
+    int maxgap_;
 #endif
 };
 
