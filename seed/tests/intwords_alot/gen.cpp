@@ -8,6 +8,10 @@ using namespace std;
     tested on 5 words of length 15 and 20
 */
 
+
+/*
+    aaand 100 tests with N=200, seed=32, 2 or 3 random prfix-sufix
+*/
 void write_to_file(string fname, vector<int> word) {
     printf("writing %s\n", fname.c_str());
 
@@ -19,6 +23,19 @@ void write_to_file(string fname, vector<int> word) {
     fclose(f);
 }
 
+
+int randint(int a, int b) {
+    return a + rand() % (b - a + 1);
+}
+
+
+vector<int> random_test() {
+    vector<int> presuf;
+    int PS = randint(2, 3);
+    for (int _ = 0; _ < PS; ++_)
+        presuf.push_back(randint(1, 16));
+    return gen_word(200, 32, presuf);
+}
 
 int main() {
     srand(1);
@@ -41,5 +58,9 @@ int main() {
                               gen_word(20, 6, {i, j}));
             }
         }
+    }
+
+    for (int id = 0; id < 100; ++id) {
+        write_to_file("spam" + to_string(id) + ".in", random_test());
     }
 }

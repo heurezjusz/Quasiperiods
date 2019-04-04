@@ -2,6 +2,10 @@
 #include "maxgap_costas.h"
 using namespace std;
 
+
+Maxgap::Maxgap() {}
+
+
 int Maxgap::size() {
     return positions.size();
 }

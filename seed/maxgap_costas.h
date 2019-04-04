@@ -8,6 +8,8 @@
 struct Maxgap {
     std::list<int> positions;
 
+    Maxgap();
+
     int size();
 
     std::list<int>::iterator append(int x);
