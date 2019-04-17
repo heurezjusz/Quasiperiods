@@ -18,9 +18,9 @@ BIN = {
     ["partitions.e", "partitions_rand_labels.e", "partitions_rand_renames.e"],
 }
 
-TEST_DIR = {"partitions": "linetrees"}
+TEST_DIR = {"partitions": "trees"}
 
-GENINPUT = []
+GENINPUT = ["trees"]
 
 
 if len(sys.argv) != 2:
@@ -66,22 +66,22 @@ def test_part(part):
     safe_exec('make ' + part)
 
     ok, bad = 0, 0
+    tst = TEST_DIR[part]
+    corr = CORRECT[part]
+    chk = CHECKER[part]
+
+    if tst in GENINPUT:
+        print_info("generating tests")
+        safe_exec("make -C %s ingen" % (tst))
 
     for sol in BIN[part]:
         print_info("testing " + sol)
-        tst = TEST_DIR[part]
-        corr = CORRECT[part]
-        chk = CHECKER[part]
 
         for fname in sorted(os.listdir(tst)):
             if not fname.endswith('.in'):
                 continue
             path = os.path.join(tst, fname)
             print fname, '\t',
-
-            if tst in GENINPUT:
-                safe_exec("python ./%s/gen.py < %s > data.in" % (tst, path))
-                path = 'data.in'
 
             safe_exec("./%s < %s > %s" % (corr, path, "out_corr"))
             safe_exec("./%s < %s > %s" % (sol, path, "out_sol"))
@@ -99,8 +99,9 @@ def test_part(part):
                 print_good("OK")
                 ok += 1
             safe_exec('rm out_corr out_sol')
-            if tst in GENINPUT:
-                safe_exec('rm data.in')
+
+    if tst in GENINPUT:
+        safe_exec("make -C %s clean-gen" % (tst))
 
     print_info('passed %d/%d tests' % (ok, ok + bad))
     cnt_ok += ok
