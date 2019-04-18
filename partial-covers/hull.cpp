@@ -73,44 +73,21 @@ void print(int shift, int n) {
 int merge(int shift, int n1, int n2) {
     int i1 = 0, i2 = 0, x = 1, xend;
 
-    // printf("MERGE %d %d %d\n>", shift, n1, n2);
-    // print(shift, n1);
-    // printf(">");
-    // print(shift + n1, n2);
-
     while (i1 < n1 && i2 < n2) {
         xend = min(seg_i1.x2, seg_i2.x2);
 
-        // printf("| x=%d i1=%d i2=%d\n", x, i1, i2);
-
         if (seg_i1.at(x) >= seg_i2.at(x)) {
-            // printf("| 1 bigger ");
-            if (seg_i1.at(xend) < seg_i2.at(xend)) {
-                // printf("*");
-                // printf("{%d-%d / %d-%d} ", seg_i1.at(0), seg_i2.at(0),
-                //        seg_i2.dx, seg_i1.dx);
+            if (seg_i1.at(xend) < seg_i2.at(xend))
                 xend =
                     ((seg_i1.at(0) - seg_i2.at(0)) / (seg_i2.dx - seg_i1.dx));
-            }
-            // printf("until %d\n", xend);
             qpush(seg_i1, x, xend);
 
         } else {
-            // printf("| 2 bigger ");
-            if (seg_i1.at(xend) > seg_i2.at(xend)) {
-                // printf("*");
+            if (seg_i1.at(xend) > seg_i2.at(xend))
                 xend =
                     ((seg_i1.at(0) - seg_i2.at(0)) / (seg_i2.dx - seg_i1.dx));
-            }
-            // printf("until %d\n", xend);
-
             qpush(seg_i2, x, xend);
         }
-
-        // printf("|? ");
-        // print(shift + i1, 1);
-        // printf("|? ");
-        // print(shift + n1 + i2, 1);
 
         // move forward
         x = xend + 1;
@@ -118,38 +95,19 @@ int merge(int shift, int n1, int n2) {
             i1++;
         if (seg_i2.x2 < x)
             i2++;
-        // printf("|(fwd) x=%d i1=%d i2=%d\n", x, i1, i2);
     }
 
-    // push rest & finish
-    /*while (i1 < n1) {
-        qpush(seg_i1, x, seg_i1.x2);
-        x = seg_i1.x2 + 1;
-        i1++;
-    }
-    while (i2 < n2) {
-        qpush(seg_i2, x, seg_i2.x2);
-        x = seg_i2.x2 + 1;
-        i2++;
-    }*/
-
-    int size = qfinish(shift);
-    // printf(">>> ");
-    // print(shift, size);
-    return size;
+    return qfinish(shift);
 }
 
 
 int create_hull(vector<Segment> const& seg, int from, int to, int shift) {
-    if (from == to) {
-        // printf("s%d\n", from);
+    if (from == to)
         return put_single(seg[from], shift);
-    }
+
     int avg = (from + to) / 2;
     int n1 = create_hull(seg, from, avg, shift);
     int n2 = create_hull(seg, avg + 1, to, shift + n1);
-
-    // printf("[%d |%d| %d]\n", from, avg, to);
 
     return merge(shift, n1, n2);
 }

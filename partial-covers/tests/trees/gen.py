@@ -40,7 +40,6 @@ def rand_tree(N):
 
 
 def write_test(fname, test):
-    print fname
     with open(fname, "w") as f:
         N = len(test) + 1
         f.write("%d\n" % N)
