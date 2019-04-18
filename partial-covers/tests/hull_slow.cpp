@@ -8,6 +8,7 @@ const int maxN = 1e5 + 10;
 
 int t[maxN];
 
+
 void add(int a, int b, int a0, int dx) {
     for (int i = a; i <= b; ++i) {
         t[i] = max(t[i], a0);

@@ -9,7 +9,6 @@ MAX_HEIGHT = int(1e5)
 
 
 def write_test(fname, tst):
-    print fname
     with open(fname, "w") as f:
         N, points = tst
         f.write("%d %d\n" % (N, len(points)))
@@ -46,10 +45,17 @@ def just_random(N, M):
     return N, [random_segment(N) for i in range(N)]
 
 
+def same(N):
+    s = N // 2
+    return N, [(i, i, i + s - 1, 1) for i in range(1, N - s + 2)]
+
+
+print "hand..."
 write_test("hand1.in", (10, [(1, 1, 10, 1), (2, 1, 6, 2), (3, 1, 5, 3)]))
 write_test("hand2.in", (20, [(2, 3, 2, 3), (7, 4, 7, 4), (9, 9, 9, 9),
                              (2, 2, 2, 2), (4, 2, 4, 4)]))
 
+print "rand..."
 for i in range(20):
     write_test("small_rand%d.in" % i, just_random(10, 3))
 for i in range(20):
@@ -57,9 +63,14 @@ for i in range(20):
 for i in range(20):
     write_test("big_rand%d.in" % i, just_random(MAX_POS, 16))
 
+print "ldots..."
 for i in range(20):
     write_test("line_with_dots_few%d.in" % i, line_with_dots(10, 3))
 for i in range(20):
     write_test("line_with_dots_medium%d.in" % i, line_with_dots(100, 17))
 for i in range(20):
     write_test("line_with_dots_alot%d.in" % i, line_with_dots(MAX_POS, 100))
+
+print "same..."
+for N in [10, 100, 500, 1000]:
+    write_test("same%d.in" % N, same(N))

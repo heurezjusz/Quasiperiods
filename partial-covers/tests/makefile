@@ -13,7 +13,7 @@ clean:
 .PHONY: clean 
 
 
-# target: combine
+# target: partitions
 
 partitions: partitions.e partitions_rand_labels.e partitions_slow.e partitions_rand_renames.e
 .PHONY: partitions
@@ -30,3 +30,13 @@ partitions_rand_renames.e: partitions_test_rand_renames.cpp make_sup
 partitions_slow.e: partitions_slow.cpp
 	g++ partitions_slow.cpp $(CXXFLAGS) -o $@
 
+
+# target: hull
+hull: hull.e hull_slow.e
+.PHONY: hull
+
+hull.e: make_sup
+	g++ hull.cpp ../hull.o $(CXXFLAGS) $(LDFLAGS) -o $@
+
+hull_slow.e:
+	g++ hull_slow.cpp $(CXXFLAGS) -o $@

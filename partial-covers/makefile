@@ -1,6 +1,6 @@
 include makefile.inc
 
-OBJS = ukkonen.o partition.o
+OBJS = ukkonen.o partition.o hull.o
 
 all: $(OBJS) slow_algorithm.e
 
