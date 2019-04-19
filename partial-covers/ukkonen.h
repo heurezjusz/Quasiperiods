@@ -15,6 +15,7 @@ struct Edge {
 struct Node {
     std::map<int, Edge> edges;
     int parent, depth, sl, letter;
+    int D, cv;  // values of CST
     Node(int parent);
     bool is_leaf();
 };

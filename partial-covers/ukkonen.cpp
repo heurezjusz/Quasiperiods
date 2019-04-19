@@ -9,7 +9,8 @@ int Edge::len() const {
 }
 
 // ==== Node ====
-Node::Node(int parent) : parent(parent), sl(NONE), letter(NONE) {}
+Node::Node(int parent)
+    : parent(parent), sl(NONE), letter(NONE), D(NONE), cv(NONE) {}
 
 bool Node::is_leaf() {
     return edges.empty();
