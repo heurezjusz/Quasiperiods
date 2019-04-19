@@ -21,13 +21,13 @@ struct Partition {
     int N;
 
     /* creates singletons {1},{2},...,{n} with labels 1,2,3,...,n */
-    Partition(int n);
+    void init(int n);
 
     /* returns label of set with element x */
     int find(int x);
 
     /* joins sets [old_labels] as new set [new_label] filling [change_list] */
-/* assumption: all old_labels exists and are distinct */
+    /* assumption: all old_labels exists and are distinct */
     void union_(std::vector<int> const& old_labels, int new_label,
                 std::vector<Change>& change_list);
 

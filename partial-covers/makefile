@@ -1,10 +1,14 @@
 include makefile.inc
 
-OBJS = ukkonen.o partition.o hull.o segment.o
+OBJS = ukkonen.o partition.o hull.o segment.o algorithm.o
 
-all: $(OBJS) slow_algorithm.e
+all: $(OBJS) slow_algorithm.e partial_covers_all.e
 
 HEADERS = $(wildcard *.h)
+
+
+partial_covers_all.e: $(OBJS)
+	g++ main.cpp $(OBJS) $(CXXFLAGS) $(LDFLAGS) -o $@
 
 %.e: %.cpp
 	g++ $< $(CXXFLAGS) $(LDFLAGS) -o $@

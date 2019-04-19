@@ -47,7 +47,7 @@ vector<int> labels;
 void gen_labels() {
     set<int> s;
     while (N > (int)s.size())
-        s.insert(randint(2*N, 1e5));
+        s.insert(randint(2 * N, 1e5));
     for (int i : s)
         labels.push_back(i);
     random_shuffle(labels.begin(), labels.end());
@@ -56,7 +56,8 @@ void gen_labels() {
 
 int main() {
     scanf("%d", &N);
-    P = new Partition(N);
+    P = new Partition();
+    P->init(N);
 
     srand(42 + N);
 

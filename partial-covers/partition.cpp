@@ -3,7 +3,9 @@
 using namespace std;
 
 
-Partition::Partition(int n) : N(n), _union_id(0) {
+void Partition::init(int n) {
+    N = n;
+    _union_id = 0;
     element_to_set.resize(N + 1);
     visited.resize(N + 1);
     next.resize(N + 1);

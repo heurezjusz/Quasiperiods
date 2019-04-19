@@ -52,7 +52,8 @@ void rename() {
 
 int main() {
     scanf("%d", &N);
-    P = new Partition(N);
+    P = new Partition();
+    P->init(N);
     new_label = N + 1;
 
     srand(42 + N);
