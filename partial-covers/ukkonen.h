@@ -14,7 +14,7 @@ struct Edge {
 
 struct Node {
     std::map<int, Edge> edges;
-    int parent, depth, sl;
+    int parent, depth, sl, letter;
     Node(int parent);
     bool is_leaf();
 };
@@ -24,6 +24,7 @@ struct Tree {
     std::vector<int> word;
     std::vector<Node> nodes;
     std::vector<int> suf_map;
+    std::vector<std::vector<int>> nodes_on_depth;
 
     Tree();
     Node& root();
@@ -33,6 +34,7 @@ struct Tree {
     void get_word(int node, std::vector<int>& res);
     void print();
     void print_word_chr(int v);
+    void add_node_at_edge_to_parent(int v, int depth);
 
     // helpers
     void _add_node(int i);

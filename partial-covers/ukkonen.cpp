@@ -9,7 +9,7 @@ int Edge::len() const {
 }
 
 // ==== Node ====
-Node::Node(int parent) : parent(parent), sl(NONE) {}
+Node::Node(int parent) : parent(parent), sl(NONE), letter(NONE) {}
 
 bool Node::is_leaf() {
     return edges.empty();
@@ -205,9 +205,12 @@ void Tree::_dfs(int v) {
         Edge& e = it.second;
         if (e.b == NONE)
             e.b = N - 1;
+        nodes[e.node].letter = it.first;
         nodes[e.node].depth = node.depth + e.len();
         _dfs(e.node);
     }
+
+    nodes_on_depth[node.depth].push_back(v);
 }
 
 
@@ -222,5 +225,26 @@ void Tree::create(vector<int>& word_) {
 
     nodes[ROOT].depth = 0;
     suf_map.resize(N);
+    nodes_on_depth.resize(N + 10);
     _dfs(ROOT);
+}
+
+
+void Tree::add_node_at_edge_to_parent(int v, int depth) {
+    Node& node = nodes[v];
+    int new_v = nodes.size();
+    nodes.emplace_back(node.parent);
+    Node& new_node = nodes.back();
+
+    new_node.depth = depth;
+    nodes_on_depth[depth].push_back(new_v);
+    new_node.letter = node.letter;
+
+    Edge& edge = nodes[node.parent].edges[node.letter];
+    int new_a = depth - nodes[node.parent].depth + edge.a;
+
+    node.letter = word[new_a];
+    node.parent = new_v;
+    new_node.edges[word[new_a]] = Edge(v, new_a, edge.b);
+    edge.b = new_a - 1;
 }

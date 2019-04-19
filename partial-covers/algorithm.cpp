@@ -18,7 +18,6 @@ vector<int> cv;
 vector<int> _cv;
 vector<int> label_to_node;
 vector<int> node_to_label;
-vector<vector<int>> nodes_on_h;
 }
 
 
@@ -29,6 +28,13 @@ void local_correct(int p, int q, int v) {
 
 void lift(int h) {
     // TODO
+    for (int i : list[h]) {
+        int label = P.find(i), v = label_to_node[label];
+        _D[v]++;
+        _cv[v] = _cv[v] - h;
+        if (st.nodes[st.nodes[v].parent].depth < h)
+            st.add_node_at_edge_to_parent(v, h);
+    }
 }
 
 
@@ -56,21 +62,18 @@ void cst_count(int v) {
 
 void create_cst() {
     for (int i = 0; i < N; ++i) {
-        // printf("wat\n");
         dist[i + 1] = N + 1;
         label_to_node[i + 1] = st.suf_map[i];
         node_to_label[st.suf_map[i]] = i + 1;
         list[N + 1].push_back(i + 1);
 
         _D[st.suf_map[i]] = 1;
-        nodes_on_h[N - i].push_back(st.suf_map[i]);
-        // printf("%d vs %d\n", N - i, st.nodes[st.suf_map[i]].depth);
     }
     new_label = N + 1;
 
     for (int h = N + 1; h > 0; --h) {
         lift(h);
-        for (int v : nodes_on_h[h])
+        for (int v : st.nodes_on_depth[h])
             if (!st.nodes[v].is_leaf())
                 cst_count(v);
     }
@@ -86,7 +89,6 @@ void init_arrays(int N) {
     _cv.resize(N + 10);
     label_to_node.resize(N + 10);
     node_to_label.resize(N + 10);
-    nodes_on_h.resize(N + 10);
 }
 
 
