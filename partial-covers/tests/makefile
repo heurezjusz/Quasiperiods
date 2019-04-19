@@ -36,7 +36,7 @@ hull: hull.e hull_slow.e
 .PHONY: hull
 
 hull.e: make_sup
-	g++ hull.cpp ../hull.o $(CXXFLAGS) $(LDFLAGS) -o $@
+	g++ hull.cpp ../hull.o ../segment.o $(CXXFLAGS) $(LDFLAGS) -o $@
 
 hull_slow.e:
 	g++ hull_slow.cpp $(CXXFLAGS) -o $@
