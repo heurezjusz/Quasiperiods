@@ -1,7 +1,7 @@
 #include "cst.h"
 #include "partition.h"
 using namespace std;
-
+#include <cstdio>
 
 namespace {
 int N;
@@ -39,17 +39,31 @@ void local_correct(int p, int q, int v) {
 
 
 void lift(int h) {
+    // printf("lift %d...\n", h);
     // TODO - test
     for (int i : list[h]) {
         if (dist[i] != h)
             continue;  // "removed" element
 
         int label = P.find(i), v = label_to_node[label];
+
+        // printf("element:%d label:%d v:%d ", i, label, v);
+        // st->print_word_chr(v);
+
         _D[v]++;
         _cv[v] = _cv[v] - h;
-        if (st->nodes[st->nodes[v].parent].depth < h)
+        if (h < N + 1 && st->nodes[st->nodes[v].parent].depth < h) {
+            // printf(">> ADD NODE (branch %d, depth %d)<<\n", v, h);
+            // st->print();
+
             st->add_node_at_edge_to_parent(v, h);
+
+            // puts("===");
+            // st->print();
+            // puts(">> END <<");
+        }
     }
+    // printf("endlift %d...\n", h);
 }
 
 
@@ -76,6 +90,8 @@ void cst_count(int v) {
 
 
 void create_cst() {
+    P.init(N);
+
     for (int i = 0; i < N; ++i) {
         dist[i + 1] = N + 1;
         label_to_node[i + 1] = st->suf_map[i];

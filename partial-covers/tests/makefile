@@ -48,3 +48,11 @@ ukkonen: ukkonen.e
 
 ukkonen.e: ukkonen.cpp make_sup
 	g++ ukkonen.cpp ../ukkonen.o $(CXXFLAGS) $(LDFLAGS) -o $@
+
+
+# target: cst
+cst: cst.e
+.PHONY: cst
+
+cst.e: cst.cpp make_sup
+	g++ cst.cpp ../ukkonen.o ../cst.o ../partition.o $(CXXFLAGS) $(LDFLAGS) -o $@

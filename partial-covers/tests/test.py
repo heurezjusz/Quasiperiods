@@ -3,21 +3,24 @@
 import os
 import sys
 
-PARTS = sorted(["all", "hull", "partitions", "ukkonen"])
+PARTS = sorted(["all", "cst", "hull", "partitions", "ukkonen"])
 
 CHECKER = {
+    "cst": "cst_chk.py",
     "hull": None,
     "partitions": None,
     "ukkonen": None,
 }
 
 CORRECT = {
+    "cst": "cst_slow.py",
     "hull": "hull_slow.e",
     "partitions": "partitions_slow.e",
     "ukkonen": "ukkonen_slow.py"
 }
 
 BIN = {
+    "cst": ["cst.e"],
     "hull": ["hull.e"],
     "partitions":
     ["partitions.e", "partitions_rand_labels.e", "partitions_rand_renames.e"],
@@ -25,6 +28,7 @@ BIN = {
 }
 
 TEST_DIR = {
+    "cst": "smallwords",
     "hull": "hull",
     "partitions": "trees",
     "ukkonen": "smallwords",

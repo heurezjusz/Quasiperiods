@@ -35,6 +35,8 @@ for word, fname in [
     ('xabxac', 'hand4.in'),
     ('aabaabaacaabaabaa', 'hand5.in'),
     ('aab', 'hand6.in'),
+    ('aabbccddeeffggghhhiiijjjkkkllllmmmmnnnnooooppppqqqq'
+     'rrrrssssttttuuuuuwwwwwvvvvvxxxxxyyyyyz', 'hand7.in'),
     ('baeebcaebc', 'special1.in'),
     ('eccdeaaccc', 'special2.in'),
     ('adcbddadda', 'special3.in'),
@@ -59,6 +61,7 @@ for word, fname in [
     (recursive(3), 'rec3.in'),
     (recursive(4), 'rec4.in'),
     (debug(80), 'debug1.in'),
+    ('aaabbccaaaaabababababab', 'debug2.in'),
 ]:
     with open(fname, 'w') as f:
         f.write(word + '\n')

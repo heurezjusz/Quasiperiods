@@ -243,9 +243,10 @@ void Tree::add_node_at_edge_to_parent(int v, int depth) {
 
     Edge& edge = nodes[node.parent].edges[node.letter];
     int new_a = depth - nodes[node.parent].depth + edge.a;
+    new_node.edges[word[new_a]] = Edge(v, new_a, edge.b);
+    edge.b = new_a - 1;
+    edge.node = new_v;
 
     node.letter = word[new_a];
     node.parent = new_v;
-    new_node.edges[word[new_a]] = Edge(v, new_a, edge.b);
-    edge.b = new_a - 1;
 }
