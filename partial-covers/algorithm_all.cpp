@@ -1,4 +1,4 @@
-#include "algorithm.h"
+#include "algorithm_all.h"
 #include "cst.h"
 #include "hull.h"
 #include "ukkonen.h"

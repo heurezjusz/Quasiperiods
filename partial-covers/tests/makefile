@@ -82,3 +82,14 @@ algorithm_all_slow.e: make_sup
 
 algorithm_all.e: make_sup
 	cp ../partial_covers_all.e $@
+
+
+# target: algorithm_single
+algorithm_single: algorithm_single.e algorithm_single_slow.e
+.PHONY: algorithm_single
+
+algorithm_single_slow.e: make_sup
+	cp ../slow_algorithm_single.e $@
+
+algorithm_single.e: make_sup
+	cp ../partial_covers_single.e $@

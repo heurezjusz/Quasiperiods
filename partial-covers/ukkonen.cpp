@@ -10,7 +10,11 @@ int Edge::len() const {
 
 // ==== Node ====
 Node::Node(int parent)
-    : parent(parent), sl(NONE), letter(NONE), D(NONE), cv(NONE) {}
+    : parent(parent), sl(NONE), letter(NONE), D(NONE), cv(NONE) {
+#ifdef ADD_LEAF
+// any_leaf_pos = NONE;
+#endif
+}
 
 bool Node::is_leaf() {
     return edges.empty();
@@ -199,7 +203,10 @@ void Tree::_dfs(int v) {
     Node& node = nodes[v];
     if (node.is_leaf()) {
         suf_map[N - node.depth] = v;
-        nodes[v].depth -= 1;
+        node.depth -= 1;
+#ifdef ADD_LEAF
+        node.any_leaf_pos = N - node.depth;
+#endif
     }
 
     for (auto& it : node.edges) {
@@ -209,6 +216,10 @@ void Tree::_dfs(int v) {
         nodes[e.node].letter = it.first;
         nodes[e.node].depth = node.depth + e.len();
         _dfs(e.node);
+
+#ifdef ADD_LEAF
+        node.any_leaf_pos = nodes[e.node].any_leaf_pos;
+#endif
     }
 
     nodes_on_depth[node.depth].push_back(v);
@@ -242,6 +253,9 @@ void Tree::add_node_at_edge_to_parent(int v, int depth) {
     new_node.depth = depth;
     nodes_on_depth[depth].push_back(new_v);
     new_node.letter = node.letter;
+#ifdef ADD_LEAF
+    new_node.any_leaf_pos = node.any_leaf_pos;
+#endif
 
     Edge& edge = nodes[node.parent].edges[node.letter];
     int new_a = depth - nodes[node.parent].depth + edge.a;

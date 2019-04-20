@@ -1,5 +1,5 @@
-#ifndef __ALGORITHM
-#define __ALGORITHM
+#ifndef __ALGORITHM_ALL
+#define __ALGORITHM_ALL
 
 #include <vector>
 

@@ -4,12 +4,13 @@ import os
 import sys
 
 PARTS = sorted([
-    "all", "algorithm_all", "cst", "cst_vals", "hull", "partitions", "ukkonen",
-    "ukkonen_depth"
+    "all", "algorithm_all", "algorithm_single", "cst", "cst_vals", "hull",
+    "partitions", "ukkonen", "ukkonen_depth"
 ])
 
 CHECKER = {
     "algorithm_all": None,
+    "algorithm_single": "algorithm_single_chk.py",
     "cst": "cst_chk.py",
     "cst_vals": "cst_chk.py",
     "hull": None,
@@ -20,6 +21,7 @@ CHECKER = {
 
 CORRECT = {
     "algorithm_all": "algorithm_all_slow.e",
+    "algorithm_single": "algorithm_single_slow.e",
     "cst": "cst_slow.py",
     "cst_vals": "cst_vals_slow.py",
     "hull": "hull_slow.e",
@@ -30,6 +32,7 @@ CORRECT = {
 
 BIN = {
     "algorithm_all": ["algorithm_all.e"],
+    "algorithm_single": ["algorithm_single.e"],
     "cst": ["cst.e"],
     "cst_vals": ["cst_vals.e"],
     "hull": ["hull.e"],
@@ -41,6 +44,7 @@ BIN = {
 
 TEST_DIR = {
     "algorithm_all": "smallwords",
+    "algorithm_single": "smallwords_part",
     "cst": "smallwords",
     "cst_vals": "smallwords",
     "hull": "hull",
@@ -49,7 +53,7 @@ TEST_DIR = {
     "ukkonen_depth": "smallwords",
 }
 
-GENINPUT = ["hull", "smallwords", "trees"]
+GENINPUT = ["hull", "smallwords", "smallwords_part", "trees"]
 
 if len(sys.argv) != 2:
     print "Usage:", sys.argv[0], "PART1[,PART2,...]"
