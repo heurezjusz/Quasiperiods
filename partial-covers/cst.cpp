@@ -20,7 +20,6 @@ vector<int> node_to_label;
 
 
 void local_correct(int p, int q, int v) {
-    // TODO - test
     int d = q - p, _d = dist[p];
 
     if (_d < st->nodes[v].depth)

@@ -65,3 +65,18 @@ for word, fname in [
 ]:
     with open(fname, 'w') as f:
         f.write(word + '\n')
+
+for i in range(20):
+    with open("rand_ab%d.in" % i, 'w') as f:
+        word = ''.join(random.choice("ab") for _ in range(30))
+        f.write(word + '\n')
+
+for i in range(20):
+    with open("rand_abc%d.in" % i, 'w') as f:
+        word = ''.join(random.choice("abc") for _ in range(30))
+        f.write(word + '\n')
+
+for i in range(20):
+    with open("rand_abcd%d.in" % i, 'w') as f:
+        word = ''.join(random.choice("abcd") for _ in range(30))
+        f.write(word + '\n')
