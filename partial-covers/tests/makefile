@@ -71,3 +71,14 @@ cst_vals: cst_vals.e
 
 cst_vals.e: cst_vals.cpp make_sup
 	g++ cst_vals.cpp ../ukkonen.o ../cst.o ../partition.o $(CXXFLAGS) $(LDFLAGS) -o $@
+
+
+# target: algorithm_all
+algorithm_all: algorithm_all.e algorithm_all_slow.e
+.PHONY: algorithm_all
+
+algorithm_all_slow.e: make_sup
+	cp ../slow_algorithm.e $@
+
+algorithm_all.e: make_sup
+	cp ../partial_covers_all.e $@

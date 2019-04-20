@@ -116,7 +116,7 @@ int create_hull(vector<Segment> const& seg, int from, int to, int shift) {
 void get_hull(int _N, vector<Segment> const& segments, vector<int>& result) {
     N = _N;
     result.resize(N + 1);
-    hull.resize(max(2 * N, 16));
+    hull.resize(max(4 * N, 16));
     QEND = qi = hull.size();
 
     int M = create_hull(segments, 0, segments.size() - 1, 0);

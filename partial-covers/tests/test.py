@@ -4,10 +4,12 @@ import os
 import sys
 
 PARTS = sorted([
-    "all", "cst", "cst_vals", "hull", "partitions", "ukkonen", "ukkonen_depth"
+    "all", "algorithm_all", "cst", "cst_vals", "hull", "partitions", "ukkonen",
+    "ukkonen_depth"
 ])
 
 CHECKER = {
+    "algorithm_all": None,
     "cst": "cst_chk.py",
     "cst_vals": "cst_chk.py",
     "hull": None,
@@ -17,6 +19,7 @@ CHECKER = {
 }
 
 CORRECT = {
+    "algorithm_all": "algorithm_all_slow.e",
     "cst": "cst_slow.py",
     "cst_vals": "cst_vals_slow.py",
     "hull": "hull_slow.e",
@@ -26,6 +29,7 @@ CORRECT = {
 }
 
 BIN = {
+    "algorithm_all": ["algorithm_all.e"],
     "cst": ["cst.e"],
     "cst_vals": ["cst_vals.e"],
     "hull": ["hull.e"],
@@ -36,6 +40,7 @@ BIN = {
 }
 
 TEST_DIR = {
+    "algorithm_all": "smallwords",
     "cst": "smallwords",
     "cst_vals": "smallwords",
     "hull": "hull",

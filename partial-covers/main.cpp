@@ -18,6 +18,5 @@ int main() {
     algorithm(word, res);
 
     for (int i = 1; i <= N; ++i)
-        cout << res[i] << " ";
-    cout << "\n";
+        cout << i << ": " << res[i] << "\n";
 }
