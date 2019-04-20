@@ -27,11 +27,14 @@ def recursive(n):
 
 for word, fname in [
     ('ababaabaab', 'example.in'),
+    ('aaabaaaabaaabaaababaabaaa', 'example2.in'),
+    ('bcccacccaccaccb', 'example3.in'),
     ('abc', 'hand1.in'),
     ('wololo', 'hand2.in'),
     ('abcabxabcd', 'hand3.in'),
     ('xabxac', 'hand4.in'),
     ('aabaabaacaabaabaa', 'hand5.in'),
+    ('aab', 'hand6.in'),
     ('baeebcaebc', 'special1.in'),
     ('eccdeaaccc', 'special2.in'),
     ('adcbddadda', 'special3.in'),

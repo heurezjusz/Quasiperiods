@@ -3,30 +3,34 @@
 import os
 import sys
 
-PARTS = sorted(["all", "partitions", "hull"])
+PARTS = sorted(["all", "hull", "partitions", "ukkonen"])
 
 CHECKER = {
     "hull": None,
     "partitions": None,
+    "ukkonen": None,
 }
 
 CORRECT = {
     "hull": "hull_slow.e",
     "partitions": "partitions_slow.e",
+    "ukkonen": "ukkonen_slow.py"
 }
 
 BIN = {
     "hull": ["hull.e"],
     "partitions":
     ["partitions.e", "partitions_rand_labels.e", "partitions_rand_renames.e"],
+    "ukkonen": ["ukkonen.e"],
 }
 
 TEST_DIR = {
     "hull": "hull",
     "partitions": "trees",
+    "ukkonen": "smallwords",
 }
 
-GENINPUT = ["hull", "trees"]
+GENINPUT = ["hull", "smallwords", "trees"]
 
 if len(sys.argv) != 2:
     print "Usage:", sys.argv[0], "PART1[,PART2,...]"

@@ -5,6 +5,6 @@
 
 // creating of CST tree
 
-void extend_to_cst(Tree& t);
+void extend_to_cst(Tree& st);
 
 #endif

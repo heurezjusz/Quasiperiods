@@ -1,6 +1,6 @@
 include makefile.inc
 
-OBJS = ukkonen.o partition.o hull.o segment.o algorithm.o cst.o
+OBJS = ukkonen.o partition.o hull.o algorithm.o cst.o
 
 all: $(OBJS) slow_algorithm.e partial_covers_all.e
 

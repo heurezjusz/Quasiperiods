@@ -139,7 +139,7 @@ TEST_DIR = {
     "seeds_costas_slow_int_alot": "intwords_alot",
 }
 
-GENINPUT = ["bigwords", "small_intwords", "intwords_alot"]
+GENINPUT = ["bigwords", "small_intwords", "smallwords", "intwords_alot"]
 
 if len(sys.argv) != 2:
     print "Usage:", sys.argv[0], "PART1[,PART2,...]"
@@ -207,8 +207,8 @@ def test_part(part):
             if chk is None:
                 res = os.system('diff out_corr out_sol > /dev/null')
             else:
-                res = os.system(
-                    './%s %s out_corr out_sol > /dev/null' % (chk, path))
+                res = os.system('./%s %s out_corr out_sol > /dev/null' %
+                                (chk, path))
 
             if res != 0:
                 print_bad("WRONG")
