@@ -18,26 +18,26 @@ def is_explicit_node(i, j):
     return len(lsub) > 1
 
 
-def is_primitive_square(i, j):
+def is_primitive_for_square(i, j):
     d = j - i
-    if len(S) < j + d:
-        return False
-    if S[i:j] != S[j:j + d]:
+    if j + d > N:
         return False
 
-    # is primitive
-    for x in range(1, d):
-        if d % x == 0 and S[i:i + d] * (d / x) == S[i:j]:
+    s = S[i:j]
+    # print "> SQ checking", s
+    for n in range(1, d):
+        if d % n == 0 and s[:n] * (d // n) == s:
+            # print "> failed for n =", n
             return False
-
-    return True
+    # print "> assert ", 2 * s, "==", S[i:j + d]
+    return 2 * s == S[i:j + d]
 
 
 def print_all_nodes_of_len(h):
     print "==", h, "=="
     subwords = set()
     checked = set()
-    for i in range(N - h + 1):
+    for i in range(N - h, -1, -1):
         if S[i:i + h] not in checked:
             checked.add(S[i:i + h])
             if is_suffix(i, i + h):
@@ -45,7 +45,7 @@ def print_all_nodes_of_len(h):
             if is_explicit_node(i, i + h):
                 subwords.add(S[i:i + h])
 
-        if is_primitive_square(i, i + h):
+        if is_primitive_for_square(i, i + h):
             subwords.add(S[i:i + h])
 
     for s in subwords:
@@ -54,3 +54,4 @@ def print_all_nodes_of_len(h):
 
 for i in range(N):
     print_all_nodes_of_len(i + 1)
+print "== END =="

@@ -217,6 +217,8 @@ void Tree::create(vector<int>& word_) {
     word = word_;
     N = word.size();
 
+    nodes.reserve(2 * N);
+
     for (int i = 0; i < (int)word.size(); ++i)
         _add_node(i);
 

@@ -3,6 +3,7 @@
 using namespace std;
 #include <cstdio>
 
+
 namespace {
 int N;
 Tree* st;
@@ -39,31 +40,37 @@ void local_correct(int p, int q, int v) {
 
 
 void lift(int h) {
-    // printf("lift %d...\n", h);
+#ifdef DEB
+    printf("lift %d...\n", h);
+#endif
     // TODO - test
     for (int i : list[h]) {
         if (dist[i] != h)
             continue;  // "removed" element
 
         int label = P.find(i), v = label_to_node[label];
-
-        // printf("element:%d label:%d v:%d ", i, label, v);
-        // st->print_word_chr(v);
-
+#ifdef DEB
+        printf("element:%d label:%d v:%d ", i, label, v);
+        st->print_word_chr(v);
+#endif
         _D[v]++;
         _cv[v] = _cv[v] - h;
         if (h < N + 1 && st->nodes[st->nodes[v].parent].depth < h) {
-            // printf(">> ADD NODE (branch %d, depth %d)<<\n", v, h);
-            // st->print();
-
+#ifdef DEB
+            printf(">> ADD NODE (branch %d, depth %d)<<\n", v, h);
+            st->print();
+#endif
             st->add_node_at_edge_to_parent(v, h);
-
-            // puts("===");
-            // st->print();
-            // puts(">> END <<");
+#ifdef DEB
+            puts("===");
+            st->print();
+            puts(">> END <<");
+#endif
         }
     }
-    // printf("endlift %d...\n", h);
+#ifdef DEB
+    printf("endlift %d...\n", h);
+#endif
 }
 
 

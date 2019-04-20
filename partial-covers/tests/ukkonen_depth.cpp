@@ -25,4 +25,5 @@ int main() {
         for (int v : st.nodes_on_depth[h])
             st.print_word_chr(v);
     }
+    cout << "== END ==\n";
 }

@@ -36,7 +36,7 @@ for word, fname in [
     ('aabaabaacaabaabaa', 'hand5.in'),
     ('aab', 'hand6.in'),
     ('aabbccddeeffggghhhiiijjjkkkllllmmmmnnnnooooppppqqqq'
-     'rrrrssssttttuuuuuwwwwwvvvvvxxxxxyyyyyz', 'hand7.in'),
+     'rrrrssssttttuuuuuwwwwwvvvvvxxxxxyyyyyzzzz', 'hand7.in'),
     ('baeebcaebc', 'special1.in'),
     ('eccdeaaccc', 'special2.in'),
     ('adcbddadda', 'special3.in'),
