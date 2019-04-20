@@ -8,7 +8,7 @@ namespace {
 int N;
 Tree* st;
 Partition P;
-int new_label;
+int new_label, inf;
 
 vector<vector<int>> list;
 vector<int> dist;
@@ -24,12 +24,12 @@ void local_correct(int p, int q, int v) {
     int d = q - p, _d = dist[p];
 
     if (_d < st->nodes[v].depth)
-        _cv[v] = _cv[v] - _d;
+        _cv[v] -= _d;
     else
         _D[v]--;
 
     if (d < st->nodes[v].depth)
-        _cv[v] = _cv[v] + d;
+        _cv[v] += d;
     else
         _D[v]++;
 
@@ -40,37 +40,23 @@ void local_correct(int p, int q, int v) {
 
 
 void lift(int h) {
-#ifdef DEB
-    printf("lift %d...\n", h);
-#endif
-    // TODO - test
     for (int i : list[h]) {
         if (dist[i] != h)
             continue;  // "removed" element
 
         int label = P.find(i), v = label_to_node[label];
-#ifdef DEB
-        printf("element:%d label:%d v:%d ", i, label, v);
-        st->print_word_chr(v);
-#endif
+
         _D[v]++;
-        _cv[v] = _cv[v] - h;
-        if (h < N + 1 && st->nodes[st->nodes[v].parent].depth < h) {
-#ifdef DEB
-            printf(">> ADD NODE (branch %d, depth %d)<<\n", v, h);
-            st->print();
-#endif
+        _cv[v] -= h;
+        if (h < N + 1 && st->nodes[st->nodes[v].parent].depth < h)
             st->add_node_at_edge_to_parent(v, h);
-#ifdef DEB
-            puts("===");
-            st->print();
-            puts(">> END <<");
-#endif
-        }
     }
-#ifdef DEB
-    printf("endlift %d...\n", h);
-#endif
+}
+
+
+inline void set_values(int v) {
+    st->nodes[v].cv = _cv[v] + _D[v] * st->nodes[v].depth;
+    st->nodes[v].D = _D[v];
 }
 
 
@@ -91,8 +77,7 @@ void cst_count(int v) {
     for (Change const& ch : change_list)
         local_correct(ch.x, ch.next, v);
 
-    st->nodes[v].cv = _cv[v] + _D[v] * st->nodes[v].depth;
-    st->nodes[v].D = _D[v];
+    set_values(v);
 }
 
 
@@ -100,19 +85,21 @@ void create_cst() {
     P.init(N);
 
     for (int i = 0; i < N; ++i) {
-        dist[i + 1] = N + 1;
+        dist[i + 1] = inf;
         label_to_node[i + 1] = st->suf_map[i];
         node_to_label[st->suf_map[i]] = i + 1;
-        list[N + 1].push_back(i + 1);
 
         _D[st->suf_map[i]] = 1;
+        _cv[st->suf_map[i]] = 0;
+
+        set_values(st->suf_map[i]);
     }
     new_label = N + 1;
 
     for (int h = N + 1; h > 0; --h) {
         lift(h);
         for (int v : st->nodes_on_depth[h])
-            if (!st->nodes[v].is_leaf())  // TODO: check out
+            if (!st->nodes[v].is_leaf())
                 cst_count(v);
     }
 }
@@ -131,6 +118,7 @@ void init_arrays(int N) {
 void extend_to_cst(Tree& _st) {
     st = &_st;
     N = st->N - 1;
+    inf = N + 1;
     init_arrays(2 * _st.size());
     create_cst();
 }

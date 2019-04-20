@@ -63,3 +63,11 @@ cst: cst.e
 
 cst.e: cst.cpp make_sup
 	g++ cst.cpp ../ukkonen.o ../cst.o ../partition.o $(CXXFLAGS) $(LDFLAGS) -o $@
+
+
+# target: cst_vals
+cst_vals: cst_vals.e
+.PHONY: cst_vals
+
+cst_vals.e: cst_vals.cpp make_sup
+	g++ cst_vals.cpp ../ukkonen.o ../cst.o ../partition.o $(CXXFLAGS) $(LDFLAGS) -o $@
