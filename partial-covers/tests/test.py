@@ -44,7 +44,7 @@ BIN = {
 
 TEST_DIR = {
     "algorithm_all": "smallwords",
-    "algorithm_single": "smallwords_part",
+    "algorithm_single": "smallwords_with_parts",
     "cst": "smallwords",
     "cst_vals": "smallwords",
     "hull": "hull",
@@ -53,7 +53,7 @@ TEST_DIR = {
     "ukkonen_depth": "smallwords",
 }
 
-GENINPUT = ["hull", "smallwords", "smallwords_part", "trees"]
+GENINPUT = ["hull", "smallwords", "smallwords_with_parts", "trees"]
 
 if len(sys.argv) != 2:
     print "Usage:", sys.argv[0], "PART1[,PART2,...]"

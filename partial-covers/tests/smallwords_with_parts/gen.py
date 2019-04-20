@@ -25,7 +25,7 @@ def recursive(n):
     return recursive(n - 1) + chr(ord('a') + n) + recursive(n - 1)
 
 
-for word, fname in [
+tests = [
     ('ababaabaab', 'example.in'),
     ('aaabaaaabaaabaaababaabaaa', 'example2.in'),
     ('bcccacccaccaccb', 'example3.in'),
@@ -62,21 +62,20 @@ for word, fname in [
     (recursive(4), 'rec4.in'),
     (debug(80), 'debug1.in'),
     ('aaabbccaaaaabababababab', 'debug2.in'),
-]:
-    with open(fname, 'w') as f:
-        f.write(word + '\n')
+]
 
 for i in range(20):
-    with open("rand_ab%d.in" % i, 'w') as f:
-        word = ''.join(random.choice("ab") for _ in range(30))
-        f.write(word + '\n')
-
+    word = ''.join(random.choice("ab") for _ in range(30))
+    tests.append((word, "rand_ab%d.in" % i))
 for i in range(20):
-    with open("rand_abc%d.in" % i, 'w') as f:
-        word = ''.join(random.choice("abc") for _ in range(30))
-        f.write(word + '\n')
-
+    word = ''.join(random.choice("abc") for _ in range(30))
+    tests.append((word, "rand_abc%d.in" % i))
 for i in range(20):
-    with open("rand_abcd%d.in" % i, 'w') as f:
-        word = ''.join(random.choice("abcd") for _ in range(30))
-        f.write(word + '\n')
+    word = ''.join(random.choice("abcd") for _ in range(30))
+    tests.append((word, "rand_abcd%d.in" % i))
+
+for p in [10, 20, 50, 65]:
+    for word, fname in tests:
+        fname = "p" + str(p) + "_" + fname
+        with open(fname, 'w') as f:
+            f.write(word + ' ' + str(p) + '\n')
