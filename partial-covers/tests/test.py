@@ -3,20 +3,23 @@
 import os
 import sys
 
-PARTS = sorted(["all", "cst", "hull", "partitions", "ukkonen"])
+PARTS = sorted(
+    ["all", "cst", "hull", "partitions", "ukkonen", "ukkonen_depth"])
 
 CHECKER = {
     "cst": "cst_chk.py",
     "hull": None,
     "partitions": None,
     "ukkonen": None,
+    "ukkonen_depth": "cst_chk.py",
 }
 
 CORRECT = {
     "cst": "cst_slow.py",
     "hull": "hull_slow.e",
     "partitions": "partitions_slow.e",
-    "ukkonen": "ukkonen_slow.py"
+    "ukkonen": "ukkonen_slow.py",
+    "ukkonen_depth": "ukkonen_depth_slow.py",
 }
 
 BIN = {
@@ -25,6 +28,7 @@ BIN = {
     "partitions":
     ["partitions.e", "partitions_rand_labels.e", "partitions_rand_renames.e"],
     "ukkonen": ["ukkonen.e"],
+    "ukkonen_depth": ["ukkonen_depth.e"],
 }
 
 TEST_DIR = {
@@ -32,6 +36,7 @@ TEST_DIR = {
     "hull": "hull",
     "partitions": "trees",
     "ukkonen": "smallwords",
+    "ukkonen_depth": "smallwords",
 }
 
 GENINPUT = ["hull", "smallwords", "trees"]

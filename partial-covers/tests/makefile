@@ -49,6 +49,13 @@ ukkonen: ukkonen.e
 ukkonen.e: ukkonen.cpp make_sup
 	g++ ukkonen.cpp ../ukkonen.o $(CXXFLAGS) $(LDFLAGS) -o $@
 
+# target: ukkonen_depth
+ukkonen_depth: ukkonen_depth.e
+.PHONY: ukkonen_depth
+
+ukkonen_depth.e: ukkonen_depth.cpp make_sup
+	g++ ukkonen_depth.cpp ../ukkonen.o $(CXXFLAGS) $(LDFLAGS) -o $@
+
 
 # target: cst
 cst: cst.e
