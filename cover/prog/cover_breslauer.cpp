@@ -1,46 +1,40 @@
 #include <cstdio>
-#include <vector>
-using namespace std;
 
-vector<int> p;
-vector<int> dp;
-vector<int> res;
+const int maxN = 1 << 21;
 
-vector<int> s;
+int p[maxN];
+int dp[maxN];
+int res[maxN];
 
-char _s[1 << 19];
-int n;
+
+char s[1 << 21];
+int N;
 
 void get_input() {
-    s.push_back(-1);
-    scanf("%s", _s);
-    for(; _s[n]; ++n)
-        s.push_back(_s[n]);
-    s.push_back(-2);
+    scanf("%s", s + 1);
+    while (s[N + 1])
+        N++;
 }
 
 int main() {
     get_input();
-    p.resize(n + 2);
-    dp.resize(n + 2);
-    res.resize(n + 2);
 
     dp[1] = res[1] = 1;
 
-    for(int x, i = 2; i <= n; ++i) {
+    for (int x, i = 2; i <= N; ++i) {
         x = p[i - 1];
-        while(x && s[x + 1] != s[i])
+        while (x && s[x + 1] != s[i])
             x = p[x];
         x += s[x + 1] == s[i];
         p[i] = x;
 
         dp[i] = res[i] = i;
         x = res[x];
-        if(p[i] && dp[x] >= i - x) {
+        if (p[i] && dp[x] >= i - x) {
             dp[x] = i;
             res[i] = x;
         }
     }
 
-    printf("%d\n", res[n]);
+    printf("%d\n", res[N]);
 }

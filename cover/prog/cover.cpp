@@ -8,13 +8,13 @@ vector<int> res;
 
 vector<int> s;
 
-char _s[1 << 19];
+char _s[1 << 21];
 int n;
 
 void get_input() {
     s.push_back(-1);
     scanf("%s", _s);
-    for(; _s[n]; ++n)
+    for (; _s[n]; ++n)
         s.push_back(_s[n]);
     s.push_back(-2);
 }
@@ -27,16 +27,16 @@ int main() {
 
     dp[1] = res[1] = 1;
 
-    for(int x, i = 2; i <= n; ++i) {
+    for (int x, i = 2; i <= n; ++i) {
         x = p[i - 1];
-        while(x && s[x + 1] != s[i])
+        while (x && s[x + 1] != s[i])
             x = p[x];
         x += s[x + 1] == s[i];
         p[i] = x;
 
         dp[i] = res[i] = i;
         x = res[x];
-        if(p[i] && dp[x] >= i - x) {
+        if (p[i] && dp[x] >= i - x) {
             dp[x] = i;
             res[i] = x;
         }
