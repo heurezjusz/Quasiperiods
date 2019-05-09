@@ -1,18 +1,17 @@
-CXXFLAGS += -O3 -W -Wall -std=c++11
-
 all: prog compile
 
-
 prog:
-	cp ../cover/prog/cover_*.cpp .
+	cp ../cover/prog/cover_*.cpp prog/
 
 .PHONY: prog
 
-PRG_CPP = $(wildcard cover_*.cpp)
-EXE_CPP = $(patsubst %.cpp,%.e,$(PRG_CPP))
 
-compile: $(EXE_CPP)
+compile:
+	make -C prog
 .PHONY: compile
 
-%.e: %.cpp
-	g++ $(CXXFLAGS) $^ -o $*.e
+
+clean:
+	make -C prog clean
+	make -C random clean
+.PHONY: clean

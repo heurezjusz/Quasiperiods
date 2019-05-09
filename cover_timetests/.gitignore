@@ -1,1 +1,2 @@
-cover_*.cpp
+prog/cover_*.cpp
+*.in
