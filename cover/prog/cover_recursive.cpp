@@ -1,6 +1,6 @@
 #include <cstdio>
 
-const int maxN = 1 << 21;
+const int maxN = 1 << 22;
 
 int p[maxN];
 int s[maxN];
