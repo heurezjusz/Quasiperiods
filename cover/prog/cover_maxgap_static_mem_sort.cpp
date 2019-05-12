@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-const int maxN = 1 << 22;
+const int maxN = 1 << 25;
 char t[maxN];
 int pref[maxN];
 int order[maxN];

@@ -1,41 +1,23 @@
 import sys
 import os
 import time
+import importlib
 from pathlib import Path
 
-PROG = Path('prog')
-PARTS = ["random"]
-REPORT_FNAME = 'report.txt'
+utils = importlib.import_module("utils")
+from utils.parts import PARTS, get_parts, find_tests_of_part, report_fname
+
+PROG = Path("prog")
 REPORT = []
-
-
-def find_exe():
-    return sorted(PROG.glob("*.e"))
-
-
-def get_parts():
-    global PARTS
-
-    if len(sys.argv) != 2 or sys.argv[1] == "help":
-        print("usage: python3 run.py all/part1,part2,...")
-        sys.exit(1)
-
-    parts = sys.argv[1].split(',')
-    for part in parts:
-        if part not in PARTS and part != "all":
-            print("Unrecognized part:", part)
-            print("available parts: all /", ", ".join(PARTS))
-            sys.exit(1)
-
-    if "all" not in parts:
-        PARTS = parts
 
 
 def run_exe_on_test(exe, test):
     t_start = time.time()
-    res = os.system('./%s < %s > /dev/null' % (exe, test))
+    res = os.system("./%s < %s > /dev/null" % (exe, test))
     t_end = time.time()
     runtime = t_end - t_start
+    if res != 0:
+        print(exe, "fails...")
     return runtime
 
 
@@ -48,9 +30,10 @@ def run_on_test(test):
     REPORT.append(" ".join(str(t) for t in times))
 
 
-def find_tests_of_part(part):
-    os.system("make -C %s ingen" % part)
-    return sorted(Path(part).glob("*.in"))
+def find_exe():
+    if len(list(PROG.glob("*.e"))) == 0:
+        os.system("make -C prog")
+    return sorted(PROG.glob("*.e"))
 
 
 def print_header(part):
@@ -68,4 +51,4 @@ for part in PARTS:
     for test in find_tests_of_part(part):
         run_on_test(test)
 
-Path(REPORT_FNAME).write_text("\n".join(REPORT) + "\n")
+    Path(report_fname(part)).write_text("\n".join(REPORT) + "\n")

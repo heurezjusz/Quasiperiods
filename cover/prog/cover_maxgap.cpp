@@ -34,7 +34,7 @@ struct MaxGap {
 };
 
 
-char txt[1 << 22];
+char txt[1 << 25];
 void get_input() {
     scanf("%s", txt);
     for (n = 0; txt[n]; n++)

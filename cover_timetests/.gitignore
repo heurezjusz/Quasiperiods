@@ -1,2 +1,4 @@
 prog/cover_*.cpp
 *.in
+*.txt
+*/__pycache__

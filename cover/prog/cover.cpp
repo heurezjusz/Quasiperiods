@@ -8,7 +8,7 @@ vector<int> res;
 
 vector<int> s;
 
-char _s[1 << 22];
+char _s[1 << 25];
 int n;
 
 void get_input() {
