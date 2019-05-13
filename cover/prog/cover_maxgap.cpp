@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <vector>
+#include "maxN.h"
 using namespace std;
 
 
@@ -34,7 +35,7 @@ struct MaxGap {
 };
 
 
-char txt[1 << 25];
+char txt[maxN];
 void get_input() {
     scanf("%s", txt);
     for (n = 0; txt[n]; n++)
