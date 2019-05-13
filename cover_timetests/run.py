@@ -6,6 +6,7 @@ from pathlib import Path
 
 utils = importlib.import_module("utils")
 from utils.parts import PARTS, get_parts, find_tests_of_part, report_fname
+from utils.testdata import get_test_size
 
 PROG = Path("prog")
 REPORT = []
@@ -21,12 +22,15 @@ def run_exe_on_test(exe, test):
     return runtime
 
 
-def run_on_test(test):
+def run_on_test(part, test):
     print("running all solutions on %s" % test)
     global EXE, REPORT
     times = [test.parts[-1]]
     for exe in EXE:
-        times.append(run_exe_on_test(exe, test))
+        if "static_mem" in str(exe) and get_test_size(part, test) > 3e6:
+            times.append(None)
+        else:
+            times.append(run_exe_on_test(exe, test))
     REPORT.append(" ".join(str(t) for t in times))
 
 
@@ -49,6 +53,6 @@ get_parts()
 for part in PARTS:
     print_header(part)
     for test in find_tests_of_part(part):
-        run_on_test(test)
+        run_on_test(part, test)
 
     Path(report_fname(part)).write_text("\n".join(REPORT) + "\n")

@@ -43,15 +43,11 @@ void get_input() {
 }
 
 int main() {
-    //     scanf("%d", &n);
-    //     t.resize(n + 1);
     get_input();
     pref.resize(n);
     buck.resize(n);
     order.reserve(n);
 
-    //     for(int i = 0; i < n; ++i)
-    //         scanf("%d", &t[i]);
     t[n] = -1;
 
     int best = 0;

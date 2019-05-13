@@ -31,7 +31,7 @@ int gen_test(int seed, int N, int letters) {
 
 
 int main() {
-    for (int n = 1; n <= 25; ++n) {
+    for (int n = 1; n <= 40; ++n) {
         int N = 1e6 * n;
         int seed0 = N;
         gen_test(seed0 + 1, N, 2);

@@ -1,13 +1,12 @@
 #include <cstdio>
-
-const int maxN = 1 << 25;
+#include "maxN.h"
 
 int p[maxN];
 int dp[maxN];
 int res[maxN];
 
 
-char s[1 << 21];
+char s[maxN];
 int N;
 
 void get_input() {
