@@ -5,7 +5,7 @@ import importlib
 from pathlib import Path
 
 utils = importlib.import_module("utils")
-from utils.parts import PARTS, get_parts, find_tests_of_part, get_report_of_part
+from utils.parts import get_parts, find_tests_of_part, get_report_of_part
 from utils.testdata import get_test_size
 from utils.plotting import plt, plot_from_list_of_pairs
 
@@ -73,6 +73,5 @@ def plot_size_of_part(part):
     plt.show()
 
 
-get_parts()
-for part in PARTS:
+for part in get_parts():
     plot_size_of_part(part)
