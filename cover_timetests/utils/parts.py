@@ -2,7 +2,7 @@ import sys
 import os
 from pathlib import Path
 
-PARTS = PARTS = ["random"]
+PARTS = ["random", "recursive"]
 
 
 def get_parts():
@@ -13,14 +13,16 @@ def get_parts():
         sys.exit(1)
 
     parts = sys.argv[1].split(",")
+    chosen = []
     for part in parts:
         if part not in PARTS and part != "all":
             print("Unrecognized part:", part)
             print("available parts: all /", ", ".join(PARTS))
             sys.exit(1)
 
-    if "all" not in parts:
-        PARTS = parts
+    if "all" in parts:
+        return PARTS
+    return parts
 
 
 def find_tests_of_part(part):

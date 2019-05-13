@@ -5,7 +5,7 @@ import importlib
 from pathlib import Path
 
 utils = importlib.import_module("utils")
-from utils.parts import PARTS, get_parts, find_tests_of_part, report_fname
+from utils.parts import get_parts, find_tests_of_part, report_fname
 from utils.testdata import get_test_size
 
 PROG = Path("prog")
@@ -27,7 +27,7 @@ def run_on_test(part, test):
     global EXE, REPORT
     times = [test.parts[-1]]
     for exe in EXE:
-        if "static_mem" in str(exe) and get_test_size(part, test) > 3e6:
+        if "static_mem" in str(exe) and get_test_size(part, test) > 3e7:
             times.append(None)
         else:
             times.append(run_exe_on_test(exe, test))
@@ -48,9 +48,8 @@ def print_header(part):
 
 
 EXE = find_exe()
-get_parts()
 
-for part in PARTS:
+for part in get_parts():
     print_header(part)
     for test in find_tests_of_part(part):
         run_on_test(part, test)

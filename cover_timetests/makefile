@@ -24,6 +24,3 @@ run_random:
 
 
 report_%.txt: run_%
-
-plot_%: report_%.txt
-	python3 plot_summary.py %

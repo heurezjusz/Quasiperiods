@@ -2,10 +2,8 @@ from matplotlib import pyplot as plt
 import itertools
 
 
-DASHESCYCLE = itertools.cycle(
-    [[10, 10], [5, 5], [3, 3], [10, 1], [10, 5, 5, 5], [3, 3, 5, 3, 10, 3]]
-)
-COLORCYCLE = itertools.cycle(["#000000", "#555555", "#AAAAAA"])
+DASHESCYCLE = itertools.cycle([[10, 10], [5, 5], [3, 3], [10, 1], [3, 3, 5, 3, 10, 3]])
+COLORCYCLE = itertools.cycle(["#AAAAAA", "#000000", "#555555"])
 
 
 def plot_from_list_of_pairs(lst):

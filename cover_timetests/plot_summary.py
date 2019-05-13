@@ -28,6 +28,8 @@ def parse_report_per_label_size(part):
         test = line.split()[0]
         size = get_test_size(part, test)
         for time, label in zip(line.split()[1:], labels):
+            if time == "None":
+                continue
             if size not in results[label]:
                 results[label][size] = []
             results[label][size].append(float(time))
@@ -58,7 +60,7 @@ def plot_size_of_part(part):
 
     labels = []
 
-    for label, data in plots.items():
+    for label, data in sorted(plots.items()):
         labels.append(label)
         print(label, data)
         plot_from_list_of_pairs(data)
