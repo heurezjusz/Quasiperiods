@@ -55,12 +55,14 @@ def plot_size_of_part(part):
     results = parse_report_per_label_size(part)
 
     avg_dict = dict_dict_map(results, list_avg)
+    plots = [(label, list(d.items())) for label, d in avg_dict.items()]
 
-    plots = {label: list(d.items()) for label, d in avg_dict.items()}
+    plots.sort(key=lambda x: max(y for _, y in x[1]), reverse=True)
+    print([x for x, _ in plots])
 
     labels = []
 
-    for label, data in sorted(plots.items()):
+    for label, data in plots:
         labels.append(label)
         print(label, data)
         plot_from_list_of_pairs(data)
