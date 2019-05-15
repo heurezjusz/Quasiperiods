@@ -2,6 +2,7 @@ import sys
 import os
 import time
 import importlib
+import random
 from pathlib import Path
 
 utils = importlib.import_module("utils")
@@ -23,7 +24,6 @@ def run_exe_on_test(exe, test):
 
 
 def run_on_test(part, test):
-    print("running all solutions on %s" % test)
     global EXE, REPORT
     times = [test.parts[-1]]
     for exe in EXE:
@@ -51,7 +51,12 @@ EXE = find_exe()
 
 for part in get_parts():
     print_header(part)
-    for test in find_tests_of_part(part):
+    tests = find_tests_of_part(part)
+    random.shuffle(tests)
+    T = len(tests)
+
+    for (i, test) in enumerate(tests):
+        print("[%d%%] running all solutions on %s" % (int(100 * (i + 1) / T), test))
         run_on_test(part, test)
 
     Path(report_fname(part)).write_text("\n".join(REPORT) + "\n")
