@@ -29,7 +29,7 @@ string rand_string(int seed, int N, int letters) {
 void gen_test(int seed, int N, int period, int letters) {
     assert(letters <= MAX_CHAR);
 
-    string fname = "bigperiod_" + to_string(N) + "_" + to_string(letters) +
+    string fname = "littleperiod_" + to_string(N) + "_" + to_string(letters) +
                    "_" + to_string(period) + ".in";
     printf("%s\n", fname.c_str());
     FILE* f = fopen(fname.c_str(), "w");
@@ -44,13 +44,11 @@ void gen_test(int seed, int N, int period, int letters) {
 
 
 int main() {
-    for (int p = 1; p <= 100; p++) {
+    for (int p = 1; p <= 20; p++) {
         int N = 2e7;
-        for (int letters : {2, 4, 7, 10, 26, MAX_CHAR}) {
+        for (int letters : {2, 3, 4, 5, 10, 20}) {
             int seed = 100 * p + letters;
-            int period = p * N / 100;
-            gen_test(seed, N, period, letters);
-            gen_test(seed, N, period * 2 / 3, letters);
+            gen_test(seed, N, p, letters);
         }
     }
 }

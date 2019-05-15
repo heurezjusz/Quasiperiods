@@ -93,9 +93,12 @@ def plot_XXX_of_part(part, X="size"):
         print(label, data)
         plot_from_list_of_pairs(data)
 
-    plt.legend(labels, loc="upper left")
-
-    plt.ylim(ymin=0, ymax=1.0)
+    if "periods" in part:
+        plt.legend(labels, loc="upper right")
+        plt.ylim(ymin=0, ymax=1.5)
+    else:
+        plt.legend(labels, loc="upper left")
+        plt.ylim(ymin=0, ymax=1.0)
 
     plt.xlabel(get_X_xlabel(X))
     plt.ylabel("execution time [s]")

@@ -14,7 +14,7 @@ compile:
 
 clean:
 	make -C prog clean
-	make -C random clean
+	echo "=== *** +++ run clean in subfolders! +++ *** ==="
 .PHONY: clean
 
 
