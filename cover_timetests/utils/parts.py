@@ -2,7 +2,15 @@ import sys
 import os
 from pathlib import Path
 
-PARTS = ["random", "recursive", "periodic", "small_periods", "big_periods", "little_periods"]
+PARTS = [
+    "big_periods",
+    "letters",
+    "little_periods",
+    "periodic",
+    "random",
+    "recursive",
+    "small_periods",
+]
 
 
 def get_parts(max_argv=2, msg=None):
