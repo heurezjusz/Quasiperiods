@@ -27,6 +27,7 @@ def get_test_size(part, testname):
         "big_periods",
         "little_periods",
         "letters",
+        "small_covers",
     ]:
         return _get_test_size_from_name(testname)
     else:

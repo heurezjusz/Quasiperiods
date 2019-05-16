@@ -10,6 +10,7 @@ PARTS = [
     "random",
     "recursive",
     "small_periods",
+    "small_covers",
 ]
 
 
