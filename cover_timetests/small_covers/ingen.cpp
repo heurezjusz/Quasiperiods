@@ -8,7 +8,7 @@ char charset[] =
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "0123456789"
-    "!@#$%^&*()_+-=[]{}|:;\"'<>,.?/\\";
+    "%!@#$^&*()_+-=[]{}|:;\"'<>,.?/\\";
 int MAX_CHAR = sizeof(charset) / sizeof(char) - 1;
 
 
@@ -17,7 +17,7 @@ void write_to_file(string fname, vector<int> word) {
 
     FILE* f = fopen(fname.c_str(), "w");
     for (int l : word)
-        fprintf(f, "%c", l % MAX_CHAR);
+        fprintf(f, "%c", charset[l % MAX_CHAR]);
     fprintf(f, "\n");
     fclose(f);
 }
@@ -65,6 +65,7 @@ int main() {
         int seed0 = N;
 
         many_presufs(seed0 + 0, N, 100);
+        // return 0;
         many_presufs(seed0 + 1, N, 200);
         many_presufs(seed0 + 2, N, 1000);
         gen_test(seed0 + 0, N, 100, {10, 25});
