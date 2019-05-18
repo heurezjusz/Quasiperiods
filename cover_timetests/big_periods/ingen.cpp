@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdio>
+#include <map>
 #include <string>
 using namespace std;
 
@@ -28,6 +29,7 @@ string rand_string(int seed, int N, int letters) {
 
 void gen_test(int seed, int N, int period, int letters) {
     assert(letters <= MAX_CHAR);
+    charmap.clear();
 
     string fname = "bigperiod_" + to_string(N) + "_" + to_string(letters) +
                    "_" + to_string(period) + ".in";

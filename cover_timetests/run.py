@@ -50,6 +50,10 @@ def print_header(part):
 EXE = find_exe()
 
 for part in get_parts():
+    if part == "total_summary":
+        print("total_summary part not supported by run.py")
+        sys.exit(1)
+
     print_header(part)
     tests = find_tests_of_part(part)
     random.shuffle(tests)
