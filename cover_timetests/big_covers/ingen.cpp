@@ -36,6 +36,22 @@ void write_to_file(string fname, vector<int> word) {
 }
 
 
+bool has_short_period(vector<int>& word) {
+    int N = word.size();
+    vector<int> p;
+    p.resize(N);
+    for (int w = 0, i = 1; i < N; ++i) {
+        while (w > 0 && word[i] != word[w])
+            w = p[w - 1];
+        if (word[i] == word[w])
+            w++;
+        p[i] = w;
+    }
+
+    return p.back() >= N / 2;
+}
+
+
 bool is_only_ones(vector<int>& word, int cover) {
     for (int i = 0; i < cover - 1; ++i) {
         if (word[i] != word[i + 1])
@@ -54,7 +70,7 @@ void gen_test(int seed, int N, int cover, vector<int> presufs,
 
     printf("generating %s...\n", fname.c_str());
     vector<int> word = gen_word(N, cover, presufs);
-    while (is_only_ones(word, cover)) {
+    while (has_short_period(word)) {
         printf("FAIL\n");
         word = gen_word(N, cover, presufs);
     }

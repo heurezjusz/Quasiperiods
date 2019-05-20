@@ -10,7 +10,6 @@ from utils.parts import get_parts, find_tests_of_part, report_fname
 from utils.testdata import get_test_size
 
 PROG = Path("prog")
-REPORT = []
 
 
 def run_exe_on_test(exe, test):
@@ -50,6 +49,8 @@ def print_header(part):
 EXE = find_exe()
 
 for part in get_parts():
+    REPORT = []
+
     if part == "total_summary":
         print("total_summary part not supported by run.py")
         sys.exit(1)
