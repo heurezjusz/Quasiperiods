@@ -1,0 +1,5 @@
+prog/cover_*.cpp
+*.in
+report_*.txt
+!/reports/**
+*/__pycache__

@@ -5,3 +5,4 @@ bigdata/
 *.swp
 */.vscode/*
 .vscode/*
+prog/*
