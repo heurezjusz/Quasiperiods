@@ -102,8 +102,8 @@ void rand_presufs(int seed, int N, int cover, int num_of_presufs) {
 
 
 int main() {
-    for (int n = 1; n <= 20; ++n) {
-        int N = 1e6 * n;
+    for (int n = 1; n <= 50; ++n) {
+        int N = 1e4 * n;
         int seed0 = N;
 
         many_presufs(seed0 + 0, N, N / 30);

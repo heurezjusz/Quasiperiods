@@ -86,16 +86,16 @@ void many_presufs(int seed, int N, int cover) {
 
 
 int main() {
-    for (int n = 1; n <= 20; ++n) {
-        int N = 1e6 * n;
+    for (int n = 1; n <= 50; ++n) {
+        int N = 1e4 * n;
         int seed0 = N;
 
         many_presufs(seed0 + 0, N, 100);
         // return 0;
         many_presufs(seed0 + 1, N, 200);
         many_presufs(seed0 + 2, N, 1000);
-        gen_test(seed0 + 3, N, 100, {10, 25});
-        gen_test(seed0 + 4, N, 200, {23, 75});
-        gen_test(seed0 + 5, N, 500, {3, 9, 27, 81, 243});
+        gen_test(seed0 + 3, N, 100, {10, 25}, "hand1");
+        gen_test(seed0 + 4, N, 200, {23, 75}, "hand2");
+        gen_test(seed0 + 5, N, 500, {3, 9, 27, 81, 243}, "hand3");
     }
 }

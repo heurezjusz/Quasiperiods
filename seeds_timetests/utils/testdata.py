@@ -19,7 +19,15 @@ def _get_test_alphabet(part, testname):
 
 
 def get_test_size(part, testname):
-    if part in ["random", "letters", "small_periods", "big_periods", "little_periods"]:
+    if part in [
+        "random",
+        "letters",
+        "small_periods",
+        "big_periods",
+        "little_periods",
+        "small_seeds",
+        "big_seeds",
+    ]:
         return _get_test_size_from_name(testname)
     else:
         raise NotImplementedError
@@ -30,6 +38,13 @@ def get_test_period(part, testname):
         return _get_test_period_by_name(testname)
     else:
         raise NotImplementedError
+
+
+# def get_test_seed(part, testname):
+#     if part in ["small_seeds", "big_seeds"]:
+#         return _get_test_period_by_name(testname)
+#     else:
+#         raise NotImplementedError
 
 
 def get_test_alphabet(part, testname):

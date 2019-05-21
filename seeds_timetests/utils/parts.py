@@ -2,7 +2,15 @@ import sys
 import os
 from pathlib import Path
 
-PARTS = ["random", "letters", "small_periods", "big_periods", "little_periods"]
+PARTS = [
+    "random",
+    "letters",
+    "small_periods",
+    "big_periods",
+    "little_periods",
+    "small_seeds",
+    "big_seeds",
+]
 
 
 def get_parts(max_argv=2, msg=None):
