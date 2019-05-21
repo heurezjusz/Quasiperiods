@@ -46,6 +46,9 @@ def print_header(part):
     REPORT.append("test_name " + " ".join(exe.parts[-1] for exe in EXE))
 
 
+print("ulimit...")
+os.system("ulimit -s unlimited")
+
 EXE = find_exe()
 
 for part in get_parts():

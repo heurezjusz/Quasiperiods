@@ -11,6 +11,12 @@ def _get_test_period_by_name(testname):
     return int(p)
 
 
+def _get_test_seed_by_name(testname):
+    fname = str(testname).split("/")[-1]
+    p = fname.split("_")[2]
+    return int(p)
+
+
 def _get_test_alphabet(part, testname):
     fname = str(testname).split("/")[-1]
     idx = {"letters": 2, "big_periods": 2}[part]
@@ -27,6 +33,9 @@ def get_test_size(part, testname):
         "little_periods",
         "small_seeds",
         "big_seeds",
+        "periodic",
+        "per_seed_big",
+        "per_seed_small",
     ]:
         return _get_test_size_from_name(testname)
     else:
@@ -40,11 +49,11 @@ def get_test_period(part, testname):
         raise NotImplementedError
 
 
-# def get_test_seed(part, testname):
-#     if part in ["small_seeds", "big_seeds"]:
-#         return _get_test_period_by_name(testname)
-#     else:
-#         raise NotImplementedError
+def get_test_seed(part, testname):
+    if part in ["small_seeds", "big_seeds", "per_seed_big", "per_seed_small"]:
+        return _get_test_seed_by_name(testname)
+    else:
+        raise NotImplementedError
 
 
 def get_test_alphabet(part, testname):

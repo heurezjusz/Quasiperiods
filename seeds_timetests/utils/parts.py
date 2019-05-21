@@ -10,6 +10,9 @@ PARTS = [
     "little_periods",
     "small_seeds",
     "big_seeds",
+    "periodic",
+    "per_seed_big",
+    "per_seed_small",
 ]
 
 

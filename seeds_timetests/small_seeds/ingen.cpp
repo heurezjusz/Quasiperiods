@@ -62,8 +62,8 @@ bool has_short_period(vector<int>& word) {
 void gen_test(int seed, int N, int cover, vector<int> presufs,
               string msg = "") {
     srand(seed);
-    string fname = "smallcovers_" + to_string(N) + "_" + to_string(cover) +
-                   "_" + msg + ".in";
+    string fname = "smallseeds_" + to_string(N) + "_" + to_string(cover) + "_" +
+                   msg + ".in";
 
     printf("generating %s...\n", fname.c_str());
     vector<int> word = gen_word(N, cover, presufs);

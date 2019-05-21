@@ -52,8 +52,8 @@ bool has_short_period(vector<int>& word) {
 }
 
 
-bool is_only_ones(vector<int>& word, int cover) {
-    for (int i = 0; i < cover - 1; ++i) {
+bool is_only_ones(vector<int>& word, int seedlen) {
+    for (int i = 0; i < seedlen - 1; ++i) {
         if (word[i] != word[i + 1])
             return false;
     }
@@ -61,18 +61,18 @@ bool is_only_ones(vector<int>& word, int cover) {
 }
 
 
-void gen_test(int seed, int N, int cover, vector<int> presufs,
+void gen_test(int seed, int N, int seedlen, vector<int> presufs,
               string msg = "") {
     srand(seed);
 
-    string fname =
-        "bigseeds_" + to_string(N) + "_" + to_string(cover) + "_" + msg + ".in";
+    string fname = "perseed_" + to_string(N) + "_" + to_string(seedlen) + "_" +
+                   msg + ".in";
 
     printf("generating %s...\n", fname.c_str());
-    vector<int> word = gen_word(N, cover, presufs);
+    vector<int> word = gen_word(N, seedlen, presufs);
     while (has_short_period(word)) {
         printf("FAIL\n");
-        word = gen_word(N, cover, presufs);
+        word = gen_word(N, seedlen, presufs);
     }
     printf("OK\n");
 
@@ -80,11 +80,11 @@ void gen_test(int seed, int N, int cover, vector<int> presufs,
 }
 
 
-void many_presufs(int seed, int N, int cover) {
+void many_presufs(int seed, int N, int seedlen) {
     vector<int> presufs;
-    for (int i = 2; i < cover / 2 - 3; ++i)
+    for (int i = 2; i < seedlen / 2 - 3; ++i)
         presufs.push_back(i);
-    gen_test(seed, N, cover, presufs, "manyperfs");
+    gen_test(seed, N, seedlen, presufs, "manyperfs");
 }
 
 
@@ -92,27 +92,26 @@ int rand_range(int a, int b) {
     return rand() % (b - a + 1) + a;
 }
 
-void rand_presufs(int seed, int N, int cover, int num_of_presufs) {
+void rand_presufs(int seed, int N, int seedlen, int num_of_presufs) {
     vector<int> presufs;
     srand(seed);
     for (int i = 2; i < num_of_presufs; ++i)
-        presufs.push_back(rand_range(1, cover / 2 - 3));
-    gen_test(seed + 1, N, cover, presufs, "randperfs");
+        presufs.push_back(rand_range(1, seedlen / 2 - 3));
+    gen_test(seed + 1, N, seedlen, presufs, "randperfs");
 }
 
 
 int main() {
-    for (int n = 1; n <= 50; ++n) {
-        int N = 1e4 * n;
-        int seed0 = N;
+    for (int p = 1; p <= 100; ++p) {
+        int N = 5e5;
+        int seed0 = p * 100;
+        int slen = p * N / 100;
 
-        many_presufs(seed0 + 0, N, N / 30);
-        many_presufs(seed0 + 1, N, N / 10);
-        many_presufs(seed0 + 2, N, N / 4);
+        many_presufs(seed0 + 0, N, slen);
+        many_presufs(seed0 + 1, N, slen);
 
-        rand_presufs(seed0 + 3, N, N / 30, 20);
-        rand_presufs(seed0 + 4, N, N / 10, 30);
-        rand_presufs(seed0 + 5, N, N / 4, 35);
+        rand_presufs(seed0 + 3, N, slen, 20);
+        rand_presufs(seed0 + 4, N, slen, 30);
 
         // return 0;
     }
