@@ -19,14 +19,14 @@ def _get_test_alphabet(part, testname):
 
 
 def get_test_size(part, testname):
-    if part in ["random", "letters"]:
+    if part in ["random", "letters", "small_periods", "big_periods", "little_periods"]:
         return _get_test_size_from_name(testname)
     else:
         raise NotImplementedError
 
 
 def get_test_period(part, testname):
-    if part in []:
+    if part in ["small_periods", "big_periods", "little_periods"]:
         return _get_test_period_by_name(testname)
     else:
         raise NotImplementedError

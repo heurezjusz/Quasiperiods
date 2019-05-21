@@ -111,9 +111,11 @@ def plot_XXX_of_part(part, X="size"):
         print(label, data)
         plot_from_list_of_pairs(label, data)
 
+    if X == "period":
+        plt.ylim(ymin=0, ymax=5)
+
     if X == "alphabet":
         plt.legend(labels, loc="lower right")
-
     else:
         plt.legend(labels, loc="upper left")
     # elif part == "letters":
