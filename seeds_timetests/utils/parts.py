@@ -1,6 +1,7 @@
 import sys
 import os
 from pathlib import Path
+from .testdata import get_test_size
 
 PARTS = [
     "random",
@@ -13,6 +14,7 @@ PARTS = [
     "periodic",
     "per_seed_big",
     "per_seed_small",
+    "total_summary",
 ]
 
 
@@ -53,6 +55,12 @@ def report_fname(part):
     return "report_%s.txt" % part
 
 
+def has_multiple_sizes(lines):
+    testnames = [line.split(" ")[0] for line in lines if len(line) != 0]
+    sizes = set(get_test_size("total_summary", testname) for testname in testnames)
+    return len(sizes) > 1
+
+
 def get_report_of_part(part):
     if part == "total_summary":
         # get all reports
@@ -64,7 +72,9 @@ def get_report_of_part(part):
             if header is None:
                 header = lines[1]
             assert lines[1] == header, "Wrong solutions order in %s" % str(fname)
-            all_lines += lines[2:]
+            if has_multiple_sizes(lines[2:]):
+                # makes sense only for different N - size plot
+                all_lines += lines[2:]
         return "\n".join(["=== total_summary ===", header] + all_lines)
     else:
         fname = Path(report_fname(part))

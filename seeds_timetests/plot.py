@@ -107,6 +107,7 @@ def title(part):
     per_seed = "Words with fixed shortest seed length (N=500,000)"
     random = "Random words"
     periodic = "Periodic words"
+    seeded = "Words with non-trivial seed"
     alphabet = "Different words with fixed alphabet size (N=500,000)"
     return {
         "big_periods": per_period,
@@ -116,6 +117,9 @@ def title(part):
         "letters": alphabet,
         "per_seed_small": per_seed,
         "per_seed_big": per_seed,
+        "big_seeds": seeded,
+        "small_seeds": seeded,
+        "total_summary": "Average on all tests",
     }[part]
 
 

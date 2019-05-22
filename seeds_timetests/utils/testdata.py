@@ -36,6 +36,7 @@ def get_test_size(part, testname):
         "periodic",
         "per_seed_big",
         "per_seed_small",
+        "total_summary",
     ]:
         return _get_test_size_from_name(testname)
     else:
