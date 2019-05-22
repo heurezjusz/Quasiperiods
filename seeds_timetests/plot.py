@@ -6,13 +6,18 @@ from pathlib import Path
 
 utils = importlib.import_module("utils")
 from utils.parts import get_parts, find_tests_of_part, get_report_of_part, get_filters
-from utils.testdata import get_test_size, get_test_period, get_test_alphabet
+from utils.testdata import (
+    get_test_size,
+    get_test_period,
+    get_test_alphabet,
+    get_test_seed,
+)
 from utils.plotting import plt, plot_from_list_of_pairs
 
 
 plt.figure(figsize=(12, 8))
 
-POSSIBLE_PLOTS = ["size", "period", "alphabet"]
+POSSIBLE_PLOTS = ["size", "period", "alphabet", "seed"]
 
 if len(sys.argv) < 3:
     plot_type = "size"
@@ -34,7 +39,7 @@ def filtered_out(filters, testname):
 
 
 def parse_report_per_label_XXX(part, X="size"):
-    assert X in ["size", "period", "alphabet"]
+    assert X in ["size", "period", "alphabet", "seed"]
 
     lines = get_report_of_part(part).split("\n")
     assert lines[0] == "=== " + part + " ==="
@@ -58,6 +63,8 @@ def parse_report_per_label_XXX(part, X="size"):
             XXX = get_test_size(part, test_name)
         elif X == "period":
             XXX = get_test_period(part, test_name)
+        elif X == "seed":
+            XXX = get_test_seed(part, test_name)
         else:
             XXX = get_test_alphabet(part, test_name)
 
@@ -86,15 +93,34 @@ def list_avg(l):
 
 def get_X_xlabel(X):
     if X == "size":
-        return "test size (N)"
+        return "word length (N)"
     if X == "period":
         return "period length"
     if X == "alphabet":
         return "alphabet size"
+    if X == "seed":
+        return "shortest seed length"
+
+
+def title(part):
+    per_period = "Words with fixed period length (N=500,000)"
+    per_seed = "Words with fixed shortest seed length (N=500,000)"
+    random = "Random words"
+    periodic = "Periodic words"
+    alphabet = "Different words with fixed alphabet size (N=500,000)"
+    return {
+        "big_periods": per_period,
+        "small_periods": per_period,
+        "random": random,
+        "periodic": periodic,
+        "letters": alphabet,
+        "per_seed_small": per_seed,
+        "per_seed_big": per_seed,
+    }[part]
 
 
 def plot_XXX_of_part(part, X="size"):
-    assert X in ["size", "period", "alphabet"]
+    assert X in ["size", "period", "alphabet", "seed"]
     print("plotting", part)
     results = parse_report_per_label_XXX(part, X)
 
@@ -111,8 +137,12 @@ def plot_XXX_of_part(part, X="size"):
         print(label, data)
         plot_from_list_of_pairs(label, data)
 
-    if X == "period":
+    if "_periods" in part or "per_seed_big" == part:
         plt.ylim(ymin=0, ymax=5)
+    else:
+        plt.ylim(ymin=0, ymax=3)
+
+    plt.title(title(part), fontsize=20)
 
     if X == "alphabet":
         plt.legend(labels, loc="lower right")

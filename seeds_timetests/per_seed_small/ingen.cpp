@@ -102,7 +102,7 @@ void rand_presufs(int seed, int N, int seedlen, int num_of_presufs) {
 
 
 int main() {
-    for (int p = 100; p <= 1000; p += 50) {
+    for (int p = 100; p <= 1000; p += 20) {
         int N = 5e5;
         int seed0 = p * 100;
         int slen = p;

@@ -104,14 +104,14 @@ void rand_presufs(int seed, int N, int seedlen, int num_of_presufs) {
 int main() {
     for (int p = 1; p <= 100; ++p) {
         int N = 5e5;
-        int seed0 = p * 100;
+        int seed0 = p * 100 + 1;
         int slen = p * N / 100;
 
         many_presufs(seed0 + 0, N, slen);
         many_presufs(seed0 + 1, N, slen);
 
-        rand_presufs(seed0 + 3, N, slen, 20);
-        rand_presufs(seed0 + 4, N, slen, 30);
+        rand_presufs(seed0 + 3, N, slen, 4);
+        rand_presufs(seed0 + 4, N, slen, 15);
 
         // return 0;
     }
