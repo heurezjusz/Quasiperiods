@@ -6,13 +6,18 @@ from pathlib import Path
 
 utils = importlib.import_module("utils")
 from utils.parts import get_parts, find_tests_of_part, get_report_of_part
-from utils.testdata import get_test_size, get_test_period, get_test_alphabet
+from utils.testdata import (
+    get_test_size,
+    get_test_period,
+    get_test_alphabet,
+    get_test_cover,
+)
 from utils.plotting import plt, plot_from_list_of_pairs
 
 
 plt.figure(figsize=(12, 8))
 
-POSSIBLE_PLOTS = ["size", "period", "alphabet"]
+POSSIBLE_PLOTS = ["size", "period", "alphabet", "cover"]
 
 if len(sys.argv) < 3:
     plot_type = "size"
@@ -25,7 +30,7 @@ if plot_type not in POSSIBLE_PLOTS:
 
 
 def parse_report_per_label_XXX(part, X="size"):
-    assert X in ["size", "period", "alphabet"]
+    assert X in ["size", "period", "alphabet", "cover"]
 
     lines = get_report_of_part(part).split("\n")
     assert lines[0] == "=== " + part + " ==="
@@ -40,7 +45,9 @@ def parse_report_per_label_XXX(part, X="size"):
             continue
         test = line.split()[0]
 
-        if X == "size":
+        if X == "cover":
+            XXX = get_test_cover(part, test)
+        elif X == "size":
             XXX = get_test_size(part, test)
         elif X == "period":
             XXX = get_test_period(part, test)
@@ -79,10 +86,33 @@ def get_X_xlabel(X):
         return "alphabet size"
 
 
+def title(part):
+    per_period = "Strings with fixed period length (N=20,000,000)"
+    per_cover = "Strings with fixed shortest cover length (N=20,000,000)"
+    random = "Random strings"
+    periodic = "Periodic strings"
+    covered = "Strings with proper cover"
+    alphabet = "Different strings with fixed alphabet size (N=20,000,000)"
+    return {
+        "big_periods": per_period,
+        "little_periods": per_period,
+        "small_periods": per_period,
+        "random": random,
+        "periodic": periodic,
+        "letters": alphabet,
+        "per_cover_small": per_cover,
+        "per_cover_big": per_cover,
+        "big_covers": covered,
+        "small_covers": covered,
+        "total_summary": "Average on all tests",
+    }[part]
+
+
 def plot_XXX_of_part(part, X="size"):
-    assert X in ["size", "period", "alphabet"]
+    assert X in ["size", "period", "alphabet", "cover"]
     print("plotting", part)
     results = parse_report_per_label_XXX(part, X)
+    maxX = max(list(results.items())[0][1].items())[0]
 
     avg_dict = dict_dict_map(results, list_avg)
     plots = [(label, list(d.items())) for label, d in avg_dict.items()]
@@ -91,11 +121,14 @@ def plot_XXX_of_part(part, X="size"):
     print([x for x, _ in plots])
 
     labels = []
-
     for label, data in plots:
         labels.append(label)
         print(label, data)
-        plot_from_list_of_pairs(data)
+        plot_from_list_of_pairs(label, data)
+
+    plt.title(title(part), fontsize=20)
+
+    plt.xlim(xmin=0, xmax=maxX)
 
     if "periods" in part:
         plt.legend(labels, loc="upper right")

@@ -44,7 +44,7 @@ int gen_test(int seed, int N, int period, int letters) {
 
 
 int main() {
-    for (int n = 1; n <= 20; ++n) {
+    for (int n = 1; n <= 30; ++n) {
         for (int letters : {2, 3, 4, 10, 26, 62}) {
             int N = 1e6 * n;
             for (int period : {1, 3, 10, 100, 1000, N / 100, N / 10}) {

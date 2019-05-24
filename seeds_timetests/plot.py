@@ -67,6 +67,8 @@ def parse_report_per_label_XXX(part, X="size"):
             XXX = get_test_seed(part, test_name)
         else:
             XXX = get_test_alphabet(part, test_name)
+            if XXX == 1:
+                continue
 
         for time, label in zip(line.split()[1:], labels):
             if time == "None":
@@ -93,7 +95,7 @@ def list_avg(l):
 
 def get_X_xlabel(X):
     if X == "size":
-        return "word length (N)"
+        return "string length (N)"
     if X == "period":
         return "period length"
     if X == "alphabet":
@@ -103,12 +105,12 @@ def get_X_xlabel(X):
 
 
 def title(part):
-    per_period = "Words with fixed period length (N=500,000)"
-    per_seed = "Words with fixed shortest seed length (N=500,000)"
-    random = "Random words"
-    periodic = "Periodic words"
-    seeded = "Words with non-trivial seed"
-    alphabet = "Different words with fixed alphabet size (N=500,000)"
+    per_period = "Strings with fixed period length (N=500,000)"
+    per_seed = "Strings with fixed shortest seed length (N=500,000)"
+    random = "Random strings"
+    periodic = "Periodic strings"
+    seeded = "Strings with proper seed"
+    alphabet = "Different strings with fixed alphabet size (N=500,000)"
     return {
         "big_periods": per_period,
         "small_periods": per_period,

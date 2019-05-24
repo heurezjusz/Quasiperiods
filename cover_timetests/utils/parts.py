@@ -13,6 +13,8 @@ PARTS = [
     "small_periods",
     "small_covers",
     "total_summary",
+    "per_cover_big",
+    "per_cover_small",
 ]
 
 

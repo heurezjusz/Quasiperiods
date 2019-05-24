@@ -11,6 +11,12 @@ def _get_test_period_by_name(testname):
     return int(p)
 
 
+def _get_test_cover_by_name(testname):
+    fname = str(testname).split("/")[-1]
+    p = fname.split("_")[2]
+    return int(p)
+
+
 def _get_test_alphabet(part, testname):
     fname = str(testname).split("/")[-1]
     idx = {"letters": 2, "big_periods": 2}[part]
@@ -30,6 +36,8 @@ def get_test_size(part, testname):
         "small_covers",
         "big_covers",
         "total_summary",
+        "per_cover_big",
+        "per_cover_small",
     ]:
         return _get_test_size_from_name(testname)
     else:
@@ -39,6 +47,13 @@ def get_test_size(part, testname):
 def get_test_period(part, testname):
     if part in ["periodic", "small_periods", "big_periods", "little_periods"]:
         return _get_test_period_by_name(testname)
+    else:
+        raise NotImplementedError
+
+
+def get_test_cover(part, testname):
+    if part in ["per_cover_big", "per_cover_small"]:
+        return _get_test_cover_by_name(testname)
     else:
         raise NotImplementedError
 

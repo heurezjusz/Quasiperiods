@@ -2,20 +2,24 @@ from matplotlib import pyplot as plt
 import itertools
 
 
-DASHESCYCLE = itertools.cycle([[10, 1], [1, 2], [5, 5]])
-COLORCYCLE = itertools.cycle(["#000000", "#AAAAAA", "#555555"])
-CURRENT_COLOR = next(COLORCYCLE)
-CHANGE_COLOR = [5, 5]
+BLACK = "#000000"
+GREY = "#AAAAAA"
+LINE = [10, 1]
+DOTS = [1, 2]
+DASHES = [5, 5]
+
+color_dash_dict = {
+    "cover_breslauer.e": (GREY, LINE),
+    "cover_maxgap.e": (BLACK, LINE),
+    "cover_maxgap_static_mem.e": (BLACK, DOTS),
+    "cover_nlogn.e": (GREY, DOTS),
+    "cover_recursive.e": (BLACK, DASHES),
+}
 
 
-def plot_from_list_of_pairs(lst):
-    global CURRENT_COLOR
-    dashes = next(DASHESCYCLE)
+def plot_from_list_of_pairs(label, lst):
+    color, dashes = color_dash_dict[label]
     x, y = zip(*sorted(lst))
-    print("plot with color %s and style %s" % (CURRENT_COLOR, str(dashes)))
-    plt.plot(x, y, "o", color=CURRENT_COLOR, markersize=5, dashes=dashes)
-
-    if dashes == CHANGE_COLOR:
-        print("*")
-        CURRENT_COLOR = next(COLORCYCLE)
+    print("plot with color %s and style %s" % (color, str(dashes)))
+    plt.plot(x, y, "o", color=color, markersize=5, dashes=dashes)
 

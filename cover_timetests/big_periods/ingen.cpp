@@ -29,7 +29,6 @@ string rand_string(int seed, int N, int letters) {
 
 void gen_test(int seed, int N, int period, int letters) {
     assert(letters <= MAX_CHAR);
-    charmap.clear();
 
     string fname = "bigperiod_" + to_string(N) + "_" + to_string(letters) +
                    "_" + to_string(period) + ".in";
@@ -46,11 +45,12 @@ void gen_test(int seed, int N, int period, int letters) {
 
 
 int main() {
-    for (int p = 1; p <= 100; p++) {
+    const int P = 40;
+    for (int p = 1; p <= P; p++) {
         int N = 2e7;
         for (int letters : {2, 4, 7, 10, 26, MAX_CHAR}) {
             int seed = 100 * p + letters;
-            int period = p * N / 100;
+            int period = p * N / P;
             gen_test(seed, N, period, letters);
             gen_test(seed, N, period * 2 / 3, letters);
         }

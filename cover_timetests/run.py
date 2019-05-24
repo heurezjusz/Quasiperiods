@@ -48,6 +48,9 @@ def print_header(part):
 
 EXE = find_exe()
 
+print("setting ulimit")
+os.system("ulimit -s unlimited")
+
 for part in get_parts():
     REPORT = []
 

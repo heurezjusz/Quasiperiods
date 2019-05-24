@@ -65,8 +65,8 @@ void gen_test(int seed, int N, int cover, vector<int> presufs,
               string msg = "") {
     srand(seed);
 
-    string fname = "bigcovers_" + to_string(N) + "_" + to_string(cover) + "_" +
-                   msg + ".in";
+    string fname = "percoversml_" + to_string(N) + "_" + to_string(cover) +
+                   "_" + msg + ".in";
 
     printf("generating %s...\n", fname.c_str());
     vector<int> word = gen_word(N, cover, presufs);
@@ -102,17 +102,16 @@ void rand_presufs(int seed, int N, int cover, int num_of_presufs) {
 
 
 int main() {
-    for (int n = 1; n <= 30; ++n) {
-        int N = 1e6 * n;
-        int seed0 = N;
+    for (int p = 100; p <= 1000; p += 20) {
+        int N = 2e7;
+        int seed0 = p * 100;
+        int clen = p;
 
-        many_presufs(seed0 + 0, N, N / 30);
-        many_presufs(seed0 + 1, N, N / 10);
-        many_presufs(seed0 + 2, N, N / 4);
+        many_presufs(seed0 + 0, N, clen);
+        many_presufs(seed0 + 1, N, clen);
 
-        rand_presufs(seed0 + 3, N, N / 30, 20);
-        rand_presufs(seed0 + 4, N, N / 10, 30);
-        rand_presufs(seed0 + 5, N, N / 4, 35);
+        rand_presufs(seed0 + 3, N, clen, 3);
+        rand_presufs(seed0 + 4, N, clen, 5);
 
         // return 0;
     }
