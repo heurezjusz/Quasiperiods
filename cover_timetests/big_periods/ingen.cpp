@@ -47,7 +47,7 @@ void gen_test(int seed, int N, int period, int letters) {
 int main() {
     const int P = 40;
     for (int p = 1; p <= P; p++) {
-        int N = 2e7;
+        int N = 3e7;
         for (int letters : {2, 4, 7, 10, 26, MAX_CHAR}) {
             int seed = 100 * p + letters;
             int period = p * N / P;

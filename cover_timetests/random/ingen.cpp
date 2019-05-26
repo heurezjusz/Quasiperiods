@@ -17,8 +17,10 @@ int randint(int a, int b) {
 }
 
 
-int gen_test(int seed, int N, int letters) {
+void gen_test(int seed, int N, int letters) {
     assert(letters <= MAX_CHAR);
+
+    srand(seed);
 
     string fname = "rand_" + to_string(N) + "_" + to_string(letters) + ".in";
     FILE* f = fopen(fname.c_str(), "w");
@@ -31,7 +33,7 @@ int gen_test(int seed, int N, int letters) {
 
 
 int main() {
-    for (int n = 1; n <= 40; ++n) {
+    for (int n = 1; n <= 30; ++n) {
         int N = 1e6 * n;
         int seed0 = N;
         gen_test(seed0 + 1, N, 2);

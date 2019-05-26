@@ -102,8 +102,8 @@ void rand_presufs(int seed, int N, int cover, int num_of_presufs) {
 
 
 int main() {
-    for (int p = 1; p <= 100; ++p) {
-        int N = 2e7;
+    for (int p = 1; p <= 50; ++p) {
+        int N = 3e7;
         int seed0 = p * 100 + 1;
         int clen = p * N / 100;
 

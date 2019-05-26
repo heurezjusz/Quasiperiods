@@ -45,7 +45,7 @@ void gen_test(int seed, int N, int period, int letters, string type) {
 
 int main() {
     for (int letters = 1; letters <= MAX_CHAR; letters++) {
-        int N = 2e7;
+        int N = 3e7;
         int seed0 = letters;
         gen_test(seed0 + 0, N, N, letters, "random");
         gen_test(seed0 + 1, N, 2 * MAX_CHAR, letters, "small_period");

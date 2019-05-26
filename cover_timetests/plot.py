@@ -51,8 +51,12 @@ def parse_report_per_label_XXX(part, X="size"):
             XXX = get_test_size(part, test)
         elif X == "period":
             XXX = get_test_period(part, test)
+            if XXX == 1:
+                continue
         else:
             XXX = get_test_alphabet(part, test)
+            if XXX == 1:
+                continue
 
         for time, label in zip(line.split()[1:], labels):
             if time == "None":
@@ -86,13 +90,23 @@ def get_X_xlabel(X):
         return "alphabet size"
 
 
+def real_label(label):
+    return {
+        "cover_nlogn.e": "nlogn",
+        "cover_maxgap.e": "Moore",
+        "cover_maxgap_static_mem.e": "Moore (static arrays)",
+        "cover_recursive.e": "Apostolico",
+        "cover_breslauer.e": "Breslauer",
+    }[label]
+
+
 def title(part):
-    per_period = "Strings with fixed period length (N=20,000,000)"
-    per_cover = "Strings with fixed shortest cover length (N=20,000,000)"
+    per_period = "Strings with fixed period length (N=30,000,000)"
+    per_cover = "Strings with fixed shortest cover length (N=30,000,000)"
     random = "Random strings"
     periodic = "Periodic strings"
     covered = "Strings with proper cover"
-    alphabet = "Different strings with fixed alphabet size (N=20,000,000)"
+    alphabet = "Different strings with fixed alphabet size (N=30,000,000)"
     return {
         "big_periods": per_period,
         "little_periods": per_period,
@@ -105,6 +119,7 @@ def title(part):
         "big_covers": covered,
         "small_covers": covered,
         "total_summary": "Average on all tests",
+        "recursive": "wololo",
     }[part]
 
 
@@ -122,23 +137,24 @@ def plot_XXX_of_part(part, X="size"):
 
     labels = []
     for label, data in plots:
-        labels.append(label)
+        labels.append(real_label(label))
         print(label, data)
         plot_from_list_of_pairs(label, data)
 
     plt.title(title(part), fontsize=20)
 
-    plt.xlim(xmin=0, xmax=maxX)
+    plt.xlim(xmin=0, xmax=min(maxX, 3e7))
 
     if "periods" in part:
         plt.legend(labels, loc="upper right")
-        plt.ylim(ymin=0, ymax=1.5)
     elif part == "letters":
         plt.legend(labels, loc="upper right")
-        plt.ylim(ymin=0, ymax=2)
+    elif part in ["periodic", "random", "big_covers", "small_covers"]:
+        plt.legend(labels, loc="upper left")
     else:
         plt.legend(labels, loc="upper left")
-        plt.ylim(ymin=0, ymax=1.0)
+
+    plt.ylim(ymin=0, ymax=1.5)
 
     plt.xlabel(get_X_xlabel(X))
     plt.ylabel("execution time [s]")
