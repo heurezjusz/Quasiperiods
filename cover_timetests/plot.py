@@ -88,6 +88,8 @@ def get_X_xlabel(X):
         return "period length"
     if X == "alphabet":
         return "alphabet size"
+    if X == "cover":
+        return "shortest cover length"
 
 
 def real_label(label):
@@ -97,6 +99,7 @@ def real_label(label):
         "cover_maxgap_static_mem.e": "Moore (static arrays)",
         "cover_recursive.e": "Apostolico",
         "cover_breslauer.e": "Breslauer",
+        "cover_just_kmp.e": "KMP",
     }[label]
 
 

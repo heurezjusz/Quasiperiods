@@ -4,6 +4,7 @@ import itertools
 
 BLACK = "#000000"
 GREY = "#AAAAAA"
+RED = "#EE4444"
 LINE = [10, 1]
 DOTS = [1, 2]
 DASHES = [5, 5]
@@ -14,6 +15,7 @@ color_dash_dict = {
     "cover_maxgap_static_mem.e": (BLACK, DASHES),
     "cover_nlogn.e": (GREY, LINE),
     "cover_recursive.e": (BLACK, DOTS),
+    "cover_just_kmp.e": (RED, DASHES),
 }
 
 
