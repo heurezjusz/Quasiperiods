@@ -94,11 +94,11 @@ def get_X_xlabel(X):
 
 def real_label(label):
     return {
-        "cover_nlogn.e": "nlogn",
-        "cover_maxgap.e": "Moore",
-        "cover_maxgap_static_mem.e": "Moore (static arrays)",
-        "cover_recursive.e": "Apostolico",
-        "cover_breslauer.e": "Breslauer",
+        "cover_nlogn.e": "Folk",
+        "cover_maxgap.e": "MS",
+        "cover_maxgap_static_mem.e": "MS (static arrays)",
+        "cover_recursive.e": "AFI",
+        "cover_breslauer.e": "Bres",
         "cover_just_kmp.e": "KMP",
     }[label]
 
@@ -122,7 +122,7 @@ def title(part):
         "big_covers": covered,
         "small_covers": covered,
         "total_summary": "Average on all tests",
-        "recursive": "wololo",
+        "recursive": "None",
     }[part]
 
 
