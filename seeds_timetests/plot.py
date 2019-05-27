@@ -125,6 +125,14 @@ def title(part):
     }[part]
 
 
+def real_label(label):
+    return {
+        "seed_kociumaka.e": "KKRRW",
+        "seed_costas.e": "IMP",
+        "seed_kociumaka_nlogn.e": "KKRRW-s",
+    }[label]
+
+
 def plot_XXX_of_part(part, X="size"):
     assert X in ["size", "period", "alphabet", "seed"]
     print("plotting", part)
@@ -139,21 +147,18 @@ def plot_XXX_of_part(part, X="size"):
     labels = []
 
     for label, data in plots:
-        labels.append(label)
+        labels.append(real_label(label))
         print(label, data)
         plot_from_list_of_pairs(label, data)
 
-    if "_periods" in part or "per_seed_big" == part:
+    if "_periods" in part or "per_seed_big" == part or "letters" == part:
         plt.ylim(ymin=0, ymax=5)
     else:
         plt.ylim(ymin=0, ymax=3)
 
     plt.title(title(part), fontsize=20)
 
-    if X == "alphabet":
-        plt.legend(labels, loc="lower right")
-    else:
-        plt.legend(labels, loc="upper left")
+    plt.legend(labels, loc="upper left")
     # elif part == "letters":
     #     plt.legend(labels, loc="upper right")
     #     plt.ylim(ymin=0, ymax=2)
