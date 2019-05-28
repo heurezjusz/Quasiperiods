@@ -1,5 +1,6 @@
 #include "../ukkonen.h"
 #include <iostream>
+#include <map>
 using namespace std;
 
 Tree st;
@@ -23,7 +24,8 @@ void dfs_count(int v) {
         suf_arr.push_back(N - node.depth - 1);
     }
 
-    for (auto& it : node.edges) {
+    map<int, Edge> edges(node.edges.begin(), node.edges.end());
+    for (auto& it : edges) {
         Edge& e = it.second;
         sum += e.len();
         _lcp = min(_lcp, node.depth);
@@ -51,7 +53,9 @@ void dfs_print(Node& v, int id) {
         print_word(id);
         return;
     }
-    for (auto& it : v.edges) {
+
+    map<int, Edge> edges(v.edges.begin(), v.edges.end());
+    for (auto& it : edges) {
         Edge& e = it.second;
         dfs_print(st.node(e.node), e.node);
     }

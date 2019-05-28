@@ -59,7 +59,7 @@ void spaces(int n) {
     for (int i = 0; i < n; ++i)
         printf(" ");
 }
-}
+}  // namespace
 
 
 void Tree::_print_node(int v) {
@@ -97,10 +97,10 @@ void Tree::print_word_chr(int v) {
 namespace {
 
 int active_node, active_len, last_creted;
-map<int, Edge>::iterator active_edge;
+unordered_map<int, Edge>::iterator active_edge;
 
 int remainder;
-}
+}  // namespace
 
 void Tree::_connect_sl(int id) {
     if (last_creted != NONE)

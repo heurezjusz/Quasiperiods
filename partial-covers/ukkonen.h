@@ -1,6 +1,6 @@
 #ifndef __UKKONEN
 #define __UKKONEN
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 const int NONE = -1;
@@ -13,7 +13,7 @@ struct Edge {
 };
 
 struct Node {
-    std::map<int, Edge> edges;
+    std::unordered_map<int, Edge> edges;
     int parent, depth, sl, letter;
     int D, cv;  // values of CST
 #ifdef ADD_LEAF
