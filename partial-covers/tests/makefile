@@ -10,7 +10,7 @@ clean:
 	rm -f *.o
 	rm -f *.e
 	make clean -C ..
-.PHONY: clean 
+.PHONY: clean
 
 
 # target: partitions
