@@ -42,9 +42,9 @@ void ans() {
         }
     }
 
-    puts("NEXT");
-    for (int i = 1; i <= N; ++i)
-        printf("%d ", next[i]);
+    // puts("NEXT");
+    // for (int i = 1; i <= N; ++i)
+    //     printf("%d ", next[i]);
 
     puts("\nJOINED LIST");
     for (int el : lists[b])

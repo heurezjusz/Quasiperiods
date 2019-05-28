@@ -3,98 +3,135 @@
 using namespace std;
 
 
-void Partition::init(int n) {
-    N = n;
-    _union_id = 0;
-    element_to_set.resize(N + 1);
-    visited.resize(N + 1);
-    next.resize(N + 1);
-    iota(element_to_set.begin(), element_to_set.end(), 0);
-    label_to_set = set_to_label = element_to_set;
+namespace JST {
+vector<Change> global_changes;
+int color;
 
-    sets.resize(N + 1);
-    for (int i = 1; i <= N; ++i)
-        sets[i].insert(i);
+
+void cp(Node* dst, Node* src) {
+    dst->minval = src->minval;
+    dst->maxval = src->maxval;
+    dst->colormax = src->colormax;
+    dst->colormin = src->colormin;
 }
 
 
-/* assumption: all old_labels exists and are distinct */
-void Partition::union_(vector<int> const& old_labels, int new_label,
-                       vector<Change>& change_list) {
-    if ((int)label_to_set.size() <= new_label)
-        label_to_set.resize(new_label + 1);
-
-    int the_set = label_to_set[old_labels[0]];
-    if (old_labels.size()) {
-        ++_union_id;
-        vector<int> raw_change_list;
-        for (int i = 1; i < (int)old_labels.size(); ++i)
-            the_set =
-                _union(the_set, label_to_set[old_labels[i]], raw_change_list);
-
-        for (int x : raw_change_list)
-            change_list.emplace_back(x, next[x]);
+Node* join(Node* A, Node* B) {
+    if (A == nullptr) {
+        if (B != nullptr)
+            B->_set_color(-color);
+        return B;
+    }
+    if (B == nullptr) {
+        A->_set_color(color);
+        return A;
     }
 
-    label_to_set[new_label] = the_set;
-    set_to_label[the_set] = new_label;
+    A->t0 = join(A->t0, B->t0);
+    A->t1 = join(A->t1, B->t1);
+    A->update();
+
+    return A;
+}
+
+
+Node* create(int x, int BASE) {
+    Node* root = new Node(x);
+    x += BASE - 1;
+    while (x != 1) {
+        if (x & 1)
+            root = new Node(nullptr, root);
+        else
+            root = new Node(root, nullptr);
+        x >>= 1;
+    }
+    return root;
+}
+
+
+Node::Node(int x)
+    : t0(nullptr),
+      t1(nullptr),
+      minval(x),
+      maxval(x),
+      colormin(0),
+      colormax(0) {}
+
+
+Node::Node(Node* t0, Node* t1) : t0(t0), t1(t1) {
+    this->update();
+}
+
+
+void Node::update() {
+    if (t0 == nullptr)
+        cp(this, t1);
+    else if (t1 == nullptr)
+        cp(this, t0);
+    else {
+        minval = t0->minval;
+        colormin = t0->colormin;
+        maxval = t1->maxval;
+        colormax = t1->colormax;
+
+        if (t0->colormax != t1->colormin)
+            global_changes.emplace_back(t0->maxval, t1->minval);
+    }
+}
+
+
+void Node::_set_color(int color) {
+    colormin = colormax = color;
+}
+
+};  // namespace JST
+
+
+void Partition::init(int n, int max_label) {
+    N = n;
+    BASE = 1;
+    while (BASE < N)
+        BASE <<= 1;
+
+    if (max_label == -1)
+        max_label = N + 10;
+
+    FU.reserve(max_label + 1);
+    trees.reserve(max_label + 1);
+
+    FU.push_back(-1);  // label 0 remains unused
+    trees.push_back(nullptr);
+
+    for (int i = 1; i <= N; ++i) {
+        FU.push_back(i);
+        trees.push_back(JST::create(i, BASE));
+    }
 }
 
 
 int Partition::find(int x) {
-    return set_to_label[element_to_set[x]];
+    return FU[x] == x ? x : FU[x] = find(FU[x]);
 }
 
 
-/* assuption: gets 2 non-empty, different sets */
-int Partition::_union(int a, int b, vector<int>& change_list) {
-    if (sets[a].size() > sets[b].size())
-        swap(a, b);
+void Partition::union_(vector<int> const& old_labels, int new_label,
+                       vector<Change>& change_list) {
+    JST::global_changes.clear();
 
-    int prev = -1;
-    for (int el : sets[a]) {
-        auto it = sets[b].insert(el).first;
-        element_to_set[el] = b;
-
-        if (it != sets[b].begin()) {
-            it--;
-
-            if (*it != prev) {
-                // updating prev data
-                if (prev != -1) {
-                    auto it_next = sets[b].upper_bound(prev);
-                    if (it_next != sets[b].end()) {
-                        next[prev] = *it_next;
-                        if (visited[prev] != _union_id) {
-                            change_list.push_back(prev);
-                            visited[prev] = _union_id;
-                        }
-                    }
-                }
-
-                // updating element data
-                next[*it] = el;
-                if (visited[*it] != _union_id) {
-                    change_list.push_back(*it);
-                    visited[*it] = _union_id;
-                }
-            }
-        }
-
-        prev = el;
+    if ((int)trees.size() <= new_label) {
+        FU.resize(2 * new_label);
+        trees.resize(2 * new_label, nullptr);
     }
 
-    // updating prev last time
-    auto it_next = sets[b].upper_bound(prev);
-    if (it_next != sets[b].end()) {
-        next[prev] = *it_next;
-        if (visited[prev] != _union_id) {
-            change_list.push_back(prev);
-            visited[prev] = _union_id;
-        }
+    trees[new_label] = trees[old_labels[0]];
+    FU[old_labels[0]] = new_label;
+    FU[new_label] = new_label;
+
+    for (int i = 1; i < (int)old_labels.size(); ++i) {
+        JST::color++;
+        join(trees[new_label], trees[old_labels[i]]);
+        FU[old_labels[i]] = new_label;
     }
 
-    sets[a].clear();
-
-    return b;
+    change_list.swap(JST::global_changes);
 }

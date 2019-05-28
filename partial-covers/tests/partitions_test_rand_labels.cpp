@@ -1,14 +1,21 @@
-#include "../partition.h"
 #include <algorithm>
 #include <cassert>
 #include <cstdio>
+#include <set>
 #include <vector>
+#include "../partition.h"
+#include "print_jst_node.h"
 using namespace std;
 
 const int maxN = 1e5 + 10;
 
 Partition* P;
 int N, new_label;
+
+
+bool cmp(Change const& a, Change const& b) {
+    return a.x < b.x;
+}
 
 
 void ans() {
@@ -23,17 +30,18 @@ void ans() {
     vector<Change> change_list;
     P->union_({a, b}, new_label, change_list);
 
+    sort(change_list.begin(), change_list.end(), cmp);
+
     puts("CHANGES");
     for (auto const& ch : change_list)
         printf("%d %d\n", ch.x, ch.next);
 
-    puts("NEXT");
-    for (int i = 1; i <= N; ++i)
-        printf("%d ", P->next[i]);
+    // puts("NEXT");
+    // for (int i = 1; i <= N; ++i)
+    //     printf("%d ", nxt[i]);
 
     puts("\nJOINED LIST");
-    for (int a : P->sets[P->label_to_set[new_label]])
-        printf("%d ", a);
+    print_node_elements(P->trees[new_label], P->BASE);
     puts("");
 }
 
@@ -57,7 +65,7 @@ void gen_labels() {
 int main() {
     scanf("%d", &N);
     P = new Partition();
-    P->init(N);
+    P->init(N, 1e5 + 10);
 
     srand(42 + N);
 
