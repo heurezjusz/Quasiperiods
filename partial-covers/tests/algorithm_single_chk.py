@@ -15,7 +15,7 @@ with open(fsol, 'r') as f:
     lines_sol = f.read().split("\n")
 
 if lines_wzo[0] != lines_sol[0]:
-    print "WRONG, wiersz 1: %s vs %s\n" % lines_sol[0], lines_wzo[0]
+    print "WRONG, wiersz 1: %s vs %s\n" % (lines_sol[0], lines_wzo[0])
     sys.exit(1)
 
 if lines_wzo[0] == "0":

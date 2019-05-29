@@ -13,7 +13,7 @@ int main() {
     string sword;
     cin >> sword >> percent;
     int N = sword.size();
-    int min_positions = N * percent / 100;
+    int min_positions = (N * percent + 99) / 100;
 
     for (char c : sword)
         word.push_back(c - 'a');

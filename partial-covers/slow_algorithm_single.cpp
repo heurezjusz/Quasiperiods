@@ -57,7 +57,7 @@ int main() {
     cin >> S >> percent;
 
     N = S.size();
-    limit = N * percent / 100;
+    limit = (N * percent + 99) / 100;
 
     if (limit == 0) {
         cout << "0\n";
