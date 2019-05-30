@@ -97,7 +97,7 @@ void Tree::print_word_chr(int v) {
 namespace {
 
 int active_node, active_len, last_creted;
-unordered_map<int, Edge>::iterator active_edge;
+map<int, Edge>::iterator active_edge;
 
 int remainder;
 }  // namespace

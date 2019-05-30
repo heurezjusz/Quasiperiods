@@ -44,7 +44,7 @@ def get_test_size(part, testname):
 
 
 def get_test_period(part, testname):
-    if part in ["small_periods", "big_periods", "little_periods"]:
+    if part in ["small_periods", "big_periods", "little_periods", "periodic"]:
         return _get_test_period_by_name(testname)
     else:
         raise NotImplementedError

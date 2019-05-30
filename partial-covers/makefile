@@ -7,10 +7,13 @@ OBJS_ALL = $(OBJS) algorithm_all.o hull.o ukkonen.o cst.o
 OBJS_SINGLE = $(OBJS) algorithm_single.o ukkonen_leafs.o cst_leafs.o
 
 
-all: slow_algorithm.e partial_covers_all.e partial_covers_single.e slow_algorithm_single.e
+all: slow_algorithm.e partial_covers_all.e partial_covers_single.e slow_algorithm_single.e detect.e
 
 HEADERS = $(wildcard *.h)
 
+
+detect.e: algorithm_main_detect.cpp ukkonen_leafs.o cst_leafs.o partition.o
+	g++ -DADD_LEAF algorithm_main_detect.cpp ukkonen_leafs.o cst_leafs.o partition.o $(CXXFLAGS) $(LDFLAGS) -o $@
 
 partial_covers_all.e: $(OBJS_ALL) main_all.cpp
 	g++ main_all.cpp $(OBJS_ALL) $(CXXFLAGS) $(LDFLAGS) -o $@

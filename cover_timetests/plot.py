@@ -43,18 +43,21 @@ def parse_report_per_label_XXX(part, X="size"):
     for line in lines[2:]:
         if len(line) == 0:
             continue
-        test = line.split()[0]
+        testname = line.split()[0]
+
+        if part == "periodic" and 1 == get_test_period(part, testname):
+            continue
 
         if X == "cover":
-            XXX = get_test_cover(part, test)
+            XXX = get_test_cover(part, testname)
         elif X == "size":
-            XXX = get_test_size(part, test)
+            XXX = get_test_size(part, testname)
         elif X == "period":
-            XXX = get_test_period(part, test)
+            XXX = get_test_period(part, testname)
             if XXX == 1:
                 continue
         else:
-            XXX = get_test_alphabet(part, test)
+            XXX = get_test_alphabet(part, testname)
             if XXX == 1:
                 continue
 
@@ -83,7 +86,7 @@ def list_avg(l):
 
 def get_X_xlabel(X):
     if X == "size":
-        return "test size (N)"
+        return "testname size (N)"
     if X == "period":
         return "period length"
     if X == "alphabet":

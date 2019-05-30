@@ -59,6 +59,9 @@ def parse_report_per_label_XXX(part, X="size"):
         if filtered_out(filters, test_name):
             continue
 
+        if part == "periodic" and 1 == get_test_period(part, test_name):
+            continue
+
         if X == "size":
             XXX = get_test_size(part, test_name)
         elif X == "period":
