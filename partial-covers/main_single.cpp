@@ -9,11 +9,14 @@ int main() {
 
     vector<int> word;
     vector<int> res;
-    int percent;
+    double percent;
     string sword;
     cin >> sword >> percent;
     int N = sword.size();
-    int min_positions = (N * percent + 99) / 100;
+    double min_positions_ = N * percent / 100.;
+    int min_positions = min_positions_;
+    if (min_positions_ > min_positions)
+        min_positions++;
 
     for (char c : sword)
         word.push_back(c - 'a');
