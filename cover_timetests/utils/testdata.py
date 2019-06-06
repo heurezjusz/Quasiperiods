@@ -35,7 +35,6 @@ def get_test_size(part, testname):
         "letters",
         "small_covers",
         "big_covers",
-        "total_summary",
         "per_cover_big",
         "per_cover_small",
     ]:

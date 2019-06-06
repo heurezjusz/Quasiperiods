@@ -124,7 +124,6 @@ def title(part):
         "per_cover_big": per_cover,
         "big_covers": covered,
         "small_covers": covered,
-        "total_summary": "Average on all tests",
         "recursive": "None",
     }[part]
 

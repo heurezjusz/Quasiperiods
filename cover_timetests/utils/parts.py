@@ -12,7 +12,6 @@ PARTS = [
     "recursive",
     "small_periods",
     "small_covers",
-    "total_summary",
     "per_cover_big",
     "per_cover_small",
 ]
@@ -50,19 +49,6 @@ def report_fname(part):
 
 
 def get_report_of_part(part):
-    if part == "total_summary":
-        # get all reports
-        reports = Path(".").glob("report_*.txt")
-        all_lines = []
-        header = None
-        for fname in reports:
-            lines = fname.read_text().split("\n")
-            if header is None:
-                header = lines[1]
-            assert lines[1] == header, "Wrong solutions order in %s" % str(fname)
-            all_lines += lines[2:]
-        return "\n".join(["=== total_summary ===", header] + all_lines)
-    else:
-        fname = Path(report_fname(part))
-        assert fname.exists(), str(fname) + " not generated."
-        return fname.read_text()
+    fname = Path(report_fname(part))
+    assert fname.exists(), str(fname) + " not generated."
+    return fname.read_text()

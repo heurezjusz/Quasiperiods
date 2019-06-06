@@ -54,10 +54,6 @@ os.system("ulimit -s unlimited")
 for part in get_parts():
     REPORT = []
 
-    if part == "total_summary":
-        print("total_summary part not supported by run.py")
-        sys.exit(1)
-
     print_header(part)
     tests = find_tests_of_part(part)
     random.shuffle(tests)
