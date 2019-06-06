@@ -9,7 +9,7 @@ CHANGE_COLOR = [5, 5]
 
 color_dash_dict = {
     "seed_kociumaka.e": ("#000000", [10, 1]),
-    "seed_costas.e": ("#AAAAAA", [10, 1]),
+    "seed_imp.e": ("#AAAAAA", [10, 1]),
     "seed_kociumaka_nlogn.e": ("#000000", [1, 2]),
 }
 

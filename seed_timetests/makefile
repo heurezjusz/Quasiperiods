@@ -4,7 +4,7 @@ prog:
 	make -C ../seed
 	cp ../seed/seed_lin.e prog/seed_kociumaka.e
 	cp ../seed/seed_nlogn.e prog/seed_kociumaka_nlogn.e
-	cp ../seed/seed_costas.e prog/
+	cp ../seed/seed_imp.e prog/
 
 .PHONY: prog
 

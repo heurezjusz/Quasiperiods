@@ -131,7 +131,7 @@ def title(part):
 def real_label(label):
     return {
         "seed_kociumaka.e": "KKRRW",
-        "seed_costas.e": "IMP",
+        "seed_imp.e": "IMP",
         "seed_kociumaka_nlogn.e": "KKRRW-s",
     }[label]
 
