@@ -56,3 +56,14 @@ In directories `cover_timetests` and `seed_timetests` are testing tools allowing
 - `make` prepares executable files
 - `python3 run.py part`  measures execution times on tests from chosen part and saves it in `report_part.txt`. List of parts is available by running `python3 run.py help`. Tests are chosen in random order.
 - `python3 plot.py part plot-type` plots results saved in `report_part.txt`. Plot type defines values on x-axis. Possible types are: "size" (default), "period", "alphabet" and "cover/seed".
+
+## Unit tests
+
+In `seed` and `partial-covers` directories there is `test` subdirectory containing Python script for running all unit tests. Usage: `python test.py all`.
+
+To run tests in `cover` directory you need to perform following steps:
+
+- `mkdir in out`
+- put your test cases in `in` directory. Test cases should be named `cover*.in`, where `*` is a numer of the test case.
+- run `make outgen`
+- run `make run__XXX` to run `cover_XXX.cpp` on your tests.
