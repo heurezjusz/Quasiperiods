@@ -18,9 +18,16 @@ clean:
 .PHONY: clean
 
 
-run_random:
-	python3 run.py random
-.PHONY: run_random
-
-
-report_%.txt: run_%
+clean-gen:
+	make clean-gen -C big_covers
+	make clean-gen -C letters
+	make clean-gen -C per_cover_big    
+	make clean-gen -C periodic
+	make clean-gen -C recursive
+	make clean-gen -C small_covers
+	make clean-gen -C big_periods
+	make clean-gen -C little_periods
+	make clean-gen -C per_cover_small
+	make clean-gen -C random
+	make clean-gen -C small_periods
+.PHONY: clean-gen
