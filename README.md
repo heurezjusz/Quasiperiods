@@ -10,7 +10,7 @@ filename | algorithm
 -|-
 `cover_afi.cpp`|Apostolico
 `cover_breslauer.cpp`|Breslauer
-`cover_folk.cpp`|folklore ![equation](http://latex.codecogs.com/gif.latex?O\(n\log\ n\))
+`cover_folk.cpp`|folklore ![equation](http://latex.codecogs.com/gif.latex?O\(n\log(n)\))
 `cover_ms.cpp`|Moore and Smyth
 `cover_ms_static_mem.cpp`|Moore and Smyth with static array instead of `std::vector`
 
@@ -26,8 +26,8 @@ filename | algorithm | input type
 `seed_imp_int.e`|Iliopoulos|integers
 `seed_lin.e`|Kociumaka|string
 `seed_lin_int.e`|Kociumaka|integers
-`seed_nlogn.e`|simplified ![equation](http://latex.codecogs.com/gif.latex?O\(n\log\ n\)) version of Kociumaka|string
-`seed_nlogn_int.e`|simplified ![equation](http://latex.codecogs.com/gif.latex?O\(n\log\ n\)) version of Kociumaka|integers
+`seed_nlogn.e`|simplified ![equation](http://latex.codecogs.com/gif.latex?O\(n\log(n)\)) version of Kociumaka|string
+`seed_nlogn_int.e`|simplified ![equation](http://latex.codecogs.com/gif.latex?O\(n\log(n)\)) version of Kociumaka|integers
 
 If input type is "string", the executable reads single string from `stdin`. For "integers" it expects
 ![equation](http://latex.codecogs.com/gif.latex?N) integers in format
