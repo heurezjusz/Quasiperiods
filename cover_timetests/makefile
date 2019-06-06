@@ -13,8 +13,19 @@ compile:
 
 
 clean:
-	make -C prog clean
-	echo "=== *** +++ run clean in subfolders! +++ *** ==="
+	make clean -C prog
+	make clean -C swieta
+	make clean -C big_covers
+	make clean -C letters
+	make clean -C per_cover_big    
+	make clean -C periodic
+	make clean -C recursive
+	make clean -C small_covers
+	make clean -C big_periods
+	make clean -C little_periods
+	make clean -C per_cover_small
+	make clean -C random
+	make clean -C small_periods
 .PHONY: clean
 
 
