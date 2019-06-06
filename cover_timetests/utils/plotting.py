@@ -24,4 +24,3 @@ def plot_from_list_of_pairs(label, lst):
     x, y = zip(*sorted(lst))
     print("plot with color %s and style %s" % (color, str(dashes)))
     plt.plot(x, y, "o", color=color, markersize=5, dashes=dashes)
-

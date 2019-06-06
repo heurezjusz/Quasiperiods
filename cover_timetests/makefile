@@ -17,7 +17,7 @@ clean:
 	make clean -C swieta
 	make clean -C big_covers
 	make clean -C letters
-	make clean -C per_cover_big    
+	make clean -C per_cover_big
 	make clean -C periodic
 	make clean -C recursive
 	make clean -C small_covers
@@ -32,7 +32,7 @@ clean:
 clean-gen:
 	make clean-gen -C big_covers
 	make clean-gen -C letters
-	make clean-gen -C per_cover_big    
+	make clean-gen -C per_cover_big
 	make clean-gen -C periodic
 	make clean-gen -C recursive
 	make clean-gen -C small_covers
