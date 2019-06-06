@@ -9,7 +9,7 @@ swieta:
 .PHONY: swieta
 
 gen.e: gen.cpp swieta
-	g++ $(CXXFLAGS) gen.cpp $(SWIETA) -o $@ 
+	g++ $(CXXFLAGS) gen.cpp $(SWIETA) -o $@
 
 clean:
 	rm -f *.o *.e

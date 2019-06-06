@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "algorithm.h"
-#include "maxgap_costas.h"
+#include "maxgap_imp.h"
 #include "pack.h"
 using namespace std;
 
@@ -78,7 +78,7 @@ struct Class : Maxgap {
             return;
         decomposed = true;
 
-        // costas stuff
+        // imp stuff
         int e1 = positions.front() + 1, et = positions.back() + 1;
         int k = (N - et + 1) - B[et - 1];  // length
         int s = (MF[k] + 1) + 1 - e1;      // length

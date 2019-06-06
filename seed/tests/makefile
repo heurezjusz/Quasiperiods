@@ -174,54 +174,54 @@ seeds_vs_big: seeds_vs
 .PHONY: seeds_vs_big
 
 
-#target: seeds_costas_slow
-seeds_costas_slow.e: make_sup
-	cp ../seed_costas_slow.e seeds_costas_slow.e
+#target: seeds_imp_slow
+seeds_imp_slow.e: make_sup
+	cp ../seed_imp_slow.e seeds_imp_slow.e
 
-seeds_costas_slow: packs_chk_costas.e seeds_costas_slow.e seeds_nlogn.e
-.PHONY: seeds_costas_slow
-
-
-#target: seeds_costas
-seeds_costas.e: make_sup
-	cp ../seed_costas.e seeds_costas.e
-
-seeds_costas: packs_chk_costas.e seeds_costas.e seeds_nlogn.e
-.PHONY: seeds_costas
+seeds_imp_slow: packs_chk_imp.e seeds_imp_slow.e seeds_nlogn.e
+.PHONY: seeds_imp_slow
 
 
-#target: seeds_costas_int
+#target: seeds_imp
+seeds_imp.e: make_sup
+	cp ../seed_imp.e seeds_imp.e
+
+seeds_imp: packs_chk_imp.e seeds_imp.e seeds_nlogn.e
+.PHONY: seeds_imp
+
+
+#target: seeds_imp_int
 seeds_nlogn_int.e: make_sup
 	cp ../seed_nlogn_int.e seeds_nlogn_int.e
 
-seeds_costas_int.e: make_sup
-	cp ../seed_costas_int.e seeds_costas_int.e
+seeds_imp_int.e: make_sup
+	cp ../seed_imp_int.e seeds_imp_int.e
 
-seeds_costas_int: packs_chk_costas_int.e seeds_costas_int.e seeds_nlogn_int.e
-.PHONY: seeds_costas_int
+seeds_imp_int: packs_chk_imp_int.e seeds_imp_int.e seeds_nlogn_int.e
+.PHONY: seeds_imp_int
 
-#target: seeds_costas_slow_int
-seeds_costas_slow_int.e: make_sup
-	cp ../seed_costas_slow_int.e seeds_costas_slow_int.e
+#target: seeds_imp_slow_int
+seeds_imp_slow_int.e: make_sup
+	cp ../seed_imp_slow_int.e seeds_imp_slow_int.e
 
-seeds_costas_slow_int: packs_chk_costas_int.e seeds_costas_slow_int.e seeds_nlogn_int.e
-.PHONY: seeds_costas_slow_int
+seeds_imp_slow_int: packs_chk_imp_int.e seeds_imp_slow_int.e seeds_nlogn_int.e
+.PHONY: seeds_imp_slow_int
 
-#target: seeds_costas_int_alot
-seeds_costas_int_alot: seeds_costas_int
-.PHONY: seeds_costas_int_alot
+#target: seeds_imp_int_alot
+seeds_imp_int_alot: seeds_imp_int
+.PHONY: seeds_imp_int_alot
 
-#target: seeds_costas_slow_int_alot
-seeds_costas_slow_int_alot: seeds_costas_int
-.PHONY: seeds_costas_slow_int_alot
+#target: seeds_imp_slow_int_alot
+seeds_imp_slow_int_alot: seeds_imp_int
+.PHONY: seeds_imp_slow_int_alot
 
 
 #target: seeds_vs_int_alot
 seeds_lin_int.e: make_sup
 	cp ../seed_lin_int.e seeds_lin_int.e
 
-seeds_vs_int_alot: seeds_nlogn_int.e seeds_lin_int.e packs_chk_costas_int.e
-.PHONY: seeds_costas_int_alot
+seeds_vs_int_alot: seeds_nlogn_int.e seeds_lin_int.e packs_chk_imp_int.e
+.PHONY: seeds_imp_int_alot
 
 
 #target: *.e

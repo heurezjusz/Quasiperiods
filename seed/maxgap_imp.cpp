@@ -1,4 +1,4 @@
-#include "maxgap_costas.h"
+#include "maxgap_imp.h"
 using namespace std;
 
 
