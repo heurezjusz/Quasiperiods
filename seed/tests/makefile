@@ -241,4 +241,5 @@ clean:
 	rm -f *.o
 	rm -f *.e
 	make clean -C ..
+	make clean -C swieta
 .PHONY: clean
