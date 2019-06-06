@@ -13,8 +13,8 @@ GCC_OPT = -Wall -lm -O2 -Wno-unused-result -Werror ${CFLAGS}
 GPP_OPT = -Wall -lm -O2 -Wno-unused-result -Werror ${CXXFLAGS}
 PPC_OPT = -O2 -XS -Xt -Ci -Cr -Co -gl ${PASFLAGS}
 
-PRG_C 	= $(wildcard *.c) 
-PRG_CPP = $(wildcard *.cpp) 
+PRG_C 	= $(wildcard *.c)
+PRG_CPP = $(wildcard *.cpp)
 PRG_JAVA = $(wildcard *.java)
 PRG_PAS = $(wildcard *.pas)
 PRG_ML  = $(wildcard *.ml)
@@ -53,7 +53,7 @@ all: $(EXE) ${ID}.valgrind
 
 %.valgrind: %.c
 	gcc -O2 ${CFLAGS} -g -lm $^ -o $*.valgrind ${C_LDFLAGS}
-	
+
 %.valgrind: %.cpp
 	g++ -O2 ${CXXFLAGS} -g -lm $^ -o $*.valgrind ${CXX_LDFLAGS}
 

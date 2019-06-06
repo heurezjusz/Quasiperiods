@@ -28,9 +28,9 @@ void KMP() {
 }
 
 
-bool KMP_check(int B, int _N) {
+bool KMP_check(int B) {
     int last_occ = 1;
-    for (int psuf = 0, i = 2; i <= _N; ++i) {
+    for (int psuf = 0, i = 2; i <= N; ++i) {
         while (psuf > 0 && s[psuf + 1] != s[i])
             psuf = p[psuf];
         if (s[psuf + 1] == s[i])
@@ -50,27 +50,19 @@ bool KMP_check(int B, int _N) {
 }
 
 
-int find_ans(int N) {
-    int B = p[N];
-    if (B == 0)
-        return N;
-
-    int candidate = N;
-    if (B <= 2 * N / 3)
-        candidate = find_ans(B);
-    else {
-        int period = N - B;
-        candidate = find_ans(period + N % period);
-    }
-
-    if (candidate == N || KMP_check(candidate, N))
-        return candidate;
-    return N;
-}
-
-
 int main() {
     get_input();
     KMP();
-    printf("%d\n", find_ans(N));
+    int bn = 0, psuf = N;
+    while (psuf > 0) {
+        borders[bn++] = psuf;
+        psuf = p[psuf];
+    }
+
+    int res = bn - 1;
+    while (res >= 0 &&
+           (borders[res] <= 2 * borders[res + 1] || !KMP_check(borders[res])))
+        res--;
+
+    printf("%d\n", res == -1 ? N : borders[res]);
 }

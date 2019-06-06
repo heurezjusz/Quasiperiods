@@ -11,10 +11,10 @@ DASHES = [5, 5]
 
 color_dash_dict = {
     "cover_breslauer.e": (GREY, DASHES),
-    "cover_maxgap.e": (BLACK, LINE),
-    "cover_maxgap_static_mem.e": (BLACK, DASHES),
-    "cover_nlogn.e": (GREY, LINE),
-    "cover_recursive.e": (BLACK, DOTS),
+    "cover_ms.e": (BLACK, LINE),
+    "cover_ms_static_mem.e": (BLACK, DASHES),
+    "cover_folk.e": (GREY, LINE),
+    "cover_afi.e": (BLACK, DOTS),
     "cover_just_kmp.e": (RED, DASHES),
 }
 

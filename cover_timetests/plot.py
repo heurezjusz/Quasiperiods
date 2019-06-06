@@ -97,10 +97,10 @@ def get_X_xlabel(X):
 
 def real_label(label):
     return {
-        "cover_nlogn.e": "Folk",
-        "cover_maxgap.e": "MS",
-        "cover_maxgap_static_mem.e": "MS (static arrays)",
-        "cover_recursive.e": "AFI",
+        "cover_folk.e": "Folk",
+        "cover_ms.e": "MS",
+        "cover_ms_static_mem.e": "MS (static arrays)",
+        "cover_afi.e": "AFI",
         "cover_breslauer.e": "Bres",
         "cover_just_kmp.e": "KMP",
     }[label]
