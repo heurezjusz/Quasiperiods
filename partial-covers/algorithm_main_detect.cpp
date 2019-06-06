@@ -28,6 +28,10 @@ void try_node(int v) {
     if (node.depth >= limit)
         return;
 
+    // separated occurences
+    if (node.cv == node.depth * node.D)
+        return;
+
     found.push_back(node.any_leaf_pos);
     lens.push_back(node.depth);
     covered.push_back(node.cv);
