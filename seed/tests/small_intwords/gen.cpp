@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <cstdio>
-#include "swieta/genword.h"
+#include "../swieta/genword.h"
 using namespace std;
 
 

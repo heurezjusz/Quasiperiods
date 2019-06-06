@@ -4,8 +4,8 @@ SWIETA = sommer.o genword.o
 CXXFLAGS = -W -Wall -std=c++11 -g
 
 swieta:
-	make -C swieta $(SWIETA)
-	cp swieta/sommer.o swieta/genword.o .
+	make -C ../swieta $(SWIETA)
+	cp ../swieta/sommer.o ../swieta/genword.o .
 .PHONY: swieta
 
 gen.e: gen.cpp swieta
