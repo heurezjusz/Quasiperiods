@@ -48,7 +48,7 @@ filename|description
 `partial_covers_all.e`|Solution for All Partial Covers problem. Input is a single string ![equation](http://latex.codecogs.com/gif.latex?T). On output print ![equation](http://latex.codecogs.com/gif.latex?\|T\|) lines in format ![equation](http://latex.codecogs.com/gif.latex?i:x_i), where ![equation](http://latex.codecogs.com/gif.latex?x_i) is the length of the shortest partial cover which covers at least ![equation](http://latex.codecogs.com/gif.latex?i) positions.
 `slow_*`|Brute force solutions of above problems, used in correctness tests.
 
-![equation](http://latex.codecogs.com/gif.latex?|T|)
+
 ## Performance testing tools
 
 In directories `cover_timetests` and `seed_timetests` are testing tools allowing to run experiments we made in our paper. Usage:
