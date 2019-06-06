@@ -10,14 +10,30 @@ prog:
 
 
 clean:
-	make -C prog clean
-	echo "=== *** +++ run clean in subfolders! +++ *** ==="
+	rm prog/*.e -f
+	make clean -C swieta
+	make clean -C big_seeds
+	make clean -C letters
+	make clean -C per_seed_big
+	make clean -C periodic
+	make clean -C small_seeds
+	make clean -C big_periods
+	make clean -C little_periods
+	make clean -C per_seed_small
+	make clean -C random
+	make clean -C small_periods
 .PHONY: clean
 
 
-run_random:
-	python3 run.py random
-.PHONY: run_random
-
-
-report_%.txt: run_%
+clean-gen:
+	make clean-gen -C big_seeds
+	make clean-gen -C letters
+	make clean-gen -C per_seed_big
+	make clean-gen -C periodic
+	make clean-gen -C small_seeds
+	make clean-gen -C big_periods
+	make clean-gen -C little_periods
+	make clean-gen -C per_seed_small
+	make clean-gen -C random
+	make clean-gen -C small_periods
+.PHONY: clean-gen
