@@ -5,6 +5,7 @@ Experimental Evaluation of Algorithms for Computing Quasiperiods
 
 ### Directory `cover` :
 `cover/prog` contains implementations if algorithms computing shortest cover of the string.
+
 filename | algorithm
 -|-
 `cover_afi.cpp`|Apostolico
