@@ -44,11 +44,11 @@ Output format of all executables is a list if packages.
 
 filename|description
 -|-
-`partial_covers_single.e`|Solution for Partial Covers problem. It reads from input a string and a float, representing input string $`T`$ and value $`\alpha`$ in percents. On output prints two lines. In first one prints the length of the shortest partial cover covering at least $`\alpha`$ positions. On the second line there are starting positions of occurrences of resulting partial covers. Each partial cover is listed once.
-`partial_covers_all.e`|Solution for All Partial Covers problem. Input is a single string $`T`$. On output print $`|T|`$ lines in format $`i: x_i`$, where $`x_i`$ is the length of the shortest partial cover which covers at least $`i`$ positions.
+`partial_covers_single.e`|Solution for Partial Covers problem. It reads from input a string and a float, representing input string ![equation](http://latex.codecogs.com/gif.latex?T) and value $`\alpha`$ in percents. On output prints two lines. In first one prints the length of the shortest partial cover covering at least $`\alpha`$ positions. On the second line there are starting positions of occurrences of resulting partial covers. Each partial cover is listed once.
+`partial_covers_all.e`|Solution for All Partial Covers problem. Input is a single string ![equation](http://latex.codecogs.com/gif.latex?T). On output print ![equation](http://latex.codecogs.com/gif.latex?\|T\|) lines in format ![equation](http://latex.codecogs.com/gif.latex?i:x_i), where ![equation](http://latex.codecogs.com/gif.latex?x_i) is the length of the shortest partial cover which covers at least ![equation](http://latex.codecogs.com/gif.latex?i) positions.
 `slow_*`|Brute force solutions of above problems, used in correctness tests.
 
-
+![equation](http://latex.codecogs.com/gif.latex?|T|)
 ## Performance testing tools
 
 In directories `cover_timetests` and `seed_timetests` are testing tools allowing to run experiments we made in our paper. Usage:
