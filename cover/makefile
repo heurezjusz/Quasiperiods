@@ -1,5 +1,5 @@
 # based on makefile by Tomasz Walen, Rafal Rusin, Adam Iwanicki
-# for Polish Olympiad in Informatics 
+# written for Polish Olympiad in Informatics 
 
 SHELL := /bin/bash
 
@@ -22,13 +22,7 @@ TESTS = $(shell find -L in -regex "in/$(ID)[0-9]*[a-z]?.in" | sort -n -k 1.`echo
 
 
 all:
-	# specify target: outgen / run / run_XXX / clean #
-
-
-run:
-	## Uruchomienie rozwi�zania wzorcowego ##
-	make -C prog
-	make _run_ver_n_$(ID).e
+	# specify target: outgen / run_all / run_XXX / clean #
 
 
 run_all:
