@@ -4,7 +4,7 @@ Experimental Evaluation of Algorithms for Computing Quasiperiods
 ## Implementations
 
 ### Directory `cover` :
-`cover/prog` contains implementations if algorithms computing shortest cover of the string.
+Directory `cover/prog` contains implementations if algorithms computing shortest cover of the string.
 
 filename | algorithm
 -|-
@@ -18,7 +18,7 @@ To compile all programs run `make -C cover/prog`. Input of all executable files 
 is the length of the cover.
 
 ### Directory `seed` :
-`seed/` contains implementations if algorithms computing shortest seed of the string. Command `make -C seed` builds following executable files:
+Directory `seed/` contains implementations if algorithms computing shortest seed of the string. Command `make -C seed` builds following executable files:
 
 filename | algorithm | input type
 -|-|-
@@ -40,11 +40,11 @@ This input format allows us to test algorithms on tests with huge alphabets.
 Output format of all executables is a list if packages.
 
 ### Directory  `partial-covers` :
-`seed/` contains implementations if algorithms computing partial covers of the string. Command `make -C partial-covers` builds following executable files:
+Directory `partial-covers/` contains implementations if algorithms computing partial covers of the string. Command `make -C partial-covers` builds following executable files:
 
 filename|description
 -|-
-`partial_covers_single.e`|Solution for Partial Covers problem. It reads from input a string and a float, representing input string ![equation](http://latex.codecogs.com/gif.latex?T) and value ![equation](http://latex.codecogs.com/gif.latex?\alpha) in percents. On output prints two lines. In first one prints the length of the shortest partial cover covering at least ![equation](http://latex.codecogs.com/gif.latex?\alpha) positions. On the second line there are starting positions of occurrences of resulting partial covers. Each partial cover is listed once.
+`partial_covers_single.e`|Solution for Partial Covers problem. It reads from input a string and a float, representing input string ![equation](http://latex.codecogs.com/gif.latex?T) and value ![equation](http://latex.codecogs.com/gif.latex?\alpha) in percents. On output prints two lines. In the first one prints the length of the shortest partial cover covering at least ![equation](http://latex.codecogs.com/gif.latex?\alpha) positions. On the second line there are starting positions of occurrences of resulting partial covers. Each partial cover is listed once.
 `partial_covers_all.e`|Solution for All Partial Covers problem. Input is a single string ![equation](http://latex.codecogs.com/gif.latex?T). On output print ![equation](http://latex.codecogs.com/gif.latex?\|T\|) lines in format ![equation](http://latex.codecogs.com/gif.latex?i:x_i), where ![equation](http://latex.codecogs.com/gif.latex?x_i) is the length of the shortest partial cover which covers at least ![equation](http://latex.codecogs.com/gif.latex?i) positions.
 `slow_*`|Brute force solutions of above problems, used in correctness tests.
 
