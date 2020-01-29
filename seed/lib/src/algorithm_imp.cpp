@@ -139,9 +139,7 @@ struct Partitioning {
     int new_class_id, max_alph_size, k, N;
 
     Partitioning(int max_alph_size)  // assumes letters 0...max_alph_size-1
-        : new_class_id(0),
-          max_alph_size(max_alph_size),
-          k(1) {}
+        : new_class_id(0), max_alph_size(max_alph_size), k(1) {}
 
 
     int _create_new_class(int k0) {

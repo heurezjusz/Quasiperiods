@@ -6,7 +6,7 @@
 #include "combine.h"
 #include "lcands.h"
 #include "rmcands.h"
-#include "rmcands16.h"
+#include "rmcands_16.h"
 #include "rmcands_lens.h"
 #include "ukkonen.h"
 using namespace std;
