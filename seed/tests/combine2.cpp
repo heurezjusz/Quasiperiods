@@ -1,6 +1,6 @@
-#include "../combine.h"
 #include <iostream>
 #include <vector>
+#include "../lib/src/combine.h"
 using namespace std;
 
 

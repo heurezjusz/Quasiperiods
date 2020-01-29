@@ -1,4 +1,4 @@
-#include "../maxgap.h"
+#include "../lib/src/maxgap.h"
 #include <cstdio>
 
 int main() {

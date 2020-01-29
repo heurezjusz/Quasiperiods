@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <cassert>
 #include <iostream>
-#include <vector>
 #include <set>
-#include "../pack.h"
+#include <vector>
+#include "../lib/src/pack.h"
 using namespace std;
 
 void combine(string& word, vector<vector<Pack>>& packs, vector<Pack>& res);

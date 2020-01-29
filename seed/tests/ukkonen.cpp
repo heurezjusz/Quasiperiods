@@ -1,4 +1,4 @@
-#include "../ukkonen.h"
+#include "../lib/src/ukkonen.h"
 #include <algorithm>
 #include <iostream>
 #include <map>

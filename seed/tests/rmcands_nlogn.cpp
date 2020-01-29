@@ -1,4 +1,4 @@
-#include "../rmcands_nlogn.h"
+#include "../lib/src/rmcands_nlogn.h"
 #include <iostream>
 using namespace std;
 

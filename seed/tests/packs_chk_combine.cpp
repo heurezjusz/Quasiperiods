@@ -1,6 +1,6 @@
-#include "../pack.h"
-#include "../combine.h"
-#include "../ukkonen.h"
+#include "../lib/src/combine.h"
+#include "../lib/src/pack.h"
+#include "../lib/src/ukkonen.h"
 
 #include <fstream>
 #include <iostream>

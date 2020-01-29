@@ -1,4 +1,4 @@
-#include "../lcands.h"
+#include "../lib/src/lcands.h"
 #include <iostream>
 #include <string>
 using namespace std;

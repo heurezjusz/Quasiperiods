@@ -1,7 +1,7 @@
 #include <iostream>
-#include "../combine.h"
-#include "../pack.h"
-#include "../ukkonen.h"
+#include "../lib/src/combine.h"
+#include "../lib/src/pack.h"
+#include "../lib/src/ukkonen.h"
 using namespace std;
 
 Tree* st;
@@ -20,7 +20,7 @@ void candidates_from_word(vector<int>& word, int offset,
     cout << "\n";
 }
 #define TEST_QUASISEED_PARTS
-#include "../algorithm.cpp"
+#include "../lib/src/algorithm.cpp"
 
 int main() {
     cin >> w >> len;

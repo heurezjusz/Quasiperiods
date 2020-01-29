@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../ukkonen.h"
+#include "../lib/src/ukkonen.h"
 using namespace std;
 
 Tree *st;
@@ -11,7 +11,7 @@ int len;
 
 
 #define TEST_CHOOSE
-#include "../algorithm.cpp"
+#include "../lib/src/algorithm.cpp"
 
 int main() {
     cin >> w >> len;

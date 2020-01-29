@@ -1,7 +1,7 @@
 #include <iostream>
-#include "../combine.h"
-#include "../pack.h"
-#include "../ukkonen.h"
+#include "../lib/src/combine.h"
+#include "../lib/src/pack.h"
+#include "../lib/src/ukkonen.h"
 using namespace std;
 
 Tree* st;
@@ -18,7 +18,7 @@ void algorithm(vector<int>& word, vector<Pack>&) {
     cout << "\n";
 }
 #define TEST_CALL_SMALLER
-#include "../algorithm.cpp"
+#include "../lib/src/algorithm.cpp"
 
 int main() {
     cin >> w >> len;

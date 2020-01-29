@@ -1,4 +1,4 @@
-#include "../maxgap_nlogn.h"
+#include "../lib/src/maxgap_nlogn.h"
 #include <cstdio>
 
 int main() {

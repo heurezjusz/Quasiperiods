@@ -1,6 +1,6 @@
 #include <iostream>
 #include <map>
-#include "../ukkonen.h"
+#include "../lib/src/ukkonen.h"
 using namespace std;
 
 Tree st;

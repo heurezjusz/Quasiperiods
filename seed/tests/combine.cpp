@@ -1,4 +1,4 @@
-#include "../combine.h"
+#include "../lib/src/combine.h"
 #include <iostream>
 #include <vector>
 using namespace std;
