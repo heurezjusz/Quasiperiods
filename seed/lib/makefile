@@ -7,7 +7,7 @@ OBJS_NLOGN = maxgap_nlogn.o rmcands_nlogn.o algorithm_nlogn.o $(OBJS)
 OBJS_IMP = pack.o maxgap_imp.o algorithm_imp.o
 OBJS_IMP_SLOW = pack.o maxgap_imp_nlogn.o algorithm_imp_slow.o
 
-DIRS = kkrrw
+DIRS = kkrrw kkrrws imp imp_slow
 
 all: $(DIRS)
 
@@ -16,7 +16,28 @@ kkrrw:
 	make -C src
 	mkdir $@
 	for obj in $(OBJS_N) ; do \
-		ln -s ../src/$$obj kkrrw/$$obj ; \
+		ln -s ../src/$$obj $@/$$obj ; \
+	done
+
+kkrrws:
+	make -C src
+	mkdir $@
+	for obj in $(OBJS_NLOGN) ; do \
+		ln -s ../src/$$obj $@/$$obj ; \
+	done
+
+imp:
+	make -C src
+	mkdir $@
+	for obj in $(OBJS_IMP) ; do \
+		ln -s ../src/$$obj $@/$$obj ; \
+	done
+
+imp_slow:
+	make -C src
+	mkdir $@
+	for obj in $(OBJS_IMP_SLOW) ; do \
+		ln -s ../src/$$obj $@/$$obj ; \
 	done
 
 
