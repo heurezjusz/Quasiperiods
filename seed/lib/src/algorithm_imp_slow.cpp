@@ -1,2 +1,2 @@
-#define DMXGAP_NLOGN
+#define MXGAP_NLOGN
 #include "algorithm_imp.cpp"

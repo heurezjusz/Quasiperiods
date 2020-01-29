@@ -203,7 +203,7 @@ seeds_imp_int: packs_chk_imp_int.e seeds_imp_int.e seeds_nlogn_int.e
 
 #target: seeds_imp_slow_int
 seeds_imp_slow_int.e:
-	make -C ../bin $@
+	make -C ../bin seed_imp_slow_int.e
 	cp ../bin/seed_imp_slow_int.e seeds_imp_slow_int.e
 
 seeds_imp_slow_int: packs_chk_imp_int.e seeds_imp_slow_int.e seeds_nlogn_int.e

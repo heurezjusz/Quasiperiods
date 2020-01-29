@@ -1,5 +1,4 @@
-#define MXGAP_NLOGN
-#include "maxgap_imp.h"
+#include "maxgap_imp_nlogn.h"
 using namespace std;
 
 
