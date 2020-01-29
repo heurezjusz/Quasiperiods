@@ -7,9 +7,11 @@ OBJS_NLOGN = maxgap_nlogn.o rmcands_nlogn.o algorithm_nlogn.o $(OBJS)
 OBJS_IMP = pack.o maxgap_imp.o algorithm_imp.o
 OBJS_IMP_SLOW = pack.o maxgap_imp_nlogn.o algorithm_imp_slow.o
 
-DIRS = kkrrw kkrrws imp imp_slow
+DIRS_DEV = kkrrw kkrrws imp
+DIRS = $(DIRS_DEV) imp_slow
 
-all: $(DIRS)
+
+all: $(DIRS_DEV)
 
 
 kkrrw:
