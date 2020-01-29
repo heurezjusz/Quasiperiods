@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cassert>
 #include <iostream>
+#include <vector>
 #include <set>
 #include "../pack.h"
 using namespace std;
