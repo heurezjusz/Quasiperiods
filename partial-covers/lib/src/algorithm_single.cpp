@@ -1,6 +1,6 @@
 #include "algorithm_single.h"
-#include "cst.h"
-#include "ukkonen.h"
+#include "cst_leafs.h"
+#include "ukkonen_leafs.h"
 using namespace std;
 
 
@@ -10,7 +10,7 @@ Tree st;
 int limit;
 int min_len_found;
 vector<int> found;
-}
+}  // namespace
 
 
 void try_node(int v) {
