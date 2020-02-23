@@ -22,7 +22,10 @@ is the length of the cover.
 
 
 ** Directory seed **
-Directory "seed/" contains implementations if algorithms computing shortest seed of the string. Command make -C seed builds following executable files:
+Directory "seed/" contains implementations if algorithms computing shortest seed of the string.
+
+-- Executables --
+Command "make -C seed" builds following executable files:
 
   filename         | algorithm                                  | input type
  ------------------|--------------------------------------------|------------
@@ -39,6 +42,19 @@ a1 a2 a3... aN
 
 This input format allows us to test algorithms on tests with huge alphabets.
 Output format of all executables is a list if packages.
+
+-- C++ library usage --
+
+To use any of above algorithms, run "make" in location "seed/lib". It will create directories "imp", "kkrrw" and "kkrrws".
+Include "seed/lib/[ALGORITHM].h" in your code, where [ALGORITHM] should be replaced with "imp", "kkrrw" or "kkrrws".
+It will provide the function
+
+    void algorithm(std::vector<int> &word, std::vector<Pack> &result);
+
+which takes input in "vector<int>" format (consecutive elements of the vector represents consecutive letters),
+and appends the output at the end of the vector "result".
+
+Compile your code linking all objective files ("*.o") from directory "seed/lib/[ALGORITHM]".
 
 
 ** Directory partial-covers **
