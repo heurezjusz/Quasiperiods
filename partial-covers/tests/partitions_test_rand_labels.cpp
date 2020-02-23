@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <set>
 #include <vector>
-#include "../partition.h"
+#include "../lib/src/partition.h"
 #include "print_jst_node.h"
 using namespace std;
 

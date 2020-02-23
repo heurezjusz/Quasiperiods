@@ -1,7 +1,7 @@
-#include "../cst.h"
+#include "../lib/src/cst.h"
 #include <iostream>
 #include <string>
-#include "../ukkonen.h"
+#include "../lib/src/ukkonen.h"
 using namespace std;
 
 

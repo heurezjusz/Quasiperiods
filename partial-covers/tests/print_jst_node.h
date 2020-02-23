@@ -2,7 +2,7 @@
 #define __print_jst_node
 
 #include <cstdio>
-#include "../partition.h"
+#include "../lib/src/partition.h"
 
 void print_node_elements(JST::Node* node, int BASE) {
     if (node == nullptr)

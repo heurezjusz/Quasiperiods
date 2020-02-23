@@ -1,4 +1,4 @@
-#include "../hull.h"
+#include "../lib/src/hull.h"
 #include <cstdio>
 using namespace std;
 
