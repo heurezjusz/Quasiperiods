@@ -1,6 +1,6 @@
 #include <iostream>
-#include "cst.h"
-#include "ukkonen.h"
+#include "cst_leafs.h"
+#include "ukkonen_leafs.h"
 using namespace std;
 
 

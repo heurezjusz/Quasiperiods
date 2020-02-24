@@ -2,7 +2,8 @@ include ../lib/src/makefile.inc
 DEP = $(wildcard ../lib/src/*.cpp ../lib/src/*.h)
 
 make_sup: $(DEP)
-	make -C ../lib/src/
+	make -C ../lib/
+	make -C ../bin/
 .PHONY: make_sup
 
 
@@ -78,10 +79,11 @@ algorithm_all: algorithm_all.e algorithm_all_slow.e
 .PHONY: algorithm_all
 
 algorithm_all_slow.e: make_sup
+	make -C ../lib/src slow_algorithm.e
 	cp ../lib/src/slow_algorithm.e $@
 
 algorithm_all.e: make_sup
-	cp ../lib/src/partial_covers_all.e $@
+	cp ../bin/partial_covers_all.e $@
 
 
 # target: algorithm_single
@@ -89,7 +91,8 @@ algorithm_single: algorithm_single.e algorithm_single_slow.e
 .PHONY: algorithm_single
 
 algorithm_single_slow.e: make_sup
+	make -C ../lib/src slow_algorithm_single.e
 	cp ../lib/src/slow_algorithm_single.e $@
 
 algorithm_single.e: make_sup
-	cp ../lib/src/partial_covers_single.e $@
+	cp ../bin/partial_covers_single.e $@

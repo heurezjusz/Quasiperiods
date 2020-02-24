@@ -1,4 +1,4 @@
-#include "algorithm_single.h"
+#include "../algorithm_single.h"
 #include "cst_leafs.h"
 #include "ukkonen_leafs.h"
 using namespace std;

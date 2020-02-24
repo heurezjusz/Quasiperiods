@@ -1,4 +1,4 @@
-#include "algorithm_all.h"
+#include "../algorithm_all.h"
 #include "cst.h"
 #include "hull.h"
 #include "ukkonen.h"
@@ -9,7 +9,7 @@ namespace {
 int N;
 Tree st;
 vector<Segment> segments;
-}
+}  // namespace
 
 
 void get_segment_from_node(int v) {

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "algorithm_all.h"
+#include "../lib/algorithm_all.h"
 
 using namespace std;
 

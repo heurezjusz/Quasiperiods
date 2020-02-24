@@ -1,5 +1,6 @@
 #include "partition_set.h"
 #include <algorithm>
+#include <numeric>
 using namespace std;
 
 
