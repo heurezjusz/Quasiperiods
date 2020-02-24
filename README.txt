@@ -67,7 +67,7 @@ Compile your code linking all objective files ("*.o") from directory "seed/lib/[
 
 Include one of the following files to your code:
 
-> "algorithm_all.h"
+ * "algorithm_all.h"
 It provides the function
 
     void algorithm(std::vector<int>& word, std::vector<int>& result);
@@ -77,7 +77,7 @@ Vector "result" is expected to be empty. As the result, the function resizes "re
 Element "result[i]" is the length of the shortest partial cover which covers at least "i" positions of "word".
 "result[0]" is filled with 0.
 
-> "algorithm_single.h"
+ * "algorithm_single.h"
 It provides the function
 
     int algorithm(std::vector<int>& word, int min_positions,
