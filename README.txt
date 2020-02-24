@@ -79,7 +79,7 @@ Element "result[i]" is the length of the shortest partial cover which covers at 
 "result[0]" is filled with 0.
 
  * "algorithm_single.h"
- 
+
 It provides the function
 
     int algorithm(std::vector<int>& word, int min_positions,
