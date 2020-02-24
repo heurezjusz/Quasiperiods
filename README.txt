@@ -6,21 +6,6 @@ Experimental Evaluation of Algorithms for Computing Quasiperiods
 === Implementations ===
 
 
-** Directory cover **
-Directory "cover/prog" contains implementations if algorithms computing shortest cover of the string.
-
-  filename                | algorithm
- -------------------------|----------------------------------------------------------
-  cover_afi.cpp           | Apostolico
-  cover_breslauer.cpp     | Breslauer
-  cover_folk.cpp          | folklore O(nlog(n))
-  cover_ms.cpp            | Moore and Smyth
-  cover_ms_static_mem.cpp | Moore and Smyth with static array instead of std::vector
-
-To compile all programs run "make -C cover/prog". Input of all executable files is a single string, output
-is the length of the cover.
-
-
 ** Directory seed **
 Directory "seed/" contains implementations if algorithms computing shortest seed of the string.
 
@@ -44,7 +29,6 @@ This input format allows us to test algorithms on tests with huge alphabets.
 Output format of all executables is a list if packages.
 
 -- C++ library usage --
-
 To use any of above algorithms, run "make" in location "seed/lib". It will create directories "imp", "kkrrw" and "kkrrws".
 Include "seed/lib/[ALGORITHM].h" in your code, where [ALGORITHM] should be replaced with "imp", "kkrrw" or "kkrrws".
 It will provide the function
@@ -58,7 +42,10 @@ Compile your code linking all objective files ("*.o") from directory "seed/lib/[
 
 
 ** Directory partial-covers **
-Directory "partial-covers" contains implementations if algorithms computing partial covers of the string. Command make -C partial-covers builds following executable files:
+Directory "partial-covers" contains implementations if algorithms computing partial covers of the string.
+
+-- Executables --
+Command "make -C partial-covers" builds following executable files:
 
   filename                | description
  -------------------------|-
@@ -73,6 +60,50 @@ Directory "partial-covers" contains implementations if algorithms computing part
                           | which covers at least i positions.
                           |
   slow_*                  | Brute force solutions of above problems, used in correctness tests.
+
+-- C++ library usage --
+To use any of above algorithms, run "make" in location "parial-covers/lib". It will create directories "algorithm_single" and "algorithm_all".
+Compile your code linking all objective files ("*.o") from directory "seed/lib/[ALGORITHM]".
+
+Include one of the following files to your code:
+
+> "algorithm_all.h"
+It provides the function
+
+    void algorithm(std::vector<int>& word, std::vector<int>& result);
+
+which takes input in "vector<int>" format (consecutive elements of the vector represents consecutive letters).
+Vector "result" is expected to be empty. As the result, the function resizes "result" to the length "word.size() + 1".
+Element "result[i]" is the length of the shortest partial cover which covers at least "i" positions of "word".
+"result[0]" is filled with 0.
+
+> "algorithm_single.h"
+It provides the function
+
+    int algorithm(std::vector<int>& word, int min_positions,
+                  std::vector<int>& result);
+
+which which takes the input word in "vector<int>" format (consecutive elements of the vector represents consecutive letters).
+"min_positions" should be equal to Alpha - the minimum number of positions to be covered by the partial cover.
+
+The result of the function is the length of the minimum partial cover which covers at least "min_positions" positions of "word".
+Additionally, it fills the vector "result" with the list of starting positions of all covers of minimum length.
+All previous content of "result" is lost.
+
+
+** Directory cover **
+Directory "cover/prog" contains implementations if algorithms computing shortest cover of the string.
+
+  filename                | algorithm
+ -------------------------|----------------------------------------------------------
+  cover_afi.cpp           | Apostolico
+  cover_breslauer.cpp     | Breslauer
+  cover_folk.cpp          | folklore O(nlog(n))
+  cover_ms.cpp            | Moore and Smyth
+  cover_ms_static_mem.cpp | Moore and Smyth with static array instead of std::vector
+
+To compile all programs run "make -C cover/prog". Input of all executable files is a single string, output
+is the length of the cover.
 
 
 
